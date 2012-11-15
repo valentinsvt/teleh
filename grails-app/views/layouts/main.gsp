@@ -25,7 +25,6 @@
 
         <link href="${resource(dir: 'css', file: 'font-awesome.css')}" rel="stylesheet">
 
-        <link href="${resource(dir: 'css', file: 'mobile2.css')}" rel="stylesheet">
         <script src="${resource(dir: 'js/jquery/plugins', file: 'jquery.highlight.js')}"></script>
         <style>
 
@@ -81,7 +80,7 @@
         <script type="text/javascript">
             var url = "${resource(dir:'images', file:'spinner_24.gif')}";
             var spinner = $("<img style='margin-left:15px;' src='" + url + "' alt='Cargando...'/>");
-            var url2 = "${resource(dir:'images', file:'spinner.gif')}";
+            var url2 = "${resource(dir:'images', file:'spinner_16.gif')}";
             var spinner2 = $("<img style='margin-left:15px;' src='" + url + "' alt='Cargando...'/>");
 
             var ot = document.title;
