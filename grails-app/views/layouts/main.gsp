@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>
-            Teleh
+            <g:layoutTitle default="${g.message(code: 'default.app.name')}"/>
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
@@ -25,6 +25,7 @@
 
         <link href="${resource(dir: 'css', file: 'font-awesome.css')}" rel="stylesheet">
 
+        <link href="${resource(dir: 'css', file: 'mobile2.css')}" rel="stylesheet">
         <script src="${resource(dir: 'js/jquery/plugins', file: 'jquery.highlight.js')}"></script>
         <style>
 
@@ -51,11 +52,11 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-        <link rel="shortcut icon" href="${resource(dir: 'images/ico', file: 'teleh_16.png')}">
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="${resource(dir: 'images/ico', file: 'teleh_144.png')}">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="${resource(dir: 'images/ico', file: 'teleh_114.png')}">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="${resource(dir: 'images/ico', file: 'teleh_72.png')}">
-        <link rel="apple-touch-icon-precomposed" href="${resource(dir: 'images/ico', file: 'teleh_57.png')}">
+        <link rel="shortcut icon" href="${resource(dir: 'images/ico', file: 'janus_16.png')}">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="${resource(dir: 'images/ico', file: 'janus_144.png')}">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="${resource(dir: 'images/ico', file: 'janus_114.png')}">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="${resource(dir: 'images/ico', file: 'janus_72.png')}">
+        <link rel="apple-touch-icon-precomposed" href="${resource(dir: 'images/ico', file: 'janus_57.png')}">
 
         <script src="${resource(dir: 'js', file: 'functions.js')}"></script>
         <g:layoutHead/>
@@ -66,21 +67,12 @@
 
     <body>
 
-        <mn:menu title="Sistema Teleh"/>
-
-
-        <div class="container principal">
-
-            <g:layoutBody/>
-
-        </div>
-
-        <script src="${resource(dir: 'css/bootstrap/js', file: 'bootstrap.js')}"></script>
+        <mn:menu title="${g.layoutTitle(default: 'Teleh')}"/>
 
         <script type="text/javascript">
             var url = "${resource(dir:'images', file:'spinner_24.gif')}";
             var spinner = $("<img style='margin-left:15px;' src='" + url + "' alt='Cargando...'/>");
-            var url2 = "${resource(dir:'images', file:'spinner_16.gif')}";
+            var url2 = "${resource(dir:'images', file:'spinner.gif')}";
             var spinner2 = $("<img style='margin-left:15px;' src='" + url + "' alt='Cargando...'/>");
 
             var ot = document.title;
@@ -116,6 +108,19 @@
             }
 
             $(function () {
+
+                $("#dlgLoad").dialog({
+                    modal         : true,
+                    autoOpen      : false,
+                    closeOnEscape : false,
+                    draggable     : false,
+                    resizable     : false,
+                    zIndex        : 9000,
+                    open          : function (event, ui) {
+                        $(event.target).parent().find(".ui-dialog-titlebar-close").remove();
+                    }
+                });
+
                 var ahora = new Date();
                 var fin = ahora.clone().add(20).minute();
 
@@ -132,5 +137,20 @@
                 });
             });
         </script>
+
+        <div id="dlgLoad" class="ui-helper-hidden" style="text-align:center;">
+            Cargando.....Por favor espere......<br/><br/>
+            <img src="${resource(dir: 'images', file: 'spinner64.gif')}" alt=""/>
+        </div>
+
+        <div class="container principal">
+
+            <g:layoutBody/>
+
+        </div>
+
+
+        <script src="${resource(dir: 'css/bootstrap/js', file: 'bootstrap.js')}"></script>
+
     </body>
 </html>
