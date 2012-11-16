@@ -94,7 +94,7 @@ class Persona {
         horas1(nullable: false, default: 0)
         horas2(nullable: false, default: 0)
         horas3(nullable: false, default: 0)
-        tituloArchivo(blank: true, nullable: true,)
+        tituloArchivo(blank: true, nullable: true, maxSize: 2 * 1024 * 1024)  //max 2 mb
         pin(blank: true, nullable: true, size: 0..5)
         puntajeTitulo(nullable: false, default: 0)
         puntajeCursos(nullable: false, default: 0)
@@ -150,7 +150,7 @@ class Persona {
         horas1 column: 'horas1'
         horas2 column: 'horas2'
         horas3 column: 'horas3'
-        tituloArchivo column: 'titulo'
+        tituloArchivo column: 'titulo', sqlType: "blob"
         pin column: 'insc_pin'
         puntajeTitulo column: 'inscpttt'
         puntajeCursos column: 'inscptcr'
