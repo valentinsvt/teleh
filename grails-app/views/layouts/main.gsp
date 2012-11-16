@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>
-            <g:layoutTitle default="${g.message(code: 'default.app.name')}"/>
+            Teleh
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
@@ -66,7 +66,7 @@
 
     <body>
 
-        <mn:menu title="${g.layoutTitle(default: g.message(code: 'default.app.name'))}"/>
+        <mn:menu title="Sistema Teleh"/>
 
 
         <div class="container principal">

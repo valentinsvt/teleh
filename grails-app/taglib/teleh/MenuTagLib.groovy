@@ -5,45 +5,28 @@ class MenuTagLib {
 
     def menu = { attrs ->
 
-        def items = [:]
-        session.usuario = teleh.Persona.get(1)
-        session.perfil = teleh.seguridad.Prfl.get(1)
-        def usuario = session.usuario
-        def perfil = session.perfil
-        def acciones = teleh.seguridad.Prms.findAllByPerfil(perfil).accion
-        acciones.each {ac ->
-            if (!items[ac.modulo.nombre]) {
-                items.put(ac.modulo.nombre, [ac.accnDescripcion, g.createLink(controller: ac.control.ctrlNombre, action: ac.accnNombre)])
-            } else {
-                items[ac.modulo.nombre].add(ac.accnDescripcion)
-                items[ac.modulo.nombre].add(g.createLink(controller: ac.control.ctrlNombre, action: ac.accnNombre))
-            }
-        }
-
-//        println "items "+items
-
-
+//
         def strItems = ""
-        items.each {item ->
-//            def clase = ""
-//            println session.controller + "    " + tipo
-//            if (session.controller == item) {
-//                clase = "active"
+//        items.each {item ->
+////            def clase = ""
+////            println session.controller + "    " + tipo
+////            if (session.controller == item) {
+////                clase = "active"
+////            }
+////            strItems += "<li class='" + clase + "'>"
+////            strItems += "<a href='" + item.url + "'>" + item.label + "</a>"
+////            strItems += "</li>"
+//
+//            strItems += '<li class="dropdown">'
+//            strItems += '<a href="#" class="dropdown-toggle" data-toggle="dropdown">' + item.key + '<b class="caret"></b></a>'
+//            strItems += '<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">'
+//
+//            (item.value.size() / 2).toInteger().times {
+//                strItems += '<li><a href="' + item.value[it * 2 + 1] + '">' + item.value[it * 2] + '</a></li>'
 //            }
-//            strItems += "<li class='" + clase + "'>"
-//            strItems += "<a href='" + item.url + "'>" + item.label + "</a>"
-//            strItems += "</li>"
-
-            strItems += '<li class="dropdown">'
-            strItems += '<a href="#" class="dropdown-toggle" data-toggle="dropdown">' + item.key + '<b class="caret"></b></a>'
-            strItems += '<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">'
-
-            (item.value.size() / 2).toInteger().times {
-                strItems += '<li><a href="' + item.value[it * 2 + 1] + '">' + item.value[it * 2] + '</a></li>'
-            }
-            strItems += '</ul>'
-            strItems += '</li>'
-        }
+//            strItems += '</ul>'
+//            strItems += '</li>'
+//        }
 
         def html = ""
         html += '<div class="navbar navbar-static-top navbar-inverse">'
