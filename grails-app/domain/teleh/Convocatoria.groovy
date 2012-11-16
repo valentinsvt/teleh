@@ -19,7 +19,7 @@ class Convocatoria implements Serializable {
     }
     static constraints = {
         descripcion(size: 1..63, blank: false, nullable: false, attributes: [title: 'descripcion'])
-        fechaInicio(blank: false, nullable: false, attributes: [title: 'descripcion'])
-        fechaFin(blank: false, nullable: false, attributes: [title: 'descripcion'])
+        fechaInicio(blank: false, nullable: false, attributes: [title: 'fecha inicio'])
+        fechaFin(blank: false, nullable: false, attributes: [title: 'fecha fin'])
     }
 }
