@@ -7,17 +7,17 @@ class Titulo implements Serializable {
     Integer puntaje
 
     static mapping = {
-        table 'tpcn'
+        table 'titl'
         cache usage: 'read-write', include: 'non-lazy'
-        id column: 'tpcn__id'
+        id column: 'titl__id'
         id generator: 'identity'
         version false
         columns {
-            id column: 'tpcn__id'
+            id column: 'titl__id'
             tipoTitulo column: 'tptt__id'
             tipo column: 'titltipo'
-            descripcion column: 'tpcndscr'
-            puntaje column: 'tpcndscr'
+            descripcion column: 'titldscr'
+            puntaje column: 'titldscr'
         }
     }
     static constraints = {
