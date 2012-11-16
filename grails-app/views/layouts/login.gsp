@@ -35,7 +35,7 @@
     <g:layoutHead/>
 </head>
 
-<body style="background: rgba(0,0,0,0.7)">
+<body style="background: none">
 
 <div style="width: 1000px;margin-top: 50px;margin-left: 30px;">
     <g:layoutBody/>

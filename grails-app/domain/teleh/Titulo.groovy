@@ -17,7 +17,7 @@ class Titulo implements Serializable {
             tipoTitulo column: 'tptt__id'
             tipo column: 'titltipo'
             descripcion column: 'titldscr'
-            puntaje column: 'titldscr'
+            puntaje column: 'titlptje'
         }
     }
     static constraints = {

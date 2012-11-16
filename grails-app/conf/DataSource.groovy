@@ -1,43 +1,43 @@
 dataSource {
     pooled = true
-    driverClassName = "org.h2.Driver"
-    username = "sa"
-    password = ""
+    //driverClassName = "org.postgresql.Driver"
+    //dialect = org.hibernate.dialect.PostgreSQLDialect
+    driverClassName = "com.mysql.jdbc.Driver"
+    dialect =  "org.hibernate.dialect.MySQL5InnoDBDialect"
 }
 hibernate {
-    cache.use_second_level_cache = true
-    cache.use_query_cache = false
-    cache.region.factory_class = 'net.sf.ehcache.hibernate.EhCacheRegionFactory'
+    cache.use_second_level_cache=true
+    cache.use_query_cache=true
+    //cache.provider_class='com.opensymphony.oscache.hibernate.OSCacheProvider'
+    cache.provider_class='net.sf.ehcache.hibernate.EhCacheProvider'
 }
 // environment specific settings
 environments {
     development {
         dataSource {
-            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+            dbCreate = "update"
+            url = "jdbc:mysql://10.0.0.1/teleh"
+            //url = "jdbc:postgresql://10.0.0.3:5432/tages"
+            username = "root"
+            password = "root"
         }
     }
     test {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+            //url = "jdbc:postgresql://10.0.0.3:5432/mies"
+            url = "jdbc:postgresql://127.0.0.1:5432/v"
+            username = "postgres"
+            //password = "postgres"
+            password = "Sunday.server.2011"
         }
     }
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
-            pooled = true
-            properties {
-               maxActive = -1
-               minEvictableIdleTimeMillis=1800000
-               timeBetweenEvictionRunsMillis=1800000
-               numTestsPerEvictionRun=3
-               testOnBorrow=true
-               testWhileIdle=true
-               testOnReturn=true
-               validationQuery="SELECT 1"
-            }
+            url = "jdbc:mysql://localhost/teleh"
+            username = "root"
+            password = "mies1809"
         }
     }
 }

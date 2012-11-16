@@ -13,21 +13,21 @@ class ShieldController {
     }
     def error = {
         def msn="Ha ocurrido un error interno."
-        try{
-            def er = new ErrorLog()
-            er.fecha=new Date()
-            er.error=request["exception"].message?.encodeAsHTML()
-            er.causa=request["exception"].cause?.message?.encodeAsHTML()
-            er.url=request["javax.servlet.forward.request_uri"];
-            er.usuario=session.usuario
-            er.save()
-           // println " \n<===Error Aqui===> "+request["javax.servlet.forward.request_uri"]
-            //println " \n<===Que eres pal burro?????? ===> "+request["exception"].message?.encodeAsHTML()
-            //println " \n<===Causa===> "+request["exception"].cause?.message?.encodeAsHTML()
-            
-        }catch (e){
-            println "error en error "+e
-        }
+//        try{
+//            def er = new ErrorLog()
+//            er.fecha=new Date()
+//            er.error=request["exception"].message?.encodeAsHTML()
+//            er.causa=request["exception"].cause?.message?.encodeAsHTML()
+//            er.url=request["javax.servlet.forward.request_uri"];
+//            er.usuario=session.usuario
+//            er.save()
+//           // println " \n<===Error Aqui===> "+request["javax.servlet.forward.request_uri"]
+//            //println " \n<===Que eres pal burro?????? ===> "+request["exception"].message?.encodeAsHTML()
+//            //println " \n<===Causa===> "+request["exception"].cause?.message?.encodeAsHTML()
+//
+//        }catch (e){
+//            println "error en error "+e
+//        }
         render(view:"advertencia",model:[msn:msn,error:true])
     }
     def comprobarPassword = {

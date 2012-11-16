@@ -25,7 +25,6 @@
 
         <link href="${resource(dir: 'css', file: 'font-awesome.css')}" rel="stylesheet">
 
-        <link href="${resource(dir: 'css', file: 'mobile2.css')}" rel="stylesheet">
         <script src="${resource(dir: 'js/jquery/plugins', file: 'jquery.highlight.js')}"></script>
         <style>
 
@@ -52,11 +51,7 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-        <link rel="shortcut icon" href="${resource(dir: 'images/ico', file: 'janus_16.png')}">
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="${resource(dir: 'images/ico', file: 'janus_144.png')}">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="${resource(dir: 'images/ico', file: 'janus_114.png')}">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="${resource(dir: 'images/ico', file: 'janus_72.png')}">
-        <link rel="apple-touch-icon-precomposed" href="${resource(dir: 'images/ico', file: 'janus_57.png')}">
+        <link rel="shortcut icon" href="${resource(dir: 'images', file: 'calendar.png')}">
 
         <script src="${resource(dir: 'js', file: 'functions.js')}"></script>
         <g:layoutHead/>
