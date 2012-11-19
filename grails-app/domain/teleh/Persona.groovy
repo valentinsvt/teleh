@@ -23,6 +23,7 @@ class Persona {
     String certificadoExtrangero
     String habla50Nativa
     String habla50Extrangera
+    TipoIdioma tipoIdiomaNativo
     String direccion
     String telefonoFijo
     String telefonoCelular
@@ -68,7 +69,7 @@ class Persona {
         cedula(blank: false, nullable: false, size: 10..10, unique: false)
         fechaNacimiento(nullable: true, unique: false, default: new Date())
         sexo(nullable: true, size: 1..10, inList: ['femenino', 'masculino'])
-        email(nullable: false, email: true,size: 1..55)
+        email(nullable: false, email: true, size: 1..55)
         etnia(nullable: true, size: 1..16, inList: ['Indígena', 'Mestizo', 'Blanco', 'Montubio', 'Afroecuatoriano'])
         promotorCNH(blank: true, nullable: true, size: 1..2, inList: ['SI', 'NO'], default: 'NO')
         lenguaNativa(blank: true, nullable: true, size: 1..2, inList: ['SI', 'NO'], default: 'NO')
@@ -77,6 +78,7 @@ class Persona {
         certificadoExtrangero(blank: true, nullable: true, size: 1..2, inList: ['SI', 'NO'], default: 'NO')
         habla50Nativa(blank: true, nullable: true, size: 1..2, inList: ['SI', 'NO'], default: 'NO')
         habla50Extrangera(blank: true, nullable: true, size: 1..2, inList: ['SI', 'NO'], default: 'NO')
+        tipoIdiomaNativo(blank: true, nullable: true)
         direccion(blank: true, nullable: true, size: 1..128, unique: false)
         telefonoFijo(blank: true, nullable: true, size: 1..24, unique: false)
         telefonoCelular(blank: true, nullable: true, size: 1..24, unique: false)
@@ -134,6 +136,7 @@ class Persona {
         certificadoExtrangero column: 'insccere'
         habla50Nativa column: 'inscln50'
         habla50Extrangera column: 'inscle50'
+        tipoIdiomaNativo column: 'tpididnt'
         direccion column: 'inscdire'
         telefonoFijo column: 'insctelf'
         telefonoCelular column: 'insctelc'

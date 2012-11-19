@@ -170,6 +170,14 @@ class ElementosTagLib {
         js += 'dateFormat: "' + formatJs + '",'
         js += 'changeMonth: true,'
         js += 'changeYear: true'
+        if (attrs.minDate) {
+            js += ","
+            js += "minDate:" + attrs.minDate
+        }
+        if (attrs.maxDate) {
+            js += ","
+            js += "maxDate:" + attrs.maxDate
+        }
 //        js += 'showOn          : "both",'
 //        js += 'buttonImage     : "' + resource(dir: 'images', file: 'calendar.png') + '",'
 //        js += 'buttonImageOnly : true'
