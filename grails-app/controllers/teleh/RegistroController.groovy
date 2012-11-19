@@ -5,16 +5,26 @@ class RegistroController {
     def mailService
 
     def index() {
+        def fecha = new Date()
+        session.convocatoria=null
+        def conv = Convocatoria.findByFechaInicioLessThanEqualsAndFechaFinGreaterThanEquals(fecha,fecha)
+        if (conv)
+            session.convocatoria=conv
+        def mensaje=params.msn
+        params.msn=null
+//        println "conv "+session.convocatoria
+        [msn: mensaje]
 
     }
 
     def registrar(){
-        def prsn = Persona.findByCedula(params.cedula)
+        def prsn = Persona.findByCedulaAndConvocatoria(params.cedula,session.convocatoria)
         def msn
         if (!prsn) {
             prsn = new Persona(params)
             def pin = prsn.email.encodeAsMD5().substring(0, 3) + prsn.cedula.encodeAsMD5().substring(0, 3)
             prsn.pin = pin.encodeAsMD5()
+            prsn.convocatoria=Convocatoria.get(session.convocatoria.id)
 
             if (prsn.save(flush: true)) {
                 try {
@@ -50,11 +60,11 @@ class RegistroController {
                     redirect(action: "enviado")
                 } else {
                     println "errores " + prsn.errors
-                    msn = "Existe un error con los datos ingresados. Recuerde que los campos nombre y apellidos tienen un m&aacute;ximo de 31 caracteres y el email es &uacute;nico"
+                    msn = "Existe un error con los datos ingresados. Recuerde que el campo email tiene un máximo de &uacute;nico caracteres"
                     redirect(action: "index", params: [msn: msn])
                 }
             } else {
-                msn = "Usted ya est&aacute; registrado"
+                msn = "Usted ya est&aacute; registrado en esta convocatoria"
                 redirect(action: "index", params: [msn: msn])
             }
         }

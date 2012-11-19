@@ -16,48 +16,55 @@
 </head>
 
 <body>
-<div style="border: 1px solid #525E67;background: #E0E0E0;color: #939Aa2;width: 340px;position: relative;padding: 10px;height: 320px;margin: 0px;" class="ui-corner-all">
+<div style="border: 1px solid #525E67;background: #E0E0E0;color: #939Aa2;width: 340px;position: relative;padding: 10px;min-height: 320px;margin: 0px;" class="ui-corner-all">
+    <g:if test="${session.convocatoria}">
+        <g:form class="well form-horizontal" id="frmLogin" action="registrar" name="frmLogin" style="background: none;border: 0px solid #E0E0E0 !important;padding-left: 0px;margin-left: 20px;box-shadow: none" >
+            <p class=" tituloGrande" style="float:left;font-family: 'Open Sans Condensed',serif;font-weight: bold;font-size: 25px;width: 95%">Sistema de evaluación</p>
 
-<g:form class="well form-horizontal" id="frmLogin" action="registrar" name="frmLogin" style="background: none;border: 0px solid #E0E0E0 !important;padding-left: 0px;margin-left: 20px;box-shadow: none" >
-    <p class=" tituloGrande" style="float:left;font-family: 'Open Sans Condensed',serif;font-weight: bold;font-size: 25px;width: 95%">Sistema de evaluación</p>
+        %{--<div class="linea" style="height: 95%;left: 45px"></div>--}%
+            <fieldset style="background: none;margin: 0px;border: 0px solid #E0E0E0 !important;color: #333;margin-top: 50px">
 
-    %{--<div class="linea" style="height: 95%;left: 45px"></div>--}%
-    <fieldset style="background: none;margin: 0px;border: 0px solid #E0E0E0 !important;color: #333;margin-top: 50px">
+                <g:if test="${msn}">
+                    <div class="alert alert-info" role="status">
+                        <a class="close" data-dismiss="alert" href="#">×</a>
+                        ${msn}
+                    </div>
+                </g:if>
 
-        <g:if test="${flash.message}">
-            <div class="alert alert-info" role="status">
-                <a class="close" data-dismiss="alert" href="#">×</a>
-                ${flash.message}
+                <div class="control-group" style="margin-top: 0">
+                    <label class="control-label" for="login" style="width: 100%;text-align: left;font-size: 20px;font-family: 'Open Sans Condensed', serif;font-weight: bolder">Cédula:</label>
+
+                    <div class="controls" style="width: 100%;margin-left: 5px">
+                        <g:textField name="cedula" class="span2 required" style="width: 90%"/>
+                        <p class="help-block ui-helper-hidden"></p>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="login" style="width: 100%;text-align: left;font-size: 20px;font-family: 'Open Sans Condensed', serif;font-weight: bolder">Correo electrónico:</label>
+
+                    <div class="controls" style="width: 100%;margin-left: 5px">
+                        <g:textField name="email" class="span2 required"  id="email" style="width: 90%"/>
+                        <p class="help-block ui-helper-hidden"></p>
+                    </div>
+                </div>
+
+                <div class="control-group">
+
+                    <a href="#" class="btn btn-primary" id="btnLogin">Continuar</a>
+                    <a href="#" id="btnOlvidoPass" style="color: #0088CC;margin-left: 70px;text-decoration: none;font-family: 'Open Sans Condensed', serif;font-weight: bold">
+                        No recibió su contraseña?
+                    </a>
+                </div>
+            </fieldset>
+        </g:form>
+    </g:if>
+    <g:else>
+        <p class=" tituloGrande" style="float:left;font-family: 'Open Sans Condensed',serif;font-weight: bold;font-size: 25px;width: 95%">Sistema de evaluación</p>
+            <div class="alert alert-info" role="status" style="margin-top: 50px;">
+                No existe ninguna convocatoria vigente actualmente
             </div>
-        </g:if>
-
-        <div class="control-group" style="margin-top: 0">
-            <label class="control-label" for="login" style="width: 100%;text-align: left;font-size: 20px;font-family: 'Open Sans Condensed', serif;font-weight: bolder">Cédula:</label>
-
-            <div class="controls" style="width: 100%;margin-left: 5px">
-                <g:textField name="cedula" class="span2 required" style="width: 90%"/>
-                <p class="help-block ui-helper-hidden"></p>
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label" for="login" style="width: 100%;text-align: left;font-size: 20px;font-family: 'Open Sans Condensed', serif;font-weight: bolder">Correo electrónico:</label>
-
-            <div class="controls" style="width: 100%;margin-left: 5px">
-                <g:textField name="email" class="span2 required"  id="email" style="width: 90%"/>
-                <p class="help-block ui-helper-hidden"></p>
-            </div>
-        </div>
-
-        <div class="control-group">
-
-            <a href="#" class="btn btn-primary" id="btnLogin">Continuar</a>
-            <a href="#" id="btnOlvidoPass" style="color: #0088CC;margin-left: 70px;text-decoration: none;font-family: 'Open Sans Condensed', serif;font-weight: bold">
-                Olvidó su contraseña?
-            </a>
-        </div>
-    </fieldset>
-</g:form>
+    </g:else>
 </div>
 
 
@@ -82,53 +89,16 @@
     $(function () {
 
         $("#btnOlvidoPass").click(function () {
-            var p = $("<p>Ingrese el email registrado a su usuario y se le enviará una nueva contraseña para ingresar al sistema.</p>");
+            var p = $("<p>Por favor repita el paso anterior, registre su cédula y asegurese de escribir correctamente su dirección de correo electrónico.</p>");
             var div = $('<div class="control-group" id="divMail"/>');
-            var input = $('<input type="text" class="" id="email" placeholder="Email"/>');
-            div.append(input);
 
             var btnOk = $('<a href="#" data-dismiss="modal" class="btn">Cerrar</a>');
-            var btnSend = $('<a href="#"  class="btn btn-success"><i class="icon-ok"></i> Enviar</a>');
+//            var btnSend = $('<a href="#"  class="btn btn-success"><i class="icon-ok"></i> Enviar</a>');
 
-            var send = function () {
-                var email = $.trim(input.val());
-                if (email != "") {
-                    btnSend.replaceWith(spinner);
-                    $.ajax({
-                        type    : "POST",
-                        url     : "${createLink(action:'olvidoPass')}",
-                        data    : {
-                            email : email
-                        },
-                        success : function (msg) {
-                            var parts = msg.split("*");
-                            if (parts[0] == "OK") {
-                                $("#modalBody").addClass("alert alert-success");
-                            } else {
-                                $("#modalBody").addClass("alert alert-error");
-                            }
-                            $("#modalBody").html(parts[1]);
-                            spinner.remove();
-                        }
-                    });
-                } else {
-                    $("#divMail").addClass("error");
-                }
-            };
 
-            btnSend.click(function () {
-                send();
-                return false;
-            });
-            input.keyup(function (ev) {
-                if (ev.keyCode == 13) {
-                    send();
-                }
-            });
-
-            $("#modalTitle").html("Olvidó su contraseña?");
+            $("#modalTitle").html(" No recibió su contraseña?");
             $("#modalBody").html("").append(p).append(div);
-            $("#modalFooter").html("").append(btnOk).append(btnSend);
+            $("#modalFooter").html("").append(btnOk)
             $("#modal-pass").modal("show");
         });
 

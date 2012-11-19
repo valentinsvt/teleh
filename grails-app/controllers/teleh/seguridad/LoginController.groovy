@@ -62,6 +62,11 @@ class LoginController {
             flash.message = "Ha ocurrido un error grave"
         } else {
             user = user[0]
+            if (user.login==0){
+                user.login=1
+                user.save(flush: true)
+            }
+
             session.usuario = user
             redirect(action: "datos",controller: "persona")
             return
