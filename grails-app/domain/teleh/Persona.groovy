@@ -42,7 +42,7 @@ class Persona {
     int horas1
     int horas2
     int horas3
-    byte[] tituloArchivo
+//    byte[] tituloArchivo
     String pin
     Integer puntajeTitulo
     Integer puntajeCursos
@@ -54,55 +54,55 @@ class Persona {
 
     static constraints = {
 
-        convocatoria(blank: false, nullable: false)
-        provincia(nullable: false)
-        canton(nullable: false)
+        convocatoria(blank: true, nullable: true)
+        provincia(nullable: true)
+        canton(nullable: true)
         parroquia(nullable: true)
         titulo(blank: true, nullable: true)
-        estado(blank: false, nullable: false)
+        estado(blank: true, nullable: true)
         dateCreated(nullable: true, default: new Date())
-        apellido(blank: false, nullable: false, size: 1..64, unique: false)
-        nombre(blank: false, nullable: false, size: 1..64, unique: false)
-        cedula(blank: false, nullable: false, size: 0..10, unique: true)
-        fechaNacimiento(nullable: false, unique: false, default: new Date())
-        sexo(nullable: false, size: 1..10, inList: ['femenino', 'masculino'])
+        apellido(blank: true, nullable: true, size: 1..64, unique: false)
+        nombre(blank: true, nullable: true, size: 1..64, unique: false)
+        cedula(blank: false, nullable: false, size: 10..10, unique: true)
+        fechaNacimiento(nullable: true, unique: false, default: new Date())
+        sexo(nullable: true, size: 1..10, inList: ['femenino', 'masculino'])
         email(nullable: false, email: true)
-        etnia(nullable: false, size: 1..16, inList: ['Indígena', 'Mestizo', 'Blanco', 'Montubio', 'Afroecuatoriano'])
-        promotorCNH(blank: false, nullable: false, size: 1..2, inList: ['SI', 'NO'], default: 'NO')
-        lenguaNativa(blank: false, nullable: false, size: 1..2, inList: ['SI', 'NO'], default: 'NO')
-        lenguaExtrangera(blank: false, nullable: false, size: 1..2, inList: ['SI', 'NO'], default: 'NO')
-        certificadoNativo(blank: false, nullable: false, size: 1..2, inList: ['SI', 'NO'], default: 'NO')
-        certificadoExtrangero(blank: false, nullable: false, size: 1..2, inList: ['SI', 'NO'], default: 'NO')
-        habla50Nativa(blank: false, nullable: false, size: 1..2, inList: ['SI', 'NO'], default: 'NO')
-        habla50Extrangera(blank: false, nullable: false, size: 1..2, inList: ['SI', 'NO'], default: 'NO')
-        direccion(blank: false, nullable: false, size: 1..128, unique: false)
+        etnia(nullable: true, size: 1..16, inList: ['Indígena', 'Mestizo', 'Blanco', 'Montubio', 'Afroecuatoriano'])
+        promotorCNH(blank: true, nullable: true, size: 1..2, inList: ['SI', 'NO'], default: 'NO')
+        lenguaNativa(blank: true, nullable: true, size: 1..2, inList: ['SI', 'NO'], default: 'NO')
+        lenguaExtrangera(blank: true, nullable: true, size: 1..2, inList: ['SI', 'NO'], default: 'NO')
+        certificadoNativo(blank: true, nullable: true, size: 1..2, inList: ['SI', 'NO'], default: 'NO')
+        certificadoExtrangero(blank: true, nullable: true, size: 1..2, inList: ['SI', 'NO'], default: 'NO')
+        habla50Nativa(blank: true, nullable: true, size: 1..2, inList: ['SI', 'NO'], default: 'NO')
+        habla50Extrangera(blank: true, nullable: true, size: 1..2, inList: ['SI', 'NO'], default: 'NO')
+        direccion(blank: true, nullable: true, size: 1..128, unique: false)
         telefonoFijo(blank: true, nullable: true, size: 1..24, unique: false)
         telefonoCelular(blank: true, nullable: true, size: 1..24, unique: false)
         nombreComunidad(blank: true, nullable: true, size: 1..63)
-        experienciaAnio(blank: false, nullable: false)
-        experienciaMes(blank: false, nullable: false)
-        trabajoComunitario(blank: false, nullable: false, size: 1..32, inList: ['SI', 'NO'], default: 'NO')
-        fecha1(nullable: false, unique: false, default: new Date())
-        fecha2(nullable: false, unique: false, default: new Date())
-        fecha3(nullable: false, unique: false, default: new Date())
-        institucion1(nullable: false, blank: true, default: 'n/d', size: 1..96, unique: false)
-        institucion2(nullable: false, blank: true, default: 'n/d', size: 1..96, unique: false)
-        institucion3(nullable: false, blank: true, default: 'n/d', size: 1..96, unique: false)
-        nombreCurso1(nullable: false, blank: true, default: 'n/d', size: 1..96, unique: false)
-        nombreCurso2(nullable: false, blank: true, default: 'n/d', size: 1..96, unique: false)
-        nombreCurso3(nullable: false, blank: true, default: 'n/d', size: 1..96, unique: false)
-        horas1(nullable: false, default: 0)
-        horas2(nullable: false, default: 0)
-        horas3(nullable: false, default: 0)
-        tituloArchivo(blank: true, nullable: true, maxSize: 2 * 1024 * 1024)  //max 2 mb
+        experienciaAnio(blank: true, nullable: true)
+        experienciaMes(blank: true, nullable: true)
+        trabajoComunitario(blank: true, nullable: true, size: 1..32, inList: ['SI', 'NO'], default: 'NO')
+        fecha1(nullable: true, unique: false, default: new Date())
+        fecha2(nullable: true, unique: false, default: new Date())
+        fecha3(nullable: true, unique: false, default: new Date())
+        institucion1(nullable: true, blank: true, default: 'n/d', size: 1..96, unique: false)
+        institucion2(nullable: true, blank: true, default: 'n/d', size: 1..96, unique: false)
+        institucion3(nullable: true, blank: true, default: 'n/d', size: 1..96, unique: false)
+        nombreCurso1(nullable: true, blank: true, default: 'n/d', size: 1..96, unique: false)
+        nombreCurso2(nullable: true, blank: true, default: 'n/d', size: 1..96, unique: false)
+        nombreCurso3(nullable: true, blank: true, default: 'n/d', size: 1..96, unique: false)
+        horas1(nullable: true, default: 0)
+        horas2(nullable: true, default: 0)
+        horas3(nullable: true, default: 0)
+//        tituloArchivo(blank: true, nullable: true, maxSize: 2 * 1024 * 1024)  //max 2 mb
         pin(blank: true, nullable: true, size: 0..5)
-        puntajeTitulo(nullable: false, default: 0)
-        puntajeCursos(nullable: false, default: 0)
-        puntajeExperiencia(nullable: false, default: 0)
-        puntajeTrabajoComunitario(nullable: false, default: 0)
-        puntajeBilingue(nullable: false, default: 0)
-        puntajePrueba(nullable: false, default: 0)
-        puntajeEntrevista(nullable: false, default: 0)
+        puntajeTitulo(nullable: true, default: 0)
+        puntajeCursos(nullable: true, default: 0)
+        puntajeExperiencia(nullable: true, default: 0)
+        puntajeTrabajoComunitario(nullable: true, default: 0)
+        puntajeBilingue(nullable: true, default: 0)
+        puntajePrueba(nullable: true, default: 0)
+        puntajeEntrevista(nullable: true, default: 0)
     }
 
     static mapping = {
@@ -150,7 +150,7 @@ class Persona {
         horas1 column: 'horas1'
         horas2 column: 'horas2'
         horas3 column: 'horas3'
-        tituloArchivo column: 'titulo', sqlType: "blob"
+//        tituloArchivo column: 'titulo', sqlType: "blob"
         pin column: 'insc_pin'
         puntajeTitulo column: 'inscpttt'
         puntajeCursos column: 'inscptcr'

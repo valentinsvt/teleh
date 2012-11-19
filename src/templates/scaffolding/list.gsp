@@ -21,12 +21,13 @@
             </g:if>
         </div>
 
-        <div class="span12 btn-group" role="navigation">
+        <div class="span8 btn-group" role="navigation">
             <a href="#" class="btn btn-ajax btn-new">
                 <i class="icon-file"></i>
                 Crear ${className.replaceAll('[A-Z]') {' ' + it}}
             </a>
         </div>
+        <div id="search" class="pull-right"></div>
 
         <g:form action="delete" name="frmDelete-${className}">
             <g:hiddenField name="id"/>
@@ -113,7 +114,8 @@
                 \$('[rel=tooltip]').tooltip();
 
                 \$(".paginate").paginate({
-                    maxRows: 10
+                    maxRows        : 10,
+                    searchPosition : \$("#search")
                 });
 
                 \$(".btn-new").click(function () {
