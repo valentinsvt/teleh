@@ -18,46 +18,46 @@
 <body>
 <div style="border: 1px solid #525E67;background: #E0E0E0;color: #939Aa2;width: 340px;position: relative;padding: 10px;height: 320px;margin: 0px;" class="ui-corner-all">
 
-<g:form class="well form-horizontal" id="frmLogin" action="registrar" name="frmLogin" style="background: none;border: 0px solid #E0E0E0 !important;padding-left: 0px;margin-left: 20px;box-shadow: none" >
-    <p class=" tituloGrande" style="float:left;font-family: 'Open Sans Condensed',serif;font-weight: bold;font-size: 25px;width: 95%">Sistema de evaluación</p>
+    <g:form class="well form-horizontal" id="frmLogin" action="validar" name="frmLogin" style="background: none;border: 0px solid #E0E0E0 !important;padding-left: 0px;margin-left: 20px;box-shadow: none" >
+        <p class=" tituloGrande" style="float:left;font-family: 'Open Sans Condensed',serif;font-weight: bold;font-size: 25px;width: 95%">Sistema de evaluación</p>
 
     %{--<div class="linea" style="height: 95%;left: 45px"></div>--}%
-    <fieldset style="background: none;margin: 0px;border: 0px solid #E0E0E0 !important;color: #333;margin-top: 50px">
+        <fieldset style="background: none;margin: 0px;border: 0px solid #E0E0E0 !important;color: #333;margin-top: 50px">
 
-        <g:if test="${flash.message}">
-            <div class="alert alert-info" role="status">
-                <a class="close" data-dismiss="alert" href="#">×</a>
-                ${flash.message}
+            <g:if test="${flash.message}">
+                <div class="alert alert-info" role="status">
+                    <a class="close" data-dismiss="alert" href="#">×</a>
+                    ${flash.message}
+                </div>
+            </g:if>
+
+            <div class="control-group" style="margin-top: 0">
+                <label class="control-label" for="login" style="width: 100%;text-align: left;font-size: 20px;font-family: 'Open Sans Condensed', serif;font-weight: bolder">Cédula:</label>
+
+                <div class="controls" style="width: 100%;margin-left: 5px">
+                    <g:textField name="cedula" class="span2 required" style="width: 90%"/>
+                    <p class="help-block ui-helper-hidden"></p>
+                </div>
             </div>
-        </g:if>
 
-        <div class="control-group" style="margin-top: 0">
-            <label class="control-label" for="login" style="width: 100%;text-align: left;font-size: 20px;font-family: 'Open Sans Condensed', serif;font-weight: bolder">Cédula:</label>
+            <div class="control-group">
+                <label class="control-label" for="login" style="width: 100%;text-align: left;font-size: 20px;font-family: 'Open Sans Condensed', serif;font-weight: bolder">Contraseña:</label>
 
-            <div class="controls" style="width: 100%;margin-left: 5px">
-                <g:textField name="cedula" class="span2 required" style="width: 90%"/>
-                <p class="help-block ui-helper-hidden"></p>
+                <div class="controls" style="width: 100%;margin-left: 5px">
+                    <g:passwordField name="pin" class="span2 required"  id="pass" style="width: 90%"/>
+                    <p class="help-block ui-helper-hidden"></p>
+                </div>
             </div>
-        </div>
 
-        <div class="control-group">
-            <label class="control-label" for="login" style="width: 100%;text-align: left;font-size: 20px;font-family: 'Open Sans Condensed', serif;font-weight: bolder">Correo electrónico:</label>
+            <div class="control-group">
 
-            <div class="controls" style="width: 100%;margin-left: 5px">
-                <g:textField name="email" class="span2 required"  id="email" style="width: 90%"/>
-                <p class="help-block ui-helper-hidden"></p>
+                <a href="#" class="btn btn-primary" id="btnLogin">Continuar</a>
+                <a href="#" id="btnOlvidoPass" style="color: #0088CC;margin-left: 70px;text-decoration: none;font-family: 'Open Sans Condensed', serif;font-weight: bold">
+                    Olvidó su contraseña?
+                </a>
             </div>
-        </div>
-
-        <div class="control-group">
-
-            <a href="#" class="btn btn-primary" id="btnLogin">Continuar</a>
-            <a href="#" id="btnOlvidoPass" style="color: #0088CC;margin-left: 70px;text-decoration: none;font-family: 'Open Sans Condensed', serif;font-weight: bold">
-                Olvidó su contraseña?
-            </a>
-        </div>
-    </fieldset>
-</g:form>
+        </fieldset>
+    </g:form>
 </div>
 
 
@@ -132,7 +132,7 @@
             $("#modal-pass").modal("show");
         });
 
-        $("#email").keypress(function (ev) {
+        $("#pass").keypress(function (ev) {
             if (ev.keyCode == 13) {
                 $("#frmLogin").submit();
             }

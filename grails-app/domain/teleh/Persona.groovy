@@ -51,6 +51,8 @@ class Persona {
     Integer puntajeBilingue
     Integer puntajePrueba
     Integer puntajeEntrevista
+    Integer login = 0
+    int activo = 1
 
     static constraints = {
 
@@ -95,7 +97,7 @@ class Persona {
         horas2(nullable: true, default: 0)
         horas3(nullable: true, default: 0)
 //        tituloArchivo(blank: true, nullable: true, maxSize: 2 * 1024 * 1024)  //max 2 mb
-        pin(blank: true, nullable: true, size: 0..5)
+        pin(blank: true, nullable: true, size: 0..255)
         puntajeTitulo(nullable: true, default: 0)
         puntajeCursos(nullable: true, default: 0)
         puntajeExperiencia(nullable: true, default: 0)
@@ -103,6 +105,7 @@ class Persona {
         puntajeBilingue(nullable: true, default: 0)
         puntajePrueba(nullable: true, default: 0)
         puntajeEntrevista(nullable: true, default: 0)
+
     }
 
     static mapping = {
@@ -159,6 +162,8 @@ class Persona {
         puntajeBilingue column: 'inscptbl'
         puntajePrueba column: 'inscptpb'
         puntajeEntrevista column: 'inscptet'
+        login column: 'insclgin'
+        activo column: 'inscactv'
     }
 
     String toString() {
