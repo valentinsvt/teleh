@@ -178,21 +178,8 @@
                                     <g:else>
                                         <g:set var="tipos" value="${['N', 'A']}"/>
                                     </g:else>
-                                    <g:select id="titulo" name="titulo.id" from="${teleh.Titulo.findAllByTipoInList(tipos, [sort: 'descripcion'])}" optionKey="id" class="many-to-one " value="${personaInstance?.titulo?.id}" noSelection="['null': '']"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="span5">
-                            <div class="control-group">
-                                <div>
-                                    <span class="control-label label label-inverse">
-                                        Puntaje
-                                    </span>
-                                </div>
-
-                                <div class="controls">
-                                    <g:field type="number" name="puntajeTitulo" class=" required" value="${fieldValue(bean: personaInstance, field: 'puntajeTitulo')}"/>
+                                    <g:select id="titulo" name="titulo.id" from="${teleh.Titulo.findAllByTipoInList(tipos, [sort: 'descripcion'])}"
+                                              optionKey="id" optionValue="descripcion" class="many-to-one " value="${personaInstance?.titulo?.id}" noSelection="['null': '']"/>
                                 </div>
                             </div>
                         </div>
@@ -200,7 +187,7 @@
                 </div>
 
                 <div class="area">
-                    <p class="tituloTree tituloGrande">Conocimiento de lenguas nativas y extranjeras</p>
+                    <p class="tituloTree tituloGrande">Conocimiento de lenguas nativas y extrangeras</p>
 
                     <div class="row-fluid">
                         <div class="span5">
@@ -228,7 +215,7 @@
 
                                 <div class="controls">
                                     <g:select name="certificadoNativo" from="${personaInstance.constraints.certificadoNativo.inList}" class=" required nativa"
-                                              value="${personaInstance?.certificadoNativo}" valueMessagePrefix="persona.certificadoNativo"/>
+                                              value="${personaInstance?.certificadoNativo}" valueMessagePrefix="persona.certificadoNativo" disabled="${personaInstance?.lenguaNativa == 'NO'}" />
                                 </div>
                             </div>
                         </div>
@@ -245,7 +232,7 @@
 
                                 <div class="controls">
                                     <g:select name="tipoIdiomaNativo.id" from="${teleh.TipoIdioma.findAllByTipo('N', [sort: 'descripcion'])}" class=" required nativa"
-                                              value="${personaInstance?.tipoIdiomaNativo?.id}" optionKey="id" optionValue="descripcion" noSelection="['null': '']"/>
+                                              value="${personaInstance?.tipoIdiomaNativo?.id}" optionKey="id" optionValue="descripcion" noSelection="['null': '']" disabled="${personaInstance?.lenguaNativa == 'NO'}"/>
                                 </div>
                             </div>
                         </div>
@@ -260,7 +247,7 @@
 
                                 <div class="controls">
                                     <g:select name="habla50Nativa" from="${personaInstance.constraints.habla50Nativa.inList}" class=" required nativa"
-                                              value="${personaInstance?.habla50Nativa}" valueMessagePrefix="persona.habla50Nativa"/>
+                                              value="${personaInstance?.habla50Nativa}" valueMessagePrefix="persona.habla50Nativa" disabled="${personaInstance?.lenguaNativa == 'NO'}"/>
                                 </div>
                             </div>
                         </div>
@@ -271,13 +258,13 @@
                             <div class="control-group">
                                 <div>
                                     <span class="control-label label label-inverse">
-                                        Domina alguna lengua </br>extranjera
+                                        Domina alguna lengua </br>extrangera
                                     </span>
                                 </div>
 
                                 <div class="controls">
                                     <g:select name="lenguaExtrangera" from="${personaInstance.constraints.lenguaExtrangera.inList}" class=" required lengua"
-                                              value="${personaInstance?.lenguaExtrangera}" valueMessagePrefix="persona.lenguaExtrangera" data-tipo="extranjera"/>
+                                              value="${personaInstance?.lenguaExtrangera}" valueMessagePrefix="persona.lenguaExtrangera" data-tipo="extrangera"/>
                                 </div>
                             </div>
                         </div>
@@ -291,8 +278,8 @@
                                 </div>
 
                                 <div class="controls">
-                                    <g:select name="certificadoExtrangero" from="${personaInstance.constraints.certificadoExtrangero.inList}" class=" required extranjera"
-                                              value="${personaInstance?.certificadoExtrangero}" valueMessagePrefix="persona.certificadoExtrangero"/>
+                                    <g:select name="certificadoExtrangero" from="${personaInstance.constraints.certificadoExtrangero.inList}" class=" required extrangera"
+                                              value="${personaInstance?.certificadoExtrangero}" valueMessagePrefix="persona.certificadoExtrangero" disabled="${personaInstance?.lenguaExtrangera == 'NO'}"/>
                                 </div>
                             </div>
                         </div>
@@ -308,8 +295,8 @@
                                 </div>
 
                                 <div class="controls">
-                                    <g:select name="habla50Extrangera" from="${personaInstance.constraints.habla50Extrangera.inList}" class=" required extranjera"
-                                              value="${personaInstance?.habla50Extrangera}" valueMessagePrefix="persona.habla50Extrangera"/>
+                                    <g:select name="habla50Extrangera" from="${personaInstance.constraints.habla50Extrangera.inList}" class=" required extrangera"
+                                              value="${personaInstance?.habla50Extrangera}" valueMessagePrefix="persona.habla50Extrangera" disabled="${personaInstance?.lenguaExtrangera == 'NO'}"/>
                                 </div>
                             </div>
                         </div>
@@ -579,8 +566,10 @@
                 }); //combo promotor
 
                 $(".lengua").change(function () {
-                    console.log($(this), $(this).val());
-                });
+                    var tipo = $(this).data("tipo");
+                    var disabled = $(this).val() == "NO";
+                    $("." + tipo).val("NO").prop("disabled", disabled);
+                }); //combos idiomas
 
             });
 
