@@ -4,7 +4,7 @@
 
 <head>
     <meta name="layout" content="login">
-    <title> Registro </title>
+    <title> Ingreso al sistema </title>
 
     <script src="${resource(dir: 'js/jquery/plugins/jquery-validation-1.9.0', file: 'jquery.validate.min.js')}"></script>
     <script src="${resource(dir: 'js/jquery/plugins/jquery-validation-1.9.0', file: 'messages_es.js')}"></script>
@@ -16,20 +16,45 @@
 </head>
 
 <body>
-<div style="border: 1px solid #525E67;background: #E0E0E0;color: #939Aa2;width: 340px;position: relative;padding: 10px;height: 320px;margin: 0px;" class="ui-corner-all">
+<div style=";color: #939Aa2;width: 600px;position: relative;padding: 10px;min-height: 320px;margin: 0px;float: left;" class="ui-corner-all">
 
-    <g:form class="well form-horizontal" id="frmLogin" action="validar" name="frmLogin" style="background: none;border: 0px solid #E0E0E0 !important;padding-left: 0px;margin-left: 20px;box-shadow: none" >
-        <p class=" tituloGrande" style="float:left;font-family: 'Open Sans Condensed',serif;font-weight: bold;font-size: 25px;width: 95%">Sistema de evaluación</p>
+    <div style="height: 125px">
+        <img src="${resource(dir: 'images',file: 'logo.jpg')}" alt="">
+    </div>
 
-    %{--<div class="linea" style="height: 95%;left: 45px"></div>--}%
-        <fieldset style="background: none;margin: 0px;border: 0px solid #E0E0E0 !important;color: #333;margin-top: 50px">
+    <div style="min-height: 30px;float: left;width: 98%;margin-top: 10px;border-bottom: 1px solid black">
+        <span class=" tituloGrande" style="float:left;font-family: 'Open Sans Condensed',serif;font-weight: bold;font-size: 25px;">
+            Convocatoria:
+        </span>
+        <span  style="float:left;font-family: 'Open Sans Condensed',serif;font-weight: bold;font-size: 20px;margin-left: 10px;color:#333333 ">
+            ${session.convocatoria?.descripcion}
+        </span>
 
-            <g:if test="${flash.message}">
-                <div class="alert alert-info" role="status">
-                    <a class="close" data-dismiss="alert" href="#">×</a>
+    </div>
+    <div class="" style="width: 98%;color: black;font-family: 'Open Sans Condensed',serif;font-size: 15px;float: left;height: 130px;margin-top: 10px;margin-left: 5px;text-align: justify">
+        ${session.convocatoria?.textoInicio}
+    </div>
+    <div class="" style="width: 98%;color: black;font-family: 'Open Sans Condensed',serif;font-size: 25px;float: left;height: 130px;margin-top: 10px;margin-left: 5px;text-align: justify">
+      <a href="${g.createLink(controller: 'registro')}" class="btn btn-primary" style="font-size: 20px">Registrarse</a>
+    </div>
+
+
+</div>
+<div style="border: 1px solid #525E67;background: #E0E0E0;color: #939Aa2;width: 320px;position: relative;padding: 10px;height: 360px;margin: 0px;float: left" class="ui-corner-all">
+
+    <g:form class="well form-horizontal" id="frmLogin" action="validar" name="frmLogin" style="background: none;border: 0px solid #E0E0E0 !important;padding: 0px;margin-left: 10px;box-shadow: none" >
+
+        <fieldset style="background: none;margin: 0px;border: 0px solid #E0E0E0 !important;color: #333;margin-top: 0px">
+
+            <div class="alert alert-info" role="status" style="float: left;height: 60px;">
+                <a class="close" data-dismiss="alert" href="#">×</a>
+                <g:if test="${flash.message}">
                     ${flash.message}
-                </div>
-            </g:if>
+                </g:if>
+                <g:else>
+                    Para ingresar al sistema ingrese su número de cédula y la contraseña que fue enviada a su correo electrónico.
+                </g:else>
+            </div>
 
             <div class="control-group" style="margin-top: 0">
                 <label class="control-label" for="login" style="width: 100%;text-align: left;font-size: 20px;font-family: 'Open Sans Condensed', serif;font-weight: bolder">Cédula:</label>

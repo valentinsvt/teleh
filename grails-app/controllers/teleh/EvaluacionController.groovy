@@ -1,6 +1,6 @@
 package teleh
 
-class EvaluacionController {
+class EvaluacionController  extends teleh.seguridad.ShieldPostulante {
 
     def inicio = {
         if (session.persona) {

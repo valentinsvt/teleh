@@ -2,7 +2,7 @@ package teleh
 
 import org.springframework.dao.DataIntegrityViolationException
 
-class TipoIdiomaController /*extends teleh.seguridad.Shield*/ {
+class TipoIdiomaController extends teleh.seguridad.Shield {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 

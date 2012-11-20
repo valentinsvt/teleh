@@ -2,7 +2,7 @@ package teleh
 
 import org.springframework.dao.DataIntegrityViolationException
 
-class PersonaController /*extends teleh.seguridad.Shield*/ {
+class PersonaController extends teleh.seguridad.ShieldPostulante {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 

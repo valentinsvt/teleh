@@ -1,6 +1,6 @@
 package teleh
 
-class PersonaAdmController {
+class PersonaAdmController extends teleh.seguridad.Shield {
 
     def index() { }
 

@@ -22,7 +22,10 @@ class Shield {
             session.finalize()
             return false
         } else {
-           return true
+            if(session.perfil=="admin")
+                return true
+            else
+                redirect(controller: 'login',action: 'login')
         }
         /*************************************************************************** */
     }

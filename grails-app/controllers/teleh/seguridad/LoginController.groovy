@@ -2,6 +2,7 @@ package teleh.seguridad
 
 import teleh.Persona
 import teleh.Auxiliar
+import teleh.Convocatoria
 
 class LoginController {
 
@@ -12,6 +13,13 @@ class LoginController {
     }
 
     def postulante(){
+        def fecha = new Date()
+        session.convocatoria=null
+        def conv = Convocatoria.findByFechaInicioLessThanEqualsAndFechaFinGreaterThanEquals(fecha,fecha)
+        if (conv)
+            session.convocatoria=conv
+        def mensaje=params.msn
+        params.msn=null
 
     }
 
@@ -78,7 +86,7 @@ class LoginController {
         }
 
         if (user.size() == 0) {
-            flash.message = "No se encuentra registrado en el sistema o su pin esta incorrecto"
+            flash.message = "No se encuentra registrado en el sistema o su contraseña esta incorrecto"
         } else if (user.size() > 1) {
             flash.message = "Ha ocurrido un error grave"
         } else {

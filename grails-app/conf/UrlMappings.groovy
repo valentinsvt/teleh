@@ -7,7 +7,7 @@ class UrlMappings {
 			}
 		}
 
-		"/"(controller: 'registro')
+		"/"(controller: 'login',action: 'postulante')
 		"500"(view:'/error')
 	}
 }
