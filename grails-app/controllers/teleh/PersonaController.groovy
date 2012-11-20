@@ -113,7 +113,7 @@ class PersonaController /*extends teleh.seguridad.Shield*/ {
         redirect(action: 'list')
     }
 
-    def verTitulo = {
+    def verTitulo() {
         def tituloPersona = TituloPersona.findByPersona(Persona.get(params.id))
 
         if (!tituloPersona || !tituloPersona.tituloArchivo || !tituloPersona.tipoArchivo) {
@@ -196,6 +196,7 @@ class PersonaController /*extends teleh.seguridad.Shield*/ {
         if (params.fecha3) {
             params.fecha3 = new Date().parse("dd-MM-yyyy", params.fecha3)
         }
+        params.estado = Estado.findByCodigo("I")
         def personaInstance
         if (params.id) {
             personaInstance = Persona.get(params.id)

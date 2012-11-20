@@ -39,9 +39,10 @@
             <table class="table table-bordered table-striped table-condensed table-hover">
                 <thead>
                     <tr>
+                        <th>Convocatoria</th>
                         <th>Provincia</th>
                         <th>Canton</th>
-                        <th>Formación</th>
+                        <th>Parroquia</th>
                         <th>Titulo</th>
                         <th>Estado</th>
                         <th width="150">Acciones</th>
@@ -61,7 +62,8 @@
 
                             <td>
                                 <g:if test="${teleh.TituloPersona.findAllByPersona(personaInstance).size() > 0}">
-                                    <img class="titulo" src="${createLink(controller: 'persona', action: 'verTitulo', id: personaInstance.id)}"/>
+                                %{--<img class="titulo" src="${createLink(controller: 'persona', action: 'verTitulo', id: personaInstance.id)}" width="150"/>--}%
+                                    Archivo ${teleh.TituloPersona.findByPersona(personaInstance).tipoArchivo}
                                 </g:if>
                             </td>
 
