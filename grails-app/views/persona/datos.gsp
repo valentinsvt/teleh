@@ -191,7 +191,7 @@
                     <p class="tituloTree tituloGrande">Conocimiento de lenguas nativas y extrangeras</p>
 
                     <div class="row-fluid">
-                        <div class="span4">
+                        <div class="span3">
                             <div class="control-group">
                                 <div>
                                     <span class="control-label label label-inverse">
@@ -206,7 +206,7 @@
                             </div>
                         </div>
 
-                        <div class="span4">
+                        <div class="span3">
                             <div class="control-group">
                                 <div>
                                     <span class="control-label label label-inverse">
@@ -220,7 +220,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="span4">
+                        <div class="span3">
                             <div class="control-group">
                                 <div>
                                     <span class="control-label label label-inverse">
@@ -238,7 +238,7 @@
                     </div>
                     <div class="row-fluid">
 
-                        <div class="span4">
+                        <div class="span3">
                             <div class="control-group">
                                 <div>
                                     <span class="control-label label label-inverse">
@@ -254,7 +254,7 @@
                         </div>
 
 
-                        <div class="span4">
+                        <div class="span3">
                             <div class="control-group">
                                 <div>
                                     <span class="control-label label label-inverse">
@@ -269,7 +269,7 @@
                             </div>
                         </div>
 
-                        <div class="span4">
+                        <div class="span3">
                             <div class="control-group">
                                 <div>
                                     <span class="control-label label label-inverse">
@@ -286,7 +286,7 @@
                     </div>
 
                     <div class="row-fluid">
-                        <div class="span5">
+                        <div class="span3">
                             <div class="control-group">
                                 <div>
                                     <span class="control-label label label-inverse">
@@ -317,7 +317,7 @@
                                 </div>
 
                                 <div class="controls">
-                                    <g:textField name="direccion" maxlength="128" class="span11 required" value="${personaInstance?.direccion}"/>
+                                    <g:textField name="direccion" maxlength="128" class="span11 required" style="width: 700px" value="${personaInstance?.direccion}"/>
                                 </div>
                             </div>
                         </div>
@@ -468,21 +468,7 @@
 
                     </div>
 
-                    %{--<div class="row-fluid">--}%
-                        %{--<div class="span10">--}%
-                            %{--<div class="control-group span5">--}%
-                                %{--<div>--}%
-                                    %{--<span class="control-label label label-inverse">--}%
-                                        %{--Trabajo comunitario, <br/>pertenece y participa <br/>activamente en alguna <br/>organización activista o <br/>de dirigencia comunitaria <br/>o social--}%
-                                    %{--</span>--}%
-                                %{--</div>--}%
 
-                                %{--<div class="controls">--}%
-                                    %{--<g:select name="trabajoComunitario"  style="width: 70px" from="${personaInstance.constraints.trabajoComunitario.inList}" class=" required" value="${personaInstance?.trabajoComunitario}" valueMessagePrefix="persona.trabajoComunitario"/>--}%
-                                %{--</div>--}%
-                            %{--</div>--}%
-                        %{--</div>--}%
-                    %{--</div>--}%
                 </div>
 
                 <div class="area">
