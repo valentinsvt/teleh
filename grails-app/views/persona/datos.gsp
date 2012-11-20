@@ -191,7 +191,7 @@
                     <p class="tituloTree tituloGrande">Conocimiento de lenguas nativas y extrangeras</p>
 
                     <div class="row-fluid">
-                        <div class="span5">
+                        <div class="span4">
                             <div class="control-group">
                                 <div>
                                     <span class="control-label label label-inverse">
@@ -200,13 +200,13 @@
                                 </div>
 
                                 <div class="controls">
-                                    <g:select name="lenguaNativa" from="${personaInstance.constraints.lenguaNativa.inList}" class=" required lengua"
+                                    <g:select name="lenguaNativa" style="width: 70px" from="${personaInstance.constraints.lenguaNativa.inList}" class=" required lengua"
                                               value="${personaInstance?.lenguaNativa}" valueMessagePrefix="persona.lenguaNativa" data-tipo="nativa"/>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="span5">
+                        <div class="span4">
                             <div class="control-group">
                                 <div>
                                     <span class="control-label label label-inverse">
@@ -215,15 +215,12 @@
                                 </div>
 
                                 <div class="controls">
-                                    <g:select name="certificadoNativo" from="${personaInstance.constraints.certificadoNativo.inList}" class=" required nativa"
+                                    <g:select name="certificadoNativo" style="width: 70px" from="${personaInstance.constraints.certificadoNativo.inList}" class=" required nativa"
                                               value="${personaInstance?.certificadoNativo}" valueMessagePrefix="persona.certificadoNativo" disabled="${personaInstance?.lenguaNativa == 'NO'}"/>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row-fluid">
-                        <div class="span5">
+                        <div class="span4">
                             <div class="control-group">
                                 <div>
                                     <span class="control-label label label-inverse">
@@ -232,13 +229,16 @@
                                 </div>
 
                                 <div class="controls">
-                                    <g:select name="tipoIdiomaNativo.id" from="${teleh.TipoIdioma.findAllByTipo('N', [sort: 'descripcion'])}" class=" required nativa"
+                                    <g:select name="tipoIdiomaNativo.id" style="width: 150px" from="${teleh.TipoIdioma.findAllByTipo('N', [sort: 'descripcion'])}" class=" required nativa"
                                               value="${personaInstance?.tipoIdiomaNativo?.id}" optionKey="id" optionValue="descripcion" noSelection="['null': '']" disabled="${personaInstance?.lenguaNativa == 'NO'}"/>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="span5">
+                    </div>
+                    <div class="row-fluid">
+
+                        <div class="span4">
                             <div class="control-group">
                                 <div>
                                     <span class="control-label label label-inverse">
@@ -247,15 +247,14 @@
                                 </div>
 
                                 <div class="controls">
-                                    <g:select name="habla50Nativa" from="${personaInstance.constraints.habla50Nativa.inList}" class=" required nativa"
+                                    <g:select name="habla50Nativa" style="width: 70px" from="${personaInstance.constraints.habla50Nativa.inList}" class=" required nativa"
                                               value="${personaInstance?.habla50Nativa}" valueMessagePrefix="persona.habla50Nativa" disabled="${personaInstance?.lenguaNativa == 'NO'}"/>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row-fluid">
-                        <div class="span5">
+
+                        <div class="span4">
                             <div class="control-group">
                                 <div>
                                     <span class="control-label label label-inverse">
@@ -264,13 +263,13 @@
                                 </div>
 
                                 <div class="controls">
-                                    <g:select name="lenguaExtrangera" from="${personaInstance.constraints.lenguaExtrangera.inList}" class=" required lengua"
+                                    <g:select name="lenguaExtrangera" style="width: 70px" from="${personaInstance.constraints.lenguaExtrangera.inList}" class=" required lengua"
                                               value="${personaInstance?.lenguaExtrangera}" valueMessagePrefix="persona.lenguaExtrangera" data-tipo="extrangera"/>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="span5">
+                        <div class="span4">
                             <div class="control-group">
                                 <div>
                                     <span class="control-label label label-inverse">
@@ -279,7 +278,7 @@
                                 </div>
 
                                 <div class="controls">
-                                    <g:select name="certificadoExtrangero" from="${personaInstance.constraints.certificadoExtrangero.inList}" class=" required extrangera"
+                                    <g:select name="certificadoExtrangero" style="width: 70px" from="${personaInstance.constraints.certificadoExtrangero.inList}" class=" required extrangera"
                                               value="${personaInstance?.certificadoExtrangero}" valueMessagePrefix="persona.certificadoExtrangero" disabled="${personaInstance?.lenguaExtrangera == 'NO'}"/>
                                 </div>
                             </div>
@@ -296,7 +295,7 @@
                                 </div>
 
                                 <div class="controls">
-                                    <g:select name="habla50Extrangera" from="${personaInstance.constraints.habla50Extrangera.inList}" class=" required extrangera"
+                                    <g:select name="habla50Extrangera" style="width: 70px" from="${personaInstance.constraints.habla50Extrangera.inList}" class=" required extrangera"
                                               value="${personaInstance?.habla50Extrangera}" valueMessagePrefix="persona.habla50Extrangera" disabled="${personaInstance?.lenguaExtrangera == 'NO'}"/>
                                 </div>
                             </div>
@@ -424,7 +423,7 @@
                     <p class="tituloTree tituloGrande">Experiencia específica y capacitación</p>
 
                     <div class="row-fluid">
-                        <div class="span5">
+                        <div class="span4">
                             <div class="control-group">
                                 <div>
                                     <span class="control-label label label-inverse">
@@ -433,12 +432,12 @@
                                 </div>
 
                                 <div class="controls">
-                                    <g:field type="number" name="experienciaAnio" class=" required" value="${fieldValue(bean: personaInstance, field: 'experienciaAnio')}"/>
+                                    <g:field type="number"  style="width: 110px" name="experienciaAnio" class=" required" value="${fieldValue(bean: personaInstance, field: 'experienciaAnio')}"/>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="span5">
+                        <div class="span4">
                             <div class="control-group">
                                 <div>
                                     <span class="control-label label label-inverse">
@@ -447,27 +446,40 @@
                                 </div>
 
                                 <div class="controls">
-                                    <g:field type="number" name="experienciaMes" class=" required" value="${fieldValue(bean: personaInstance, field: 'experienciaMes')}"/>
+                                    <g:field type="number" style="width: 110px" name="experienciaMes" class=" required" value="${fieldValue(bean: personaInstance, field: 'experienciaMes')}"/>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row-fluid">
-                        <div class="span10">
-                            <div class="control-group span5">
-                                <div>
-                                    <span class="control-label label label-inverse">
-                                        Trabajo comunitario, <br/>pertenece y participa <br/>activamente en alguna <br/>organización activista o <br/>de dirigencia comunitaria <br/>o social
-                                    </span>
-                                </div>
+                        <div class="control-group span4">
+                            <div>
+                                <span class="control-label label label-inverse">
+                                    Trabajo comunitario, <br/>pertenece y participa <br/>activamente en alguna <br/>organización activista o <br/>de dirigencia comunitaria <br/>o social
+                                </span>
+                            </div>
 
-                                <div class="controls">
-                                    <g:select name="trabajoComunitario" from="${personaInstance.constraints.trabajoComunitario.inList}" class=" required" value="${personaInstance?.trabajoComunitario}" valueMessagePrefix="persona.trabajoComunitario"/>
-                                </div>
+                            <div class="controls">
+                                <g:select name="trabajoComunitario"  style="width: 70px" from="${personaInstance.constraints.trabajoComunitario.inList}" class=" required" value="${personaInstance?.trabajoComunitario}" valueMessagePrefix="persona.trabajoComunitario"/>
                             </div>
                         </div>
+
                     </div>
+
+                    %{--<div class="row-fluid">--}%
+                        %{--<div class="span10">--}%
+                            %{--<div class="control-group span5">--}%
+                                %{--<div>--}%
+                                    %{--<span class="control-label label label-inverse">--}%
+                                        %{--Trabajo comunitario, <br/>pertenece y participa <br/>activamente en alguna <br/>organización activista o <br/>de dirigencia comunitaria <br/>o social--}%
+                                    %{--</span>--}%
+                                %{--</div>--}%
+
+                                %{--<div class="controls">--}%
+                                    %{--<g:select name="trabajoComunitario"  style="width: 70px" from="${personaInstance.constraints.trabajoComunitario.inList}" class=" required" value="${personaInstance?.trabajoComunitario}" valueMessagePrefix="persona.trabajoComunitario"/>--}%
+                                %{--</div>--}%
+                            %{--</div>--}%
+                        %{--</div>--}%
+                    %{--</div>--}%
                 </div>
 
                 <div class="area">
@@ -476,56 +488,56 @@
                     <table class="table table-bordered table-condensed">
                         <thead>
                             <tr>
-                                <th>Fecha</th>
-                                <th>Institución</th>
-                                <th>Nombre del curso</th>
+                                <th style="width: 100px">Fecha</th>
+                                <th style="width: 425px">Institución</th>
+                                <th style="width: 425px">Nombre del curso</th>
                                 <th>Horas</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>
-                                    <elm:datepicker name="fecha1" class=" required" value="${personaInstance?.fecha1}"
+                                    <elm:datepicker name="fecha1" style="width: 100px" class=" required" value="${personaInstance?.fecha1}"
                                                     minDate="new Date(2009,0,1)" maxDate="new Date(${new Date().format('yyyy')}, ${new Date().format('MM').toInteger() - 1}, ${new Date().format('dd')})"/>
                                 </td>
                                 <td>
-                                    <g:textField name="institucion1" maxlength="96" class="" value="${personaInstance?.institucion1}"/>
+                                    <g:textField name="institucion1" style="width: 425px" maxlength="96" class="" value="${personaInstance?.institucion1}"/>
                                 </td>
                                 <td>
-                                    <g:textField name="nombreCurso1" maxlength="96" class="" value="${personaInstance?.nombreCurso1}"/>
+                                    <g:textField name="nombreCurso1" style="width: 425px" maxlength="96" class="" value="${personaInstance?.nombreCurso1}"/>
                                 </td>
                                 <td>
-                                    <g:field type="number" name="horas1" class=" required" value="${fieldValue(bean: personaInstance, field: 'horas1')}"/>
+                                    <g:field type="number" name="horas1"  style="width: 70px" class=" required" value="${fieldValue(bean: personaInstance, field: 'horas1')}"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <elm:datepicker name="fecha2" class=" required" value="${personaInstance?.fecha2}"
+                                    <elm:datepicker name="fecha2" style="width: 100px" class=" required" value="${personaInstance?.fecha2}"
                                                     minDate="new Date(2009,0,1)" maxDate="new Date(${new Date().format('yyyy')}, ${new Date().format('MM').toInteger() - 1}, ${new Date().format('dd')})"/>
                                 </td>
                                 <td>
-                                    <g:textField name="institucion2" maxlength="96" class="" value="${personaInstance?.institucion2}"/>
+                                    <g:textField name="institucion2" style="width: 425px" maxlength="96" class="" value="${personaInstance?.institucion2}"/>
                                 </td>
                                 <td>
-                                    <g:textField name="nombreCurso2" maxlength="96" class="" value="${personaInstance?.nombreCurso2}"/>
+                                    <g:textField name="nombreCurso2" style="width: 425px" maxlength="96" class="" value="${personaInstance?.nombreCurso2}"/>
                                 </td>
                                 <td>
-                                    <g:field type="number" name="horas2" class=" required" value="${fieldValue(bean: personaInstance, field: 'horas2')}"/>
+                                    <g:field type="number" name="horas2" style="width: 70px" class=" required" value="${fieldValue(bean: personaInstance, field: 'horas2')}"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <elm:datepicker name="fecha3" class=" required" value="${personaInstance?.fecha3}"
+                                    <elm:datepicker name="fecha3" style="width: 100px" class=" required" value="${personaInstance?.fecha3}"
                                                     minDate="new Date(2009,0,1)" maxDate="new Date(${new Date().format('yyyy')}, ${new Date().format('MM').toInteger() - 1}, ${new Date().format('dd')})"/>
                                 </td>
                                 <td>
-                                    <g:textField name="institucion3" maxlength="96" class="" value="${personaInstance?.institucion3}"/>
+                                    <g:textField name="institucion3" style="width: 425px" maxlength="96" class="" value="${personaInstance?.institucion3}"/>
                                 </td>
                                 <td>
-                                    <g:textField name="nombreCurso3" maxlength="96" class="" value="${personaInstance?.nombreCurso3}"/>
+                                    <g:textField name="nombreCurso3" style="width: 425px" maxlength="96" class="" value="${personaInstance?.nombreCurso3}"/>
                                 </td>
                                 <td>
-                                    <g:field type="number" name="horas3" class=" required" value="${fieldValue(bean: personaInstance, field: 'horas3')}"/>
+                                    <g:field type="number" name="horas3" style="width: 70px" class=" required" value="${fieldValue(bean: personaInstance, field: 'horas3')}"/>
                                 </td>
                             </tr>
                         </tbody>
