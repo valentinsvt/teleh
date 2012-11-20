@@ -26,6 +26,10 @@
         </div>
 
         <div class="btn-group" role="navigation" style="margin-bottom: 15px;">
+            <g:link action="list" class="btn">
+                <i class="icon-list-ul"></i>
+                Lista
+            </g:link>
             <a href="#" class="btn btn-ajax btn-danger" id="rechazar">
                 <i class="icon-remove"></i>
                 No aceptar
