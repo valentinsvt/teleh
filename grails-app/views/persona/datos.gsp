@@ -446,6 +446,7 @@
                                 </div>
 
 
+
                                 <div class="controls">
                                     <g:field type="number" style="width: 110px" name="experienciaMes" class=" required" value="${fieldValue(bean: personaInstance, field: 'experienciaMes')}"/>
                                 </div>
