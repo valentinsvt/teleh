@@ -1,6 +1,7 @@
 package teleh.seguridad
 
 import teleh.Persona
+import teleh.Auxiliar
 
 class LoginController {
 
@@ -49,6 +50,26 @@ class LoginController {
 
     }
 
+    def validarAux(){
+        def user = Auxiliar.withCriteria {
+            eq("usuario", params.login)
+            eq("password", params.pass.encodeAsMD5())
+        }
+
+        if (user.size() == 0) {
+            flash.message = "No se encuentra registrado en el sistema o su contraseña esta incorrecta"
+        } else if (user.size() > 1) {
+            flash.message = "Ha ocurrido un error grave"
+        } else {
+            user = user[0]
+            session.usuario = user
+            session.perfil = "admin"
+            redirect(action: "list",controller: "personaAdm")
+            return
+        }
+        redirect(controller: 'login', action: "login")
+    }
+
     def validar() {
         def user = Persona.withCriteria {
             eq("cedula", params.cedula)
@@ -68,6 +89,7 @@ class LoginController {
             }
 
             session.usuario = user
+            session.perfil="postulante"
             redirect(action: "datos",controller: "persona")
             return
         }

@@ -1,11 +1,11 @@
 
-<%@ page import="teleh.Convocatoria" %>
+<%@ page import="teleh.Auxiliar" %>
 <!doctype html>
 <html>
     <head>
         <meta name="layout" content="main">
         <title>
-            Lista de Convocatorias
+            Lista de Auxiliars
         </title>
         <script src="${resource(dir: 'js/jquery/plugins/jquery-validation-1.9.0', file: 'jquery.validate.min.js')}"></script>
         <script src="${resource(dir: 'js/jquery/plugins/jquery-validation-1.9.0', file: 'messages_es.js')}"></script>
@@ -24,51 +24,41 @@
         <div class="span8 btn-group" role="navigation">
             <a href="#" class="btn btn-ajax btn-new">
                 <i class="icon-file"></i>
-                Crear  Convocatoria
+                Crear  Auxiliar
             </a>
         </div>
         <div id="search" class="pull-right"></div>
 
-        <g:form action="delete" name="frmDelete-Convocatoria">
+        <g:form action="delete" name="frmDelete-Auxiliar">
             <g:hiddenField name="id"/>
         </g:form>
 
-        <div id="list-Convocatoria" class="span12" role="main" style="margin-top: 10px;">
+        <div id="list-Auxiliar" class="span12" role="main" style="margin-top: 10px;">
 
             <table class="table table-bordered table-striped table-condensed table-hover">
                 <thead>
                     <tr>
                     
-                        <g:sortableColumn property="descripcion" title="Descripcion" />
-                    
-                        <g:sortableColumn property="fechaInicio" title="Fecha Inicio" />
-                    
-                        <g:sortableColumn property="fechaFin" title="Fecha Fin" />
+                        <g:sortableColumn property="usuario" title="Usuario" />
 
-                    
                         <th width="150">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="paginate">
-                <g:each in="${convocatoriaInstanceList}" status="i" var="convocatoriaInstance">
+                <g:each in="${auxiliarInstanceList}" status="i" var="auxiliarInstance">
                     <tr>
                     
-                        <td>${fieldValue(bean: convocatoriaInstance, field: "descripcion")}</td>
-                    
-                        <td>${convocatoriaInstance.fechaInicio?.format('dd-MM-yyyy')} </td>
-                    
-                        <td>${convocatoriaInstance.fechaFin?.format('dd-MM-yyyy')}</td>
-
+                        <td>${fieldValue(bean: auxiliarInstance, field: "usuario")}</td>
                     
                         <td>
-                            <a class="btn btn-small btn-show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${convocatoriaInstance.id}">
+                            <a class="btn btn-small btn-show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${auxiliarInstance.id}">
                                 <i class="icon-zoom-in icon-large"></i>
                             </a>
-                            <a class="btn btn-small btn-edit btn-ajax" href="#" rel="tooltip" title="Editar" data-id="${convocatoriaInstance.id}">
+                            <a class="btn btn-small btn-edit btn-ajax" href="#" rel="tooltip" title="Editar" data-id="${auxiliarInstance.id}">
                                 <i class="icon-pencil icon-large"></i>
                             </a>
 
-                            <a class="btn btn-small btn-delete" href="#" rel="tooltip" title="Eliminar" data-id="${convocatoriaInstance.id}">
+                            <a class="btn btn-small btn-delete" href="#" rel="tooltip" title="Eliminar" data-id="${auxiliarInstance.id}">
                                 <i class="icon-trash icon-large"></i>
                             </a>
                         </td>
@@ -79,7 +69,7 @@
 
         </div>
 
-        <div class="modal hide fade" id="modal-Convocatoria">
+        <div class="modal hide fade" id="modal-Auxiliar">
             <div class="modal-header" id="modalHeader">
                 <button type="button" class="close darker" data-dismiss="modal">
                     <i class="icon-remove-circle"></i>
@@ -98,10 +88,10 @@
         <script type="text/javascript">
 
             function submitForm(btn) {
-                if ($("#frmSave-Convocatoria").valid()) {
+                if ($("#frmSave-Auxiliar").valid()) {
                     btn.replaceWith(spinner);
                 }
-                $("#frmSave-Convocatoria").submit();
+                $("#frmSave-Auxiliar").submit();
             }
 
             $(function () {
@@ -126,10 +116,10 @@
                             });
 
                             $("#modalHeader").removeClass("btn-edit btn-show btn-delete");
-                            $("#modalTitle").html("Crear Convocatoria");
+                            $("#modalTitle").html("Crear Auxiliar");
                             $("#modalBody").html(msg);
                             $("#modalFooter").html("").append(btnOk).append(btnSave);
-                            $("#modal-Convocatoria").modal("show");
+                            $("#modal-Auxiliar").modal("show");
                         }
                     });
                     return false;
@@ -153,10 +143,10 @@
                             });
 
                             $("#modalHeader").removeClass("btn-edit btn-show btn-delete").addClass("btn-edit");
-                            $("#modalTitle").html("Editar Convocatoria");
+                            $("#modalTitle").html("Editar Auxiliar");
                             $("#modalBody").html(msg);
                             $("#modalFooter").html("").append(btnOk).append(btnSave);
-                            $("#modal-Convocatoria").modal("show");
+                            $("#modal-Auxiliar").modal("show");
                         }
                     });
                     return false;
@@ -173,10 +163,10 @@
                         success : function (msg) {
                             var btnOk = $('<a href="#" data-dismiss="modal" class="btn btn-primary">Aceptar</a>');
                             $("#modalHeader").removeClass("btn-edit btn-show btn-delete").addClass("btn-show");
-                            $("#modalTitle").html("Ver Convocatoria");
+                            $("#modalTitle").html("Ver Auxiliar");
                             $("#modalBody").html(msg);
                             $("#modalFooter").html("").append(btnOk);
-                            $("#modal-Convocatoria").modal("show");
+                            $("#modal-Auxiliar").modal("show");
                         }
                     });
                     return false;
@@ -190,15 +180,15 @@
 
                     btnDelete.click(function () {
                         btnDelete.replaceWith(spinner);
-                        $("#frmDelete-Convocatoria").submit();
+                        $("#frmDelete-Auxiliar").submit();
                         return false;
                     });
 
                     $("#modalHeader").removeClass("btn-edit btn-show btn-delete").addClass("btn-delete");
-                    $("#modalTitle").html("Eliminar Convocatoria");
-                    $("#modalBody").html("<p>¿Está seguro de querer eliminar esta Convocatoria?</p>");
+                    $("#modalTitle").html("Eliminar Auxiliar");
+                    $("#modalBody").html("<p>¿Está seguro de querer eliminar este Auxiliar?</p>");
                     $("#modalFooter").html("").append(btnOk).append(btnDelete);
-                    $("#modal-Convocatoria").modal("show");
+                    $("#modal-Auxiliar").modal("show");
                     return false;
                 });
 

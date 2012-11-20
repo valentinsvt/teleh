@@ -2,7 +2,7 @@ package teleh
 
 import org.springframework.dao.DataIntegrityViolationException
 
-class ConvocatoriaController /*extends teleh.seguridad.Shield*/ {
+class ConvocatoriaController extends teleh.seguridad.Shield {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -16,12 +16,12 @@ class ConvocatoriaController /*extends teleh.seguridad.Shield*/ {
 
     def form_ajax() {
         def convocatoriaInstance = new Convocatoria(params)
-        if (params.id) {
+        if(params.id) {
             convocatoriaInstance = Convocatoria.get(params.id)
-            if (!convocatoriaInstance) {
+            if(!convocatoriaInstance) {
                 flash.clase = "alert-error"
-                flash.message = "No se encontró Convocatoria con id " + params.id
-                redirect(action: "list")
+                flash.message =  "No se encontró Convocatoria con id " + params.id
+                redirect(action:  "list")
                 return
             } //no existe el objeto
         } //es edit
@@ -29,16 +29,10 @@ class ConvocatoriaController /*extends teleh.seguridad.Shield*/ {
     } //form_ajax
 
     def save() {
-        if (params.fechaInicio) {
-            params.fechaInicio = new Date().parse("dd-MM-yyyy", params.fechaInicio)
-        }
-        if (params.fechaFin) {
-            params.fechaFin = new Date().parse("dd-MM-yyyy", params.fechaFin)
-        }
         def convocatoriaInstance
-        if (params.id) {
+        if(params.id) {
             convocatoriaInstance = Convocatoria.get(params.id)
-            if (!convocatoriaInstance) {
+            if(!convocatoriaInstance) {
                 flash.clase = "alert-error"
                 flash.message = "No se encontró Convocatoria con id " + params.id
                 redirect(action: 'list')
@@ -68,7 +62,7 @@ class ConvocatoriaController /*extends teleh.seguridad.Shield*/ {
             return
         }
 
-        if (params.id) {
+        if(params.id) {
             flash.clase = "alert-success"
             flash.message = "Se ha actualizado correctamente Convocatoria " + convocatoriaInstance.id
         } else {
@@ -82,7 +76,7 @@ class ConvocatoriaController /*extends teleh.seguridad.Shield*/ {
         def convocatoriaInstance = Convocatoria.get(params.id)
         if (!convocatoriaInstance) {
             flash.clase = "alert-error"
-            flash.message = "No se encontró Convocatoria con id " + params.id
+            flash.message =  "No se encontró Convocatoria con id " + params.id
             redirect(action: "list")
             return
         }
@@ -93,7 +87,7 @@ class ConvocatoriaController /*extends teleh.seguridad.Shield*/ {
         def convocatoriaInstance = Convocatoria.get(params.id)
         if (!convocatoriaInstance) {
             flash.clase = "alert-error"
-            flash.message = "No se encontró Convocatoria con id " + params.id
+            flash.message =  "No se encontró Convocatoria con id " + params.id
             redirect(action: "list")
             return
         }
@@ -101,12 +95,12 @@ class ConvocatoriaController /*extends teleh.seguridad.Shield*/ {
         try {
             convocatoriaInstance.delete(flush: true)
             flash.clase = "alert-success"
-            flash.message = "Se ha eliminado correctamente Convocatoria " + convocatoriaInstance.id
+            flash.message =  "Se ha eliminado correctamente Convocatoria " + convocatoriaInstance.id
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
             flash.clase = "alert-error"
-            flash.message = "No se pudo eliminar Convocatoria " + (convocatoriaInstance.id ? convocatoriaInstance.id : "")
+            flash.message =  "No se pudo eliminar Convocatoria " + (convocatoriaInstance.id ? convocatoriaInstance.id : "")
             redirect(action: "list")
         }
     } //delete

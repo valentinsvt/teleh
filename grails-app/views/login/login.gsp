@@ -4,7 +4,7 @@
 
     <head>
         <meta name="layout" content="login">
-        <title>Janus -Ingreso-</title>
+        <title>Ingreso-</title>
 
         <script src="${resource(dir: 'js/jquery/plugins/jquery-validation-1.9.0', file: 'jquery.validate.min.js')}"></script>
         <script src="${resource(dir: 'js/jquery/plugins/jquery-validation-1.9.0', file: 'messages_es.js')}"></script>
@@ -18,8 +18,8 @@
 
     <body>
 
-        <g:form class="well form-horizontal span " action="validar" name="frmLogin" style="border: 5px solid #525E67;background: #202328;color: #939Aa2;width: 300px;position: relative;padding-left: 60px">
-            <p class="css-vertical-text tituloGrande" style="left: 12px;;font-family: 'Tulpen One',cursive;font-weight: bold;font-size: 35px">Sistema Janus</p>
+        <g:form class="well form-horizontal span " action="validarAux" name="frmLogin" style="border: 5px solid #525E67;background: #202328;color: #939Aa2;width: 300px;position: relative;padding-left: 60px">
+            <p class="css-vertical-text tituloGrande" style="left: 12px;;font-family: 'Tulpen One',cursive;font-weight: bold;font-size: 35px">Sistema INFA</p>
 
             <div class="linea" style="height: 95%;left: 45px"></div>
             <fieldset style="">
@@ -53,9 +53,7 @@
                 <div class="control-group">
 
                     <a href="#" class="btn btn-primary" id="btnLogin">Continuar</a>
-                    <a href="#" id="btnOlvidoPass" style="color: #ffffff;margin-left: 70px;text-decoration: none;font-family: 'Open Sans Condensed', serif;font-weight: bold">
-                        Olvidó su contraseña?
-                    </a>
+
                 </div>
             </fieldset>
         </g:form>

@@ -56,5 +56,39 @@
         </div>
     </g:if>
     
+    <g:if test="${convocatoriaInstance?.textoInicio}">
+        <div class="control-group">
+            <div>
+                <span id="textoInicio-label" class="control-label label label-inverse">
+                    Texto Inicio
+                </span>
+            </div>
+            <div class="controls">
+        
+                <span aria-labelledby="textoInicio-label">
+                    <g:fieldValue bean="${convocatoriaInstance}" field="textoInicio"/>
+                </span>
+        
+            </div>
+        </div>
+    </g:if>
+    
+    <g:if test="${convocatoriaInstance?.textoNota}">
+        <div class="control-group">
+            <div>
+                <span id="textoNota-label" class="control-label label label-inverse">
+                    Texto Nota
+                </span>
+            </div>
+            <div class="controls">
+        
+                <span aria-labelledby="textoNota-label">
+                    <g:fieldValue bean="${convocatoriaInstance}" field="textoNota"/>
+                </span>
+        
+            </div>
+        </div>
+    </g:if>
+    
     </form>
 </div>

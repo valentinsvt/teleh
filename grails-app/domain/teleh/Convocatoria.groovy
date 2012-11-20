@@ -4,6 +4,8 @@ class Convocatoria implements Serializable {
     String descripcion
     Date fechaInicio
     Date fechaFin
+    String textoInicio
+    String textoNota
     static mapping = {
         table 'conv'
         cache usage: 'read-write', include: 'non-lazy'
@@ -15,11 +17,15 @@ class Convocatoria implements Serializable {
             descripcion column: 'convdscr'
             fechaInicio column: 'convfcin'
             fechaFin column: 'convfcfn'
+            textoInicio column: 'auxltxin'
+            textoNota column: 'auxltxnt'
         }
     }
     static constraints = {
         descripcion(size: 1..63, blank: false, nullable: false, attributes: [title: 'descripcion'])
         fechaInicio(blank: false, nullable: false, attributes: [title: 'fecha inicio'])
         fechaFin(blank: false, nullable: false, attributes: [title: 'fecha fin'])
+        textoInicio(size: 1..1024)
+        textoNota(size: 1..1024)
     }
 }

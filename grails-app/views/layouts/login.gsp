@@ -43,7 +43,7 @@
 
 <body style="background: none">
 
-<div style="width: 1000px;margin-top: 50px;margin-left: 30px;">
+<div style="width: 1100px;margin-top: 50px;margin-left: 30px;">
     <g:layoutBody/>
 </div>
 

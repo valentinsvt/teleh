@@ -1,6 +1,6 @@
 package teleh.seguridad
 
-class Shield {
+class ShieldPostulante {
     def beforeInterceptor = [action: this.&auth, except: 'login']
     /**
      * Verifica si se ha iniciado una sesión
@@ -8,21 +8,12 @@ class Shield {
      */
     def auth() {
 
-//        println "an " + actionName + " cn " + controllerName + "  "
-
-//        println session
-        session.an = actionName
-        session.cn = controllerName
-        session.pr = params
-//        return true
-        /** **************************************************************************/
         if (!session.usuario || !session.perfil) {
-            //            println "1"
-            redirect(controller: 'login', action: 'login')
+            redirect(controller: 'login', action: 'postulante')
             session.finalize()
             return false
         } else {
-           return true
+            return true
         }
         /*************************************************************************** */
     }

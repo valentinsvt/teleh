@@ -49,6 +49,34 @@
             </div>
         </div>
                 
+        <div class="control-group">
+            <div>
+                <span class="control-label label label-inverse">
+                    Texto Inicio
+                </span>
+            </div>
+
+            <div class="controls">
+                <g:textArea name="textoInicio" cols="40" rows="5" maxlength="1024" class="" value="${convocatoriaInstance?.textoInicio}"/>
+                
+                <p class="help-block ui-helper-hidden"></p>
+            </div>
+        </div>
+                
+        <div class="control-group">
+            <div>
+                <span class="control-label label label-inverse">
+                    Texto Nota
+                </span>
+            </div>
+
+            <div class="controls">
+                <g:textArea name="textoNota" cols="40" rows="5" maxlength="1024" class="" value="${convocatoriaInstance?.textoNota}"/>
+                
+                <p class="help-block ui-helper-hidden"></p>
+            </div>
+        </div>
+                
     </g:form>
 
 <script type="text/javascript">
