@@ -156,7 +156,8 @@
                                 </div>
 
                                 <div class="controls">
-                                    <g:select name="promotorCNH" from="${personaInstance.constraints.promotorCNH.inList}" class=" required" value="${personaInstance?.promotorCNH}" valueMessagePrefix="persona.promotorCNH"/>
+                                    <g:select name="promotorCNH" from="${personaInstance.constraints.promotorCNH.inList}" class=" required"
+                                              value="${personaInstance?.promotorCNH ? personaInstance.promotorCNH : 'NO'}" valueMessagePrefix="persona.promotorCNH"/>
                                 </div>
                             </div>
                         </div>
@@ -179,7 +180,7 @@
                                         <g:set var="tipos" value="${['N', 'A']}"/>
                                     </g:else>
                                     <g:select id="titulo" name="titulo.id" from="${teleh.Titulo.findAllByTipoInList(tipos, [sort: 'descripcion'])}"
-                                              optionKey="id" optionValue="descripcion" class="many-to-one " value="${personaInstance?.titulo?.id}" noSelection="['null': '']"/>
+                                              optionKey="id" optionValue="${{it.descripcion + ' (' + it.tipoTitulo.descripcion + ')'}}" class="many-to-one " value="${personaInstance?.titulo?.id}" noSelection="['null': '']"/>
                                 </div>
                             </div>
                         </div>
@@ -215,7 +216,7 @@
 
                                 <div class="controls">
                                     <g:select name="certificadoNativo" from="${personaInstance.constraints.certificadoNativo.inList}" class=" required nativa"
-                                              value="${personaInstance?.certificadoNativo}" valueMessagePrefix="persona.certificadoNativo" disabled="${personaInstance?.lenguaNativa == 'NO'}" />
+                                              value="${personaInstance?.certificadoNativo}" valueMessagePrefix="persona.certificadoNativo" disabled="${personaInstance?.lenguaNativa == 'NO'}"/>
                                 </div>
                             </div>
                         </div>

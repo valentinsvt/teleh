@@ -25,15 +25,13 @@ class PersonaController /*extends teleh.seguridad.Shield*/ {
                 tipos.add('N')
                 break;
         }
+
+        println tipos
         def titulos = Titulo.findAllByTipoInList(tipos, [sort: 'descripcion'])
-        def sel
-        if (titulos.size() > 0) {
-            sel = g.select(id: "titulo", name: "titulo.id", from: titulos, optionKey: "id", optionValue: "descripcion", "class": "many-to-one", noSelection: "['null':'']")
-        } else {
-            sel = "<select id='titulo' name='titulo.id' class='many-to-one'>"
-            sel += "<option value='null'></option>"
-            sel += "</select>"
-        }
+        println titulos
+
+        def sel = g.select(id: "titulo", name: "titulo.id", from: titulos, optionKey: "id", optionValue: {it.descripcion + ' (' + it.tipoTitulo.descripcion + ')'}, "class": "many-to-one", noSelection: ['null': ''])
+
         render sel
     }
 
