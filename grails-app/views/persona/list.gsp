@@ -36,60 +36,57 @@
 
         <div id="list-Persona" class="span12" role="main" style="margin-top: 10px;">
 
+            Inscritos
             <table class="table table-bordered table-striped table-condensed table-hover">
                 <thead>
                     <tr>
-
-                        <th>Convocatoria</th>
-
-                        <th>Provincia</th>
-
+                        <th>Vive en</th>
                         <th>Canton</th>
-
-                        <th>Parroquia</th>
-
-                        <th>Titulo</th>
-
-                        <th>Estado</th>
-
-                        <th width="150">Acciones</th>
+                        <th>Formación</th>
+                        <th>Cédula</th>
+                        <th>Nombres</th>
+                        <th>Género</th>
+                        <th>Tipo</th>
+                        <th>st</th>
+                        %{--<th width="150">Acciones</th>--}%
                     </tr>
                 </thead>
                 <tbody class="paginate">
                     <g:each in="${personaInstanceList}" status="i" var="personaInstance">
                         <tr>
-
-                            <td>${fieldValue(bean: personaInstance, field: "convocatoria")}</td>
-
-                            <td>${fieldValue(bean: personaInstance, field: "provincia")}</td>
-
-                            <td>${fieldValue(bean: personaInstance, field: "canton")}</td>
-
-                            <td>${fieldValue(bean: personaInstance, field: "parroquia")}</td>
-
                             <td>
-                                <g:if test="${teleh.TituloPersona.findAllByPersona(personaInstance).size() > 0}">
-                                    <img class="titulo" src="${createLink(controller: 'persona', action: 'verTitulo', id: personaInstance.id)}"/>
-                                </g:if>
+                                ${fieldValue(bean: personaInstance, field: "provincia")}
+                            </td>
+                            <td>
+                                ${fieldValue(bean: personaInstance, field: "canton")}
+                            </td>
+                            <td>
+                                ${fieldValue(bean: personaInstance, field: "titulo")}
                             </td>
 
-                            <td>${fieldValue(bean: personaInstance, field: "estado")}</td>
+                            %{--<td>--}%
+                            %{--<g:if test="${teleh.TituloPersona.findAllByPersona(personaInstance).size() > 0}">--}%
+                            %{--<img class="titulo" src="${createLink(controller: 'persona', action: 'verTitulo', id: personaInstance.id)}"/>--}%
+                            %{--</g:if>--}%
+                            %{--</td>--}%
 
-                            <td>
-                                <a class="btn btn-small btn-show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${personaInstance.id}">
-                                    <i class="icon-zoom-in icon-large"></i>
-                                </a>
-                                <a class="btn btn-small btn-edit btn-ajax" href="#" rel="tooltip" title="Editar" data-id="${personaInstance.id}">
-                                    <i class="icon-pencil icon-large"></i>
-                                </a>
-                                <a class="btn btn-small btn-titulo" href="#" rel="tooltip" title="Cargar título" data-id="${personaInstance.id}">
-                                    <i class="icon-certificate icon-large"></i>
-                                </a>
+                            %{--<td>${fieldValue(bean: personaInstance, field: "estado")}</td>--}%
 
-                                <a class="btn btn-small btn-delete" href="#" rel="tooltip" title="Eliminar" data-id="${personaInstance.id}">
-                                    <i class="icon-trash icon-large"></i>
-                                </a>
-                            </td>
+                            %{--<td>--}%
+                            %{--<a class="btn btn-small btn-show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${personaInstance.id}">--}%
+                            %{--<i class="icon-zoom-in icon-large"></i>--}%
+                            %{--</a>--}%
+                            %{--<a class="btn btn-small btn-edit btn-ajax" href="#" rel="tooltip" title="Editar" data-id="${personaInstance.id}">--}%
+                            %{--<i class="icon-pencil icon-large"></i>--}%
+                            %{--</a>--}%
+                            %{--<a class="btn btn-small btn-titulo" href="#" rel="tooltip" title="Cargar título" data-id="${personaInstance.id}">--}%
+                            %{--<i class="icon-certificate icon-large"></i>--}%
+                            %{--</a>--}%
+
+                            %{--<a class="btn btn-small btn-delete" href="#" rel="tooltip" title="Eliminar" data-id="${personaInstance.id}">--}%
+                            %{--<i class="icon-trash icon-large"></i>--}%
+                            %{--</a>--}%
+                            %{--</td>--}%
                         </tr>
                     </g:each>
                 </tbody>

@@ -14,6 +14,29 @@ class PersonaController /*extends teleh.seguridad.Shield*/ {
         [personaInstanceList: Persona.list(params), params: params]
     } //list
 
+    def cargarTitulos() {
+        def promotor = params.promotor
+        def tipos = ['A']
+        switch (promotor) {
+            case "SI":
+                tipos.add('S')
+                break;
+            case "NO":
+                tipos.add('N')
+                break;
+        }
+        def titulos = Titulo.findAllByTipoInList(tipos, [sort: 'descripcion'])
+        def sel
+        if (titulos.size() > 0) {
+            sel = g.select(id: "titulo", name: "titulo.id", from: titulos, optionKey: "id", optionValue: "descripcion", "class": "many-to-one", noSelection: "['null':'']")
+        } else {
+            sel = "<select id='titulo' name='titulo.id' class='many-to-one'>"
+            sel += "<option value='null'></option>"
+            sel += "</select>"
+        }
+        render sel
+    }
+
     def datos() {
         def user = Persona.get(session.usuario.id)
         return [personaInstance: user]
@@ -210,7 +233,7 @@ class PersonaController /*extends teleh.seguridad.Shield*/ {
 
         if (params.id) {
             flash.clase = "alert-success"
-            flash.message = "Se ha actualizado correctamente Persona " + personaInstance.id
+            flash.message = "Se ha guardado correctamente la Persona " + personaInstance.nombre + " " + personaInstance.apellido
         } else {
             flash.clase = "alert-success"
             flash.message = "Se ha creado correctamente Persona " + personaInstance.id
@@ -234,6 +257,13 @@ class PersonaController /*extends teleh.seguridad.Shield*/ {
             return;
         }
         def size = archivo.size
+        if (size > 1024 * 500) {
+            flash.clase = "alert-error"
+            flash.message = "El archivo del titulo debe tener un tamaño máximo de 500Kb"
+            redirect(action: 'formTitulo')
+            return;
+        }
+
         params.tipoArchivo = archivo.getContentType()
         def titulo
         def persona = Persona.get(params.persona.id)

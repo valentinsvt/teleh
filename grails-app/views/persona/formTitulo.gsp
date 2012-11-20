@@ -40,7 +40,7 @@
         </div>
 
         <div id="list-Persona" class="span12" role="main" style="margin-top: 10px;">
-            <g:uploadForm class="form-horizontal" name="frmSave-Persona" action="uploadTitulo">
+            <g:uploadForm class="form-horizontal" name="frmSave-Persona" action="uploadArchivo">
                 <g:hiddenField name="persona.id" value="${personaInstance?.id}"/>
                 POR FAVOR SUBIR AL MIES EL DOCUMENTO ESCANEADO DE SU TITULO<br/>
                 Sólo se admiten archivos en formato <span class="red">png, jpg, gif, pdf</span> con un tamaño no mayor a 500 Kb (½ mega)
@@ -53,13 +53,49 @@
 
                     <div class="controls">
                         <input type="file" name="tituloArchivo" class="required"/>
-                        <span class="mandatory">*</span>
+                        %{--<span class="mandatory">*</span>--}%
 
-                        <p class="help-block ui-helper-hidden"></p>
+                        %{--<p class="help-block ui-helper-hidden"></p>--}%
                     </div>
                 </div>
             </g:uploadForm>
         </div>
+
+
+        <script type="text/javascript">
+
+            function submitForm(btn) {
+//                if ($("#frmSave-Persona").valid()) {
+                btn.replaceWith(spinner);
+//                }
+                $("#frmSave-Persona").submit();
+            }
+            $(function () {
+                $(".btn-save").click(function () {
+                    submitForm($(this));
+                });
+            });
+
+            //            $("#frmSave-Persona").validate({
+            //                errorPlacement : function (error, element) {
+            //                    element.parent().find(".help-block").html(error).show();
+            //                },
+            //                success        : function (label) {
+            //                    label.parent().hide();
+            //                },
+            //                errorClass     : "label label-important",
+            //                submitHandler  : function (form) {
+            //                    $(".btn-success").replaceWith(spinner);
+            //                    form.submit();
+            //                }
+            //            });
+            //
+            //            $("input").keyup(function (ev) {
+            //                if (ev.keyCode == 13) {
+            //                    submitForm($(".btn-success"));
+            //                }
+            //            });
+        </script>
 
     </body>
 </html>

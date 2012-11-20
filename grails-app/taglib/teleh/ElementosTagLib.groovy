@@ -178,6 +178,15 @@ class ElementosTagLib {
             js += ","
             js += "maxDate:" + attrs.maxDate
         }
+        if (attrs.onClose) {
+            js += ','
+            js += 'onClose: ' + attrs.onClose
+        }
+        if (attrs.yearRange) {
+            js += ','
+//            println attrs.yearRange
+            js += 'yearRange: "' + attrs.yearRange + '"'
+        }
 //        js += 'showOn          : "both",'
 //        js += 'buttonImage     : "' + resource(dir: 'images', file: 'calendar.png') + '",'
 //        js += 'buttonImageOnly : true'
