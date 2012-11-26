@@ -218,7 +218,7 @@
 </div>
 
 <div class="area">
-    <p class="tituloTree tituloGrande">Conocimiento de lenguas nativas y extrangeras</p>
+    <p class="tituloTree tituloGrande">Conocimiento de lenguas nativas y extranjeras</p>
 
     <div class="row-fluid">
         <div class="span3">
@@ -294,13 +294,13 @@
             <div class="control-group">
                 <div>
                     <span class="control-label label label-inverse">
-                        Habla lengua </br>extrangera
+                        Habla lengua </br>extranjera
                     </span>
                 </div>
 
                 <div class="controls">
                     <g:select name="lenguaExtrangera" style="width: 70px" from="${personaInstance.constraints.lenguaExtrangera.inList}" class=" required lengua"
-                              rel="tooltip" title="Domina alguna lengua extrangera"
+                              rel="tooltip" title="Domina alguna lengua extranjera"
                               value="${personaInstance?.lenguaExtrangera}" valueMessagePrefix="persona.lenguaExtrangera" data-tipo="extrangera"/>
                 </div>
             </div>
@@ -334,7 +334,7 @@
 
                 <div class="controls">
                     <g:select name="habla50Extrangera" style="width: 70px" from="${personaInstance.constraints.habla50Extrangera.inList}" class=" required extrangera"
-                              rel="tooltip" title="Habla más del 50% de la lengua extrangera?"
+                              rel="tooltip" title="Habla más del 50% de la lengua extranjera?"
                               value="${personaInstance?.habla50Extrangera}" valueMessagePrefix="persona.habla50Extrangera" disabled="${personaInstance?.lenguaExtrangera == 'NO'}"/>
                 </div>
             </div>
