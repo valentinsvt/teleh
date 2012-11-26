@@ -3,30 +3,69 @@ package teleh
 class MenuTagLib {
     static namespace = "mn"
 
+
+    def renderItem(item, tipo) {
+        def str = "", clase = ""
+        if (session.cn == item.controller && session.an == item.action) {
+            clase = "active"
+        }
+        if (item.items) {
+            clase += " dropdown"
+        }
+        str += "<li class='" + clase + "'>"
+        if (item.items) {
+            str += "<a href='" + item.url + "' class='dropdown-toggle' data-toggle='dropdown'>" + item.label + "<b class=\"caret\"></b></a>"
+            str += '<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">'
+            item.items.each { t, i ->
+                str += renderItem(i, t)
+            }
+            str += "</ul>"
+        } else {
+            str += "<a href='" + createLink(controller: item.controller, action: item.action) + "'>" + item.label + "</a>"
+        }
+        str += "</li>"
+
+        return str
+    }
+
     def menu = { attrs ->
 
-//
+        def items = [:]
+
+        switch(session.perfil) {
+            case "admin":
+//                items.administracion = [:]
+//                items.administracion.label = "Administración"
+//                items.administracion.items = [:]
+//                items.administracion.items.usuarios = [:]
+//                items.administracion.items.usuarios.label = "Usuarios"
+//                items.administracion.items.usuarios.controller = "usro"
+//                items.administracion.items.usuarios.action = "index"
+//                items.administracion.items.parametros = [:]
+//                items.administracion.items.parametros.label = "Parámetros"
+//                items.administracion.items.parametros.controller = "parametros"
+//                items.administracion.items.parametros.action = "index"
+//                items.administracion.items.reportes = [:]
+//                items.administracion.items.reportes.label = "Reportes"
+//                items.administracion.items.reportes.controller = "reportes"
+//                items.administracion.items.reportes.action = "index"
+
+                items.convocatoria = [:]
+                items.convocatoria.controller = "convocatoria"
+                items.convocatoria.action = "list"
+                items.convocatoria.label = "Convocatoria"
+
+                items.ordenDeTrabajo = [:]
+                items.ordenDeTrabajo.controller = "personaAdm"
+                items.ordenDeTrabajo.action = "list"
+                items.ordenDeTrabajo.label = "Postulantes"
+                break;
+        }
+
         def strItems = ""
-//        items.each {item ->
-////            def clase = ""
-////            println session.controller + "    " + tipo
-////            if (session.controller == item) {
-////                clase = "active"
-////            }
-////            strItems += "<li class='" + clase + "'>"
-////            strItems += "<a href='" + item.url + "'>" + item.label + "</a>"
-////            strItems += "</li>"
-//
-//            strItems += '<li class="dropdown">'
-//            strItems += '<a href="#" class="dropdown-toggle" data-toggle="dropdown">' + item.key + '<b class="caret"></b></a>'
-//            strItems += '<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">'
-//
-//            (item.value.size() / 2).toInteger().times {
-//                strItems += '<li><a href="' + item.value[it * 2 + 1] + '">' + item.value[it * 2] + '</a></li>'
-//            }
-//            strItems += '</ul>'
-//            strItems += '</li>'
-//        }
+        items.each { tipo, item ->
+            strItems += renderItem(item, tipo)
+        }
 
         def html = ""
         html += '<div class="navbar navbar-static-top navbar-inverse">'

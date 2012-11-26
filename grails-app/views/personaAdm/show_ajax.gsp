@@ -16,7 +16,7 @@
         
                 <span aria-labelledby="convocatoria-label">
         %{--<g:link controller="convocatoria" action="show" id="${personaInstance?.convocatoria?.id}">--}%
-                    ${personaInstance?.convocatoria?.encodeAsHTML()}
+                    ${personaInstance?.convocatoria?.descripcion}
         %{--</g:link>--}%
                 </span>
         
@@ -111,7 +111,7 @@
         
                 <span aria-labelledby="estado-label">
         %{--<g:link controller="estado" action="show" id="${personaInstance?.estado?.id}">--}%
-                    ${personaInstance?.estado?.encodeAsHTML()}
+                    ${personaInstance?.estado?.descripcion}
         %{--</g:link>--}%
                 </span>
         
@@ -123,13 +123,13 @@
         <div class="control-group">
             <div>
                 <span id="dateCreated-label" class="control-label label label-inverse">
-                    Date Created
+                    Fecha de creaci&oacute;n
                 </span>
             </div>
             <div class="controls">
         
                 <span aria-labelledby="dateCreated-label">
-                    <g:formatDate date="${personaInstance?.dateCreated}" />
+                    <g:formatDate date="${personaInstance?.dateCreated}" format="dd-MM-yyyy" />
                 </span>
         
             </div>
@@ -197,7 +197,7 @@
             <div class="controls">
         
                 <span aria-labelledby="fechaNacimiento-label">
-                    <g:formatDate date="${personaInstance?.fechaNacimiento}" />
+                    <g:formatDate date="${personaInstance?.fechaNacimiento}" format="dd-MM-yyyy" />
                 </span>
         
             </div>
@@ -503,7 +503,7 @@
             <div class="controls">
         
                 <span aria-labelledby="fecha1-label">
-                    <g:formatDate date="${personaInstance?.fecha1}" />
+                    <g:formatDate date="${personaInstance?.fecha1}" format="dd-MM-yyyy" />
                 </span>
         
             </div>
@@ -520,7 +520,7 @@
             <div class="controls">
         
                 <span aria-labelledby="fecha2-label">
-                    <g:formatDate date="${personaInstance?.fecha2}" />
+                    <g:formatDate date="${personaInstance?.fecha2}"  format="dd-MM-yyyy"/>
                 </span>
         
             </div>
@@ -537,7 +537,7 @@
             <div class="controls">
         
                 <span aria-labelledby="fecha3-label">
-                    <g:formatDate date="${personaInstance?.fecha3}" />
+                    <g:formatDate date="${personaInstance?.fecha3}" format="dd-MM-yyyy" />
                 </span>
         
             </div>
@@ -696,24 +696,7 @@
             </div>
         </div>
     </g:if>
-    
-    <g:if test="${personaInstance?.pin}">
-        <div class="control-group">
-            <div>
-                <span id="pin-label" class="control-label label label-inverse">
-                    Pin
-                </span>
-            </div>
-            <div class="controls">
-        
-                <span aria-labelledby="pin-label">
-                    <g:fieldValue bean="${personaInstance}" field="pin"/>
-                </span>
-        
-            </div>
-        </div>
-    </g:if>
-    
+
     <g:if test="${personaInstance?.puntajeTitulo}">
         <div class="control-group">
             <div>

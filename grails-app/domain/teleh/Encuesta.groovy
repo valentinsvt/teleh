@@ -1,7 +1,9 @@
 package teleh
 
 class Encuesta {
-    
+
+    static auditable = [ignore: ['']]
+
     Examen examen
     Persona persona
     Date inicio

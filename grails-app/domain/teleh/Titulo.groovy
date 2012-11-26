@@ -1,6 +1,8 @@
 package teleh
 
 class Titulo implements Serializable {
+    static auditable = [ignore: ['']]
+
     TipoTitulo tipoTitulo
     String tipo
     String descripcion

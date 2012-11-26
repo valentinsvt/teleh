@@ -4,6 +4,7 @@ dataSource {
     //dialect = org.hibernate.dialect.PostgreSQLDialect
     driverClassName = "com.mysql.jdbc.Driver"
     dialect =  "org.hibernate.dialect.MySQL5InnoDBDialect"
+
 }
 hibernate {
     cache.use_second_level_cache=true
@@ -16,7 +17,7 @@ environments {
     development {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:mysql://10.0.0.1/teleh"
+            url = "jdbc:mysql://10.0.0.1/teleh?useUnicode=true&characterEncoding=UTF-8"
             //url = "jdbc:postgresql://10.0.0.3:5432/tages"
             username = "root"
             password = "root"

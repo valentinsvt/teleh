@@ -17,16 +17,22 @@ class Shield {
 //        return true
         /** **************************************************************************/
         if (!session.usuario || !session.perfil) {
-            //            println "1"
+//                        println "1"
             redirect(controller: 'login', action: 'login')
             session.finalize()
             return false
         } else {
-            if(session.perfil=="admin")
+            if(session.perfil=="admin") {
+//                println "2"
                 return true
-            else
+            }
+            else {
+//                println "3"
                 redirect(controller: 'login',action: 'login')
+                return false
+            }
         }
+        return false
         /*************************************************************************** */
     }
 

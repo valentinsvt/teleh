@@ -32,6 +32,7 @@ class RegistroController {
                     try {
                         mailService.sendMail {
                             to prsn.email
+                            from "info@infa.gob.ec"
                             subject "Registro Senplades"
                             html g.render(template: "enviar_pin", model: [prsn: prsn, pin: pin])
                         }
@@ -53,6 +54,7 @@ class RegistroController {
                         try {
                             mailService.sendMail {
                                 to prsn.email
+                                from "info@infa.gob.ec"
                                 subject "Registro Senplades"
                                 html g.render(template: "enviar_pin", model: [prsn: prsn, pin: pin])
                             }

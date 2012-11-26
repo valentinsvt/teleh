@@ -2,6 +2,8 @@ package teleh
 
 class Pregunta {
 
+    static auditable = [ignore: ['']]
+
     Examen examen
     int orden
     String pregunta

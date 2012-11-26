@@ -36,6 +36,8 @@
     <script type="text/javascript">
         var url = "${resource(dir:'images', file:'spinnerLogin_24.gif')}";
         var spinnerLogin = $("<img style='margin-left:15px;' src='" + url + "' alt='Cargando...'/>");
+        var url1 = "${resource(dir:'images', file:'spinner_24.gif')}";
+        var spinner= $("<img style='margin-left:15px;' src='" + url1 + "' alt='Cargando...'/>");
         var url2 = "${resource(dir:'images', file:'spinner.gif')}";
         var spinner2 = $("<img style='margin-left:15px;' src='" + url + "' alt='Cargando...'/>");
     </script>

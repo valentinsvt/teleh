@@ -48,6 +48,7 @@
                                 <th>Nombres</th>
                                 <th>Género</th>
                                 <th>Estado</th>
+                                <th width="150">Acciones</th>
                             </tr>
                         </thead>
                         <tbody class="paginate">
@@ -77,6 +78,14 @@
                                     </td>
                                     <td>
                                         ${personaInstance?.estado?.descripcion}
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-small btn-show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${personaInstance.id}">
+                                            <i class="icon-zoom-in icon-large"></i>
+                                        </a>
+                                        <g:link action="verTitulo" id="${personaInstance.id}" class="btn btn-small btn-titulo" rel="tooltip" title="Ver título" data-id="${personaInstance.id}">
+                                            <i class=" icon-credit-card icon-large"></i>
+                                        </g:link>
                                     </td>
                                 </tr>
                             </g:each>
@@ -122,6 +131,26 @@
 
                 $(function () {
                     $('[rel=tooltip]').tooltip();
+
+                    $(".btn-show").click(function () {
+                        var id = $(this).data("id");
+                        $.ajax({
+                            type    : "POST",
+                            url     : "${createLink(action:'show_ajax')}",
+                            data    : {
+                                id : id
+                            },
+                            success : function (msg) {
+                                var btnOk = $('<a href="#" data-dismiss="modal" class="btn btn-primary">Aceptar</a>');
+                                $("#modalHeader").removeClass("btn-edit btn-show btn-delete").addClass("btn-show");
+                                $("#modalTitle").html("Ver Persona");
+                                $("#modalBody").html(msg);
+                                $("#modalFooter").html("").append(btnOk);
+                                $("#modal-Persona").modal("show");
+                            }
+                        });
+                        return false;
+                    }); //click btn show
 
                     $("#convocatoria").change(function () {
                         var conv = $(this).val();

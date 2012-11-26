@@ -21,7 +21,7 @@
                 electrónico automático con su contraseña personalizada para seguir con el proceso de registro.
                 Si no recibe el correo electrónico generado automáticamente, por favor repita este paso e ingrese
                 nuevamente sus datos personales. Si requiere de ayuda o más información por favor escríbanos a
-                <a href="mailto:valentinsvt@gmail.com">mail@aqui.com</a> y le asistiremos lo antes posible.
+                <a href="mailto:info@infa.gob.ec">info@infa.gob.ec</a> y le asistiremos lo antes posible.
             </p>
 
             <div style="text-align: center; margin-top: 40px;">

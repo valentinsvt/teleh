@@ -1,6 +1,8 @@
 package teleh
 
 class TipoExamen implements Serializable {
+    static auditable = [ignore: ['']]
+
     String codigo
     String descripcion
     static mapping = {

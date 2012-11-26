@@ -1,7 +1,9 @@
 package teleh
 
 class Examen {
-    
+
+    static auditable = [ignore: ['']]
+
     String descripcion
     String proposito
     int tipo=0

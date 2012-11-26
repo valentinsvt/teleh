@@ -1,7 +1,9 @@
 package teleh
 
 class Auxiliar {
-    
+
+    static auditable = [ignore: ['']]
+
     String usuario
     String password
     static mapping = {

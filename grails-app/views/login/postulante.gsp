@@ -1,3 +1,4 @@
+<!doctype html>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <html>
@@ -177,7 +178,7 @@
             },
             errorClass     : "label label-important",
             submitHandler  : function (form) {
-                $("#btnLogin").replaceWith(spinnerLogin);
+                $("#btnLogin").replaceWith(spinner);
                 form.submit();
             }
         });

@@ -145,7 +145,7 @@
             },
             errorClass     : "label label-important",
             submitHandler  : function (form) {
-                $("#btnLogin").replaceWith(spinnerLogin);
+                $("#btnLogin").replaceWith(spinner);
                 form.submit();
             }
         });

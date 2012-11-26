@@ -2,6 +2,8 @@ package teleh
 
 class Respuesta {
 
+    static auditable = [ignore: ['']]
+
     Pregunta pregunta
     String respuesta
     int correcta=0

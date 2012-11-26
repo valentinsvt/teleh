@@ -2,6 +2,8 @@ package teleh
 
 class TituloPersona {
 
+    static auditable = [ignore: ['tituloArchivo']]
+
     Persona persona
     byte[] tituloArchivo
     String tipoArchivo

@@ -2,6 +2,8 @@ package teleh
 
 class Detalle {
 
+    static auditable = [ignore: ['']]
+
     Encuesta encuesta
     Pregunta pregunta
     Respuesta respuesta

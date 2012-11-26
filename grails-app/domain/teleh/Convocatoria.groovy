@@ -1,6 +1,8 @@
 package teleh
 
 class Convocatoria implements Serializable {
+    static auditable = [ignore: ['']]
+
     String descripcion
     Date fechaInicio
     Date fechaFin

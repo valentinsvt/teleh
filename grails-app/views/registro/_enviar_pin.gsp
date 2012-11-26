@@ -49,7 +49,7 @@
         <b>CONTRASEÑA:</b> ${pin}<br/>
 
         <br/>
-        Recuerde que su registro todavía está incompleto. Más información a <a href="mailto:valentinsvt@gmail.com">mail@aqui.com</a>
+        Recuerde que su registro todavía está incompleto. Más información a <a href="mailto:info@infa.gob.ec">info@infa.gob.ec</a>
 
 
     </p>

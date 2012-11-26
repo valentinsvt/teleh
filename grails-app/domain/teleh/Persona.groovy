@@ -2,6 +2,8 @@ package teleh
 
 class Persona {
 
+    static auditable = [ignore: ['pin']]
+
     Convocatoria convocatoria
     Provincia provincia
     Canton canton
