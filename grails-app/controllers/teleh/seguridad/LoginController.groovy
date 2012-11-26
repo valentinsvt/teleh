@@ -1,8 +1,8 @@
 package teleh.seguridad
 
-import teleh.Persona
 import teleh.Auxiliar
 import teleh.Convocatoria
+import teleh.Persona
 
 class LoginController {
 
@@ -43,6 +43,7 @@ class LoginController {
             if (persona.save(flush: true)) {
                 sendMail {
                     to mail
+                    from "info@infa.gob.ec"
                     subject "Recuperación de contraseña"
                     body 'Hola ' + persona.login + ", tu nueva contraseña es " + newPass + "."
                 }

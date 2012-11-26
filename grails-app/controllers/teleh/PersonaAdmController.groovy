@@ -5,7 +5,16 @@ class PersonaAdmController extends teleh.seguridad.Shield {
     def index() { }
 
     def list() {
-        [personaInstanceList: Persona.list(params), params: params]
+        if (!params.convocatoria) {
+            params.convocatoria = 1
+        }
+        [personaInstanceList: Persona.findAllByConvocatoria(Convocatoria.get(params.convocatoria), params), params: params]
+    }
+
+    def cambiaConvocatoria() {
+        def conv = Convocatoria.get(params.id)
+        def personas = Persona.findAllByConvocatoria(conv)
+        return [personaInstanceList: personas]
     }
 
     def show_ajax() {
@@ -30,6 +39,7 @@ class PersonaAdmController extends teleh.seguridad.Shield {
         if (params.estado == "S") {
             sendMail {
                 to persona.email
+                from "info@infa.gob.ec"
                 subject "Archivo de título"
                 html g.render(template: "subir_titulo", model: [prsn: persona])
             }

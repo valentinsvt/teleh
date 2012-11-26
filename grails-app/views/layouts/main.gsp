@@ -42,7 +42,7 @@
             color : red !important;
         }
         </style>
-        <link href="${resource(dir: 'css/bootstrap/css', file: 'bootstrap-responsive.css')}" rel="stylesheet">
+        %{--<link href="${resource(dir: 'css/bootstrap/css', file: 'bootstrap-responsive.css')}" rel="stylesheet">--}%
 
         <link href="${resource(dir: 'js/jquery/css/twitBoot', file: 'jquery-ui-1.9.1.custom.min.css')}" rel="stylesheet">
         <link href="${resource(dir: 'js/jquery/plugins/jquery.countdown', file: 'jquery.countdown.css')}" rel="stylesheet">
@@ -58,6 +58,7 @@
         <g:layoutHead/>
 
         <link href="${resource(dir: 'css', file: 'custom.css')}" rel="stylesheet">
+        <link href="${resource(dir: 'css', file: 'mobile.css')}" rel="stylesheet">
         <link href="${resource(dir: 'css', file: 'customButtons.css')}" rel="stylesheet">
     </head>
 

@@ -100,6 +100,7 @@ jQuery.fn.paginate = function (settings) {
                                 $inputSearch.val("");
                                 return false;
                             } else if (ev.keyCode == 13) {
+                                ev.stopPropagation();
                                 doSearch();
                                 return false;
                             }

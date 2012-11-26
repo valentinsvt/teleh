@@ -1,0 +1,29 @@
+@media screen and (max-width: 1199px) {
+    .form-horizontal .control-label {
+        width      : 110px;
+        word-break : hyphenate;
+    }
+
+    .form-horizontal .controls {
+        margin-left : 120px;
+    }
+}
+
+@media screen and (max-width: 979px) {
+    .form-horizontal .control-label {
+        width      : 90px;
+        word-break : hyphenate;
+    }
+
+    .form-horizontal .controls {
+        margin-left : 100px;
+    }
+
+    input, textarea, .uneditable-input {
+        width : 146px;
+    }
+
+    select {
+        width : 156px;
+    }
+}
