@@ -33,27 +33,42 @@
 
             <div id="list-Persona" class="span12" role="main" style="margin-top: 10px;">
 
-                Inscritos en la convocatoria <g:select name="convocatoria" from="${teleh.Convocatoria.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion" value="${params.convocatoria}"/>
-                <div id="divTabla">
-                    <div style="height: 30px;">
-                        <div id="search" class="pull-right"></div>
-                    </div>
-                    <table class="table table-bordered table-striped table-condensed table-hover" id="tbl">
-                        <thead>
+                Inscritos
+                en la convocatoria <g:select name="convocatoria" from="${teleh.Convocatoria.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion" value="${params.id}"/>
+                en <g:select name="provincia" from="${teleh.Provincia.list([sort: 'nombre'])}" optionKey="id" optionValue="nombre" value="${params.provincia}" noSelection="['': 'Todas las provincias']"/>
+                con estado <g:select name="estado" from="${teleh.Estado.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion" value="${params.estado}" noSelection="['': 'Todos los estados']"/>
+
+                <div style="height: 30px;">
+                    <g:if test="${params.totalRows != 0}">
+                        <div class="pull-left" style="line-height: 30px;">
+                            Total de registros: ${params.totalRows}
+                        </div>
+                    </g:if>
+                    <g:form class='form-search pull-right' name="frmBuscar" action="list" params="${[provincia: params.provincia]}" id="${params.id}">
+                        <div class='input-append'>
+                            <input type='text' name="busqueda" class='span2 search-query' value="${params.busqueda}"/>
+                            %{--<a href='#' class='btn' id="btnBuscar"><i class='icon-zoom-in'></i> Buscar</a>--}%
+                            <g:submitButton name="Buscar" class='btn'/>
+                        </div>
+                    </g:form>
+                </div>
+
+                <table class="table table-bordered table-striped table-condensed table-hover" id="tbl">
+                    <thead>
+                        <tr>
+                            <g:sortableColumn action="list" property="provincia" title="Vive en" params="${params}"/>
+                            <g:sortableColumn action="list" property="canton" title="Cantón" params="${params}"/>
+                            <g:sortableColumn action="list" property="titulo" title="Formación" params="${params}"/>
+                            <th>Cédula</th>
+                            <g:sortableColumn action="list" property="apellido" title="Nombres" params="${params}"/>
+                            <g:sortableColumn action="list" property="sexo" title="Género" params="${params}"/>
+                            <g:sortableColumn action="list" property="estado" title="Estado" params="${params}"/>
+                            <th width="150">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="paginate">
+                        <g:each in="${personaInstanceList}" status="i" var="personaInstance">
                             <tr>
-                                <th>Vive en</th>
-                                <th>Canton</th>
-                                <th>Formación</th>
-                                <th>Cédula</th>
-                                <th>Nombres</th>
-                                <th>Género</th>
-                                <th>Estado</th>
-                                <th width="150">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody class="paginate">
-                            <g:each in="${personaInstanceList}" status="i" var="personaInstance">
-                                <tr>
                                     <td>
                                         ${fieldValue(bean: personaInstance, field: "provincia")}
                                     </td>
@@ -92,16 +107,7 @@
                         </tbody>
                     </table>
 
-                    <script type="text/javascript">
-                        $(".paginate").paginate({
-                            maxRows        : 100,
-                            searchPosition : $("#search"),
-                            searchButton   : "Buscar"
-                        });
-                    </script>
-
-                </div>
-
+                <elm:paginate total="${params.totalRows}" action="list" id="${params.id}" params="${params}" maxsteps="9"/>
             </div>
 
             <div class="modal hide fade" id="modal-Persona">
@@ -154,16 +160,15 @@
 
                     $("#convocatoria").change(function () {
                         var conv = $(this).val();
-                        $.ajax({
-                            type    : "POST",
-                            url     : "${createLink(action:'cambiaConvocatoria')}",
-                            data    : {
-                                id : conv
-                            },
-                            success : function (msg) {
-                                $("#divTabla").html(msg);
-                            }
-                        });
+                        location.href = "${createLink(action:'list')}/" + conv;
+                    });
+                    $("#provincia").change(function () {
+                        var prov = $(this).val();
+                        location.href = "${createLink(action:'list', id:params.id)}?provincia=" + prov;
+                    });
+                    $("#estado").change(function () {
+                        var est = $(this).val();
+                        location.href = "${createLink(action:'list', id:params.id)}?estado=" + est;
                     });
 
                     $(".show").click(function () {
