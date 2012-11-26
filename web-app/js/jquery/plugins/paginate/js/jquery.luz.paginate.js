@@ -129,7 +129,7 @@ jQuery.fn.paginate = function (settings) {
             var $inputSearch = $("<input type='text' class='" + defaults.searchSize + " search-query' />");
             var $btnSearch = "";
             if (defaults.searchButton) {
-                $btnSearch = $("<a href='#' class='btn'><i class='icon-zoom-in'></i> " + defaults.searchButton + "</button>");
+                $btnSearch = $("<a href='#' class='btn'><i class='icon-zoom-in'></i> " + defaults.searchButton + "</a>");
                 inputEvents("click");
             } else {
                 $btnSearch = $("<span class='add-on'><i class='icon-zoom-in'></i></span>");

@@ -28,6 +28,7 @@ class ElementosTagLib {
     Closure paginate = { attrs ->
         def writer = out
 
+        writer << "<div class='pagination pagination-centered'>"
         writer << "<ul>"
 
         if (attrs.total == null) {
@@ -76,7 +77,8 @@ class ElementosTagLib {
             linkTagAttrs.class = 'prevLink'
             linkParams.offset = offset - max
             writer << "<li>" + link(linkTagAttrs.clone()) {
-                (attrs.prev ?: messageSource.getMessage('paginate.prev', null, messageSource.getMessage('default.paginate.prev', null, 'Previous', locale), locale))
+//                (attrs.prev ?: messageSource.getMessage('paginate.prev', null, messageSource.getMessage('default.paginate.prev', null, 'Previous', locale), locale))
+                writer << "<i class=\"icon-backward\"></i>"
             }
             writer << "</li>"
         }
@@ -104,8 +106,10 @@ class ElementosTagLib {
             // display firststep link when beginstep is not firststep
             if (beginstep > firststep) {
                 linkParams.offset = 0
-                writer << link(linkTagAttrs.clone()) {firststep.toString()}
-                writer << '<li class="step disabled"><a href="#">..</a></li>'
+                writer << "<li>" + link(linkTagAttrs.clone()) {firststep.toString()} + "</li>"
+                if (beginstep != 2) {
+                    writer << '<li class="step disabled"><a href="#">..</a></li>'
+                }
             }
 
             // display paginate steps
@@ -121,7 +125,9 @@ class ElementosTagLib {
 
             // display laststep link when endstep is not laststep
             if (endstep < laststep) {
-                writer << '<li class="step disabled"><a href="#">..</a></li>'
+                if (endstep < laststep - 1) {
+                    writer << '<li class="step disabled"><a href="#">..</a></li>'
+                }
                 linkParams.offset = (laststep - 1) * max
                 writer << "<li>" + link(linkTagAttrs.clone()) { laststep.toString() } + "</li>"
             }
@@ -132,10 +138,12 @@ class ElementosTagLib {
             linkTagAttrs.class = 'nextLink'
             linkParams.offset = offset + max
             writer << "<li>" + link(linkTagAttrs.clone()) {
-                (attrs.next ? attrs.next : messageSource.getMessage('paginate.next', null, messageSource.getMessage('default.paginate.next', null, 'Next', locale), locale))
+//                (attrs.next ? attrs.next : messageSource.getMessage('paginate.next', null, messageSource.getMessage('default.paginate.next', null, 'Next', locale), locale))
+                writer << "<i class=\"icon-forward\"></i>"
             } + "</li>"
         }
         writer << "</ul>"
+        writer << "</div>"
     }
 
     def datepicker = { attrs ->

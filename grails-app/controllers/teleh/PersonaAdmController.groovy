@@ -5,10 +5,78 @@ class PersonaAdmController extends teleh.seguridad.Shield {
     def index() { }
 
     def list() {
-        if (!params.convocatoria) {
-            params.convocatoria = 1
+        if (!params.id) {
+            params.id = 1
         }
-        [personaInstanceList: Persona.findAllByConvocatoria(Convocatoria.get(params.convocatoria), params), params: params]
+        if (!params.provincia || params.provincia == "") {
+            params.provincia = null
+        }
+        if (!params.estado || params.estado == "") {
+            params.estado = null
+        }
+        if (!params.max || params.max == 0) {
+            params.max = 100
+        } else {
+            params.max = params.max.toInteger()
+        }
+        if (!params.offset) {
+            params.offset = 0
+        } else {
+            params.offset = params.offset.toInteger()
+        }
+        if (!params.sort) {
+            params.sort = "apellido"
+        }
+        if (!params.order) {
+            params.order = "asc"
+        }
+
+//        println params
+        def c = Persona.createCriteria()
+        def results = c.list(max: params.max, offset: params.offset) {
+            and {
+                eq("convocatoria", Convocatoria.get(params.id.toLong()))
+                if (params.provincia) {
+                    eq("provincia", Provincia.get(params.provincia.toLong()))
+                }
+                if (params.estado) {
+                    eq("estado", Estado.get(params.estado.toLong()))
+                }
+                if (params.busqueda) {
+                    or {
+                        ilike("cedula", "%" + params.busqueda + "%")
+                        ilike("nombre", "%" + params.busqueda + "%")
+                        ilike("apellido", "%" + params.busqueda + "%")
+                    }
+                }
+                order(params.sort, params.order)
+            }
+        }
+
+        params.totalRows = results.totalCount
+//        params.totalPags = Math.ceil(params.totalRows / params.max).toInteger()
+
+//        if (!params.pag) {
+////            params.pag = 1;
+//        } else {
+//            params.pag = params.pag.toInteger()
+//        }
+//
+//        if (params.totalPags <= 10) {
+//            params.first = 1
+//            params.last = params.last = params.totalPags
+//        } else {
+//            params.first = Math.max(1, params.pag.toInteger() - 5)
+//            params.last = Math.min(params.totalPags, params.pag + 5)
+//
+//            def ts = params.last - params.first
+//            if (ts < 9) {
+//                def r = 10 - ts
+//                params.last = Math.min(params.totalPags, params.last + r).toInteger()
+//            }
+//        }
+
+        [personaInstanceList: results, params: params]
     }
 
     def cambiaConvocatoria() {

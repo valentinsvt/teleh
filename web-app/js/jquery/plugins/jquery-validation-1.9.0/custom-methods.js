@@ -14,3 +14,7 @@ $.validator.addMethod(
     },
     "No special Characters allowed here."
 );
+
+$.validator.addMethod("alphanumeric", function (value, element) {
+    return this.optional(element) || /^[a-zA-Z0-9 ]+$/.test(value);
+}, "Letras y/o números únicamente por favor");
