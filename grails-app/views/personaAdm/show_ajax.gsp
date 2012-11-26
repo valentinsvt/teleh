@@ -293,7 +293,7 @@
         <div class="control-group">
             <div>
                 <span id="lenguaExtrangera-label" class="control-label label label-inverse">
-                    Lengua Extrangera
+                    Lengua extranjera
                 </span>
             </div>
             <div class="controls">
@@ -327,7 +327,7 @@
         <div class="control-group">
             <div>
                 <span id="certificadoExtrangero-label" class="control-label label label-inverse">
-                    Certificado Extrangero
+                    Certificado extranjero
                 </span>
             </div>
             <div class="controls">
@@ -361,7 +361,7 @@
         <div class="control-group">
             <div>
                 <span id="habla50Extrangera-label" class="control-label label label-inverse">
-                    Habla50 Extrangera
+                    Habla50 extranjera
                 </span>
             </div>
             <div class="controls">
