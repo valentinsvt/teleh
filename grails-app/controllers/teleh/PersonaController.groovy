@@ -40,6 +40,16 @@ class PersonaController extends teleh.seguridad.ShieldPostulante {
         return [personaInstance: user]
     }
 
+    def comboCanton(){
+        def prov = Provincia.get(params.id)
+        [prov:prov]
+    }
+
+    def comboParr(){
+        def canton = Canton.get(params.id)
+        [canton:canton]
+    }
+
     def form_ajax() {
         def personaInstance = new Persona(params)
         if (params.id) {
@@ -247,6 +257,7 @@ class PersonaController extends teleh.seguridad.ShieldPostulante {
 
     def uploadArchivo() {
         def archivo = request.getFile("tituloArchivo")
+        println "upload "+params
         // List of OK mime-types
         def okcontents = ['image/png', 'image/jpeg', 'image/gif', 'application/pdf']
         if (!okcontents.contains(archivo.getContentType())) {
@@ -259,7 +270,7 @@ class PersonaController extends teleh.seguridad.ShieldPostulante {
         if (size > 1024 * 500) {
             flash.clase = "alert-error"
             flash.message = "El archivo del titulo debe tener un tamaño máximo de 500Kb"
-            redirect(action: 'formTitulo')
+            redirect(action: 'formTitulo',id: params.persona.id)
             return;
         }
 
@@ -274,14 +285,14 @@ class PersonaController extends teleh.seguridad.ShieldPostulante {
         } else {
             flash.clase = "alert-error"
             flash.message = "Error grave"
-            redirect(action: 'formTitulo')
+            redirect(action: 'formTitulo',id: params.persona.id)
             return;
         }
         titulo.properties = params
         if (titulo.save(flush: true)) {
             flash.clase = "alert-success"
             flash.message = "Se ha cargado correctamente el título de la Persona " + persona.nombre + " " + persona.apellido
-            redirect(action: 'formTitulo')
+            redirect(action: 'datos')
             return;
         } else {
             flash.clase = "alert-error"
@@ -298,7 +309,7 @@ class PersonaController extends teleh.seguridad.ShieldPostulante {
             str += "</ul>"
 
             flash.message = str
-            redirect(action: 'formTitulo')
+            redirect(action: 'formTitulo',id: params.persona.id)
             return;
         }
     }
