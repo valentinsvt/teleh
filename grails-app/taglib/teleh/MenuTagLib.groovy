@@ -32,6 +32,7 @@ class MenuTagLib {
 
         def items = [:]
 
+
         switch(session.perfil) {
             case "admin":
 //                items.administracion = [:]
