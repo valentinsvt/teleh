@@ -59,6 +59,21 @@ class MenuTagLib {
                 items.ordenDeTrabajo.controller = "personaAdm"
                 items.ordenDeTrabajo.action = "list"
                 items.ordenDeTrabajo.label = "Postulantes"
+
+                items.tipoTitulo = [:]
+                items.tipoTitulo.controller = "tipoTitulo"
+                items.tipoTitulo.action = "list"
+                items.tipoTitulo.label = "Tipo de título"
+
+                items.titulo = [:]
+                items.titulo.controller = "titulo"
+                items.titulo.action = "list"
+                items.titulo.label = "Títulos"
+
+                items.auxiliar = [:]
+                items.auxiliar.controller = "auxiliar"
+                items.auxiliar.action = "list"
+                items.auxiliar.label = "Usuarios"
                 break;
         }
 
