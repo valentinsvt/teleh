@@ -6,12 +6,12 @@ class BuscadorTagLib {
 
     def operacion = {atr ->
 
-        //println "atr 2 "+atr
+//        println "atr 2 "+atr
         def propiedad = atr.propiedad
         def registro = atr.registro
         def operacion = atr.funcion.keySet().toArray().getAt(0)
         def parametros = atr.funcion[operacion].clone()
-        //println " reg "+registro+" op "+operacion+" par "+parametros+" prop "+propiedad
+//        println " reg "+registro+" op "+operacion+" par "+parametros+" prop "+propiedad
         parametros.eachWithIndex {it, i ->
             if (it == "?")
                 parametros[i] = registro[propiedad]
@@ -39,8 +39,8 @@ class BuscadorTagLib {
             result = cl parametros[0]
         }
 
-        //println "return "+result
-        //println "----------------------------"
+//        println "return "+result
+//        println "----------------------------"
         out << result
     }
 

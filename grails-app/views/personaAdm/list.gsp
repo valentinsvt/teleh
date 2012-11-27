@@ -33,24 +33,44 @@
 
             <div id="list-Persona" class="span12" role="main" style="margin-top: 10px;">
 
-                Inscritos
-                en la convocatoria <g:select name="convocatoria" from="${teleh.Convocatoria.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion" value="${params.id}"/>
-                en <g:select name="provincia" from="${teleh.Provincia.list([sort: 'nombre'])}" optionKey="id" optionValue="nombre" value="${params.provincia}" noSelection="['': 'Todas las provincias']"/>
-                con estado <g:select name="estado" from="${teleh.Estado.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion" value="${params.estado}" noSelection="['': 'Todos los estados']"/>
+                <div class="row">
+                    <div class="span12">
+                        Inscritos
+                        en la convocatoria <g:select class="input-medium" name="convocatoria" from="${teleh.Convocatoria.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion" value="${params.id}"/>
+                        en <g:select class="input-medium" name="provincia" from="${teleh.Provincia.list([sort: 'nombre'])}" optionKey="id" optionValue="nombre" value="${params.provincia}" noSelection="['': 'Todas las provincias']"/>
+                        con estado <g:select class="input-medium" name="estado" from="${teleh.Estado.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion" value="${params.estado}" noSelection="['': 'Cualquiera']"/>
+                        <g:select class="input-small" name="datos" from="${['-1': 'Todos', '0': 'Sin datos', '1': 'Con datos']}" optionKey="key" optionValue="value" value="${params.datos}"/>
+                    </div>
+                </div>
 
-                <div style="height: 30px;">
-                    <g:if test="${params.totalRows != 0}">
-                        <div class="pull-left" style="line-height: 30px;">
-                            Total de registros: ${params.totalRows}
-                        </div>
-                    </g:if>
-                    <g:form class='form-search pull-right' name="frmBuscar" action="list" params="${[provincia: params.provincia]}" id="${params.id}">
+                <div class="row">
+                    <div class="span9">
+                        ${params.label}
+                    </div>
+                    <g:form class='span31 form-search' name="frmBuscar" action="list" params="${[provincia: params.provincia]}" id="${params.id}">
                         <div class='input-append'>
                             <input type='text' name="busqueda" class='span2 search-query' value="${params.busqueda}"/>
                             %{--<a href='#' class='btn' id="btnBuscar"><i class='icon-zoom-in'></i> Buscar</a>--}%
                             <g:submitButton name="Buscar" class='btn'/>
                         </div>
                     </g:form>
+                </div>
+
+                <div class="row">
+                    <div class="span12" style="height: 30px;">
+                        ${params.totales}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span12 btn-group">
+                        <a href="#" class="btn btn-export" rel="tooltip" title="Exportar esta búsqueda a Excel" id="xls">
+                            <i class="icon-table"></i>
+                        </a>
+                        <a href="#" class="btn btn-export" rel="tooltip" title="Exportar esta búsqueda a PDF" id="pdf">
+                            <i class="icon-file"></i>
+                        </a>
+                    </div>
                 </div>
 
                 <table class="table table-bordered table-striped table-condensed table-hover" id="tbl">
@@ -69,43 +89,43 @@
                     <tbody class="paginate">
                         <g:each in="${personaInstanceList}" status="i" var="personaInstance">
                             <tr>
-                                    <td>
-                                        ${fieldValue(bean: personaInstance, field: "provincia")}
-                                    </td>
-                                    <td>
-                                        ${fieldValue(bean: personaInstance, field: "canton")}
-                                    </td>
-                                    <td>
-                                        ${personaInstance.titulo?.descripcion}
-                                    </td>
-                                    <td>
-                                        <g:link action="verTitulo" rel="tooltip" title="Ver titulo" id="${personaInstance.id}">
-                                            ${personaInstance.cedula}
-                                        </g:link>
-                                    </td>
-                                    <td>
-                                        <a class="show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${personaInstance.id}">
-                                            ${personaInstance.apellido}, ${personaInstance.nombre}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        ${personaInstance.sexo?.capitalize()}
-                                    </td>
-                                    <td>
-                                        ${personaInstance?.estado?.descripcion}
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-small btn-show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${personaInstance.id}">
-                                            <i class="icon-zoom-in icon-large"></i>
-                                        </a>
-                                        <g:link action="verTitulo" id="${personaInstance.id}" class="btn btn-small btn-titulo" rel="tooltip" title="Ver título" data-id="${personaInstance.id}">
-                                            <i class=" icon-credit-card icon-large"></i>
-                                        </g:link>
-                                    </td>
-                                </tr>
-                            </g:each>
-                        </tbody>
-                    </table>
+                                <td>
+                                    ${fieldValue(bean: personaInstance, field: "provincia")}
+                                </td>
+                                <td>
+                                    ${fieldValue(bean: personaInstance, field: "canton")}
+                                </td>
+                                <td>
+                                    ${personaInstance.titulo?.descripcion}
+                                </td>
+                                <td>
+                                    <g:link action="verTitulo" rel="tooltip" title="Ver titulo" id="${personaInstance.id}">
+                                        ${personaInstance.cedula}
+                                    </g:link>
+                                </td>
+                                <td>
+                                    <a class="show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${personaInstance.id}">
+                                        ${personaInstance.apellido}, ${personaInstance.nombre}
+                                    </a>
+                                </td>
+                                <td>
+                                    ${personaInstance.sexo?.capitalize()}
+                                </td>
+                                <td>
+                                    ${personaInstance?.estado?.descripcion}
+                                </td>
+                                <td>
+                                    <a class="btn btn-small btn-show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${personaInstance.id}">
+                                        <i class="icon-zoom-in icon-large"></i>
+                                    </a>
+                                    <g:link action="verTitulo" id="${personaInstance.id}" class="btn btn-small btn-titulo" rel="tooltip" title="Ver título" data-id="${personaInstance.id}">
+                                        <i class=" icon-credit-card icon-large"></i>
+                                    </g:link>
+                                </td>
+                            </tr>
+                        </g:each>
+                    </tbody>
+                </table>
 
                 <elm:paginate total="${params.totalRows}" action="list" id="${params.id}" params="${params}" maxsteps="9"/>
             </div>
@@ -170,6 +190,10 @@
                         var est = $(this).val();
                         location.href = "${createLink(action:'list', id:params.id)}?estado=" + est;
                     });
+                    $("#datos").change(function () {
+                        var dat = $(this).val();
+                        location.href = "${createLink(action:'list', id:params.id)}?datos=" + dat;
+                    });
 
                     $(".show").click(function () {
                         var id = $(this).data("id");
@@ -190,6 +214,51 @@
                         });
                         return false;
                     }); //click btn show
+
+                    $(".btn-export").click(function () {
+                        var tipo = $(this).attr("id");
+
+                        var sep, actionUrl, url, data = "";
+                        switch (tipo) {
+                            case "xls":
+                                sep = "&";
+                                actionUrl = "";
+                                url = "${createLink(controller: "reportes", action: 'listaPersonasXls')}";
+                                data = "filename=listaPersonas.xls" + sep;
+                                break;
+                            case "pdf":
+                                sep = "W";
+                                actionUrl = "${createLink(controller:'pdf',action:'pdfLink')}?filename=listaPersonas.pdf&url=";
+                                url = "${createLink(controller: "reportes", action: 'listaPersonasPdf')}";
+                                break;
+                        }
+
+                        data += "id=${params.id}" + sep;
+                        data += "provincia=${params.provincia}" + sep;
+                        data += "estado=${params.estado}" + sep;
+                        data += "sort=${params.sort}" + sep;
+                        data += "order=${params.order}" + sep;
+                        data += "datos=${params.datos}" + sep;
+                        data += "busqueda=${params.busqueda}" + sep;
+
+                        //                        console.log(actionUrl + url + "?" + data)
+
+                        location.href = actionUrl + url + "?" + data;
+
+                        %{--var sep = "W";--}%
+                        %{--var url = "${createLink(controller: "reportes", action: 'listaPersonasPdf')}";--}%
+                        %{--var actionUrl = "${createLink(controller:'pdf',action:'pdfLink')}?filename=listaPersonas.pdf";--}%
+                        %{--var data = "id=${params.id}" + sep;--}%
+                        %{--data += "provincia=${params.provincia}" + sep;--}%
+                        %{--data += "estado=${params.estado}" + sep;--}%
+                        %{--data += "sort=${params.sort}" + sep;--}%
+                        %{--data += "order=${params.order}" + sep;--}%
+                        %{--data += "datos=${params.datos}" + sep;--}%
+                        %{--data += "busqueda=${params.busqueda}" + sep;--}%
+                        %{--//                        location.href = url + "?" + data;--}%
+                        %{--location.href = actionUrl + "&url=" + url + "?" + data;--}%
+
+                    });
 
                 });
 

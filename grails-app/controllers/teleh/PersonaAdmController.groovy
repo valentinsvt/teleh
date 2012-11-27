@@ -30,17 +30,30 @@ class PersonaAdmController extends teleh.seguridad.Shield {
         if (!params.order) {
             params.order = "asc"
         }
+        if (!params.datos) {
+            params.datos = "-1"
+        }
+
+        def conv, prov, est
+
+        conv = Convocatoria.get(params.id.toLong())
+        if (params.provincia) {
+            prov = Provincia.get(params.provincia.toLong())
+        }
+        if (params.estado) {
+            est = Estado.get(params.estado.toLong())
+        }
 
 //        println params
         def c = Persona.createCriteria()
         def results = c.list(max: params.max, offset: params.offset) {
             and {
-                eq("convocatoria", Convocatoria.get(params.id.toLong()))
+                eq("convocatoria", conv)
                 if (params.provincia) {
-                    eq("provincia", Provincia.get(params.provincia.toLong()))
+                    eq("provincia", prov)
                 }
                 if (params.estado) {
-                    eq("estado", Estado.get(params.estado.toLong()))
+                    eq("estado", est)
                 }
                 if (params.busqueda) {
                     or {
@@ -49,32 +62,43 @@ class PersonaAdmController extends teleh.seguridad.Shield {
                         ilike("apellido", "%" + params.busqueda + "%")
                     }
                 }
+                if (params.datos == "0") { //sin datos: no nombre ni apellido
+                    isNull("nombre")
+                    isNull("apellido")
+                } else if (params.datos == "1") { //con datos: con nombre y apellido
+                    isNotNull("nombre")
+                    isNotNull("apellido")
+                }
                 order(params.sort, params.order)
             }
         }
 
         params.totalRows = results.totalCount
-//        params.totalPags = Math.ceil(params.totalRows / params.max).toInteger()
 
-//        if (!params.pag) {
-////            params.pag = 1;
-//        } else {
-//            params.pag = params.pag.toInteger()
-//        }
-//
-//        if (params.totalPags <= 10) {
-//            params.first = 1
-//            params.last = params.last = params.totalPags
-//        } else {
-//            params.first = Math.max(1, params.pag.toInteger() - 5)
-//            params.last = Math.min(params.totalPags, params.pag + 5)
-//
-//            def ts = params.last - params.first
-//            if (ts < 9) {
-//                def r = 10 - ts
-//                params.last = Math.min(params.totalPags, params.last + r).toInteger()
-//            }
-//        }
+        params.label = "Se encontr" + (params.totalRows == 1 ? "ó" : "aron") + " <b>${params.totalRows}</b> inscrito" + (params.totalRows == 1 ? "" : "s") + " a la <u>convocatoria <i>${conv.descripcion}</i></u>"
+        if (params.provincia) {
+            params.label += " en la <u>provincia de <i>${prov.nombre}</i></u>"
+        } else {
+            params.label += " en <u>todas las provincias</u>"
+        }
+        if (params.estado) {
+            params.label += " con <u>estado <i>${est.descripcion}</i></u>"
+        } else {
+            params.label += " con <u>cualquier estado</u>"
+        }
+        if (params.datos == '1') {
+            params.label += " que <u>ya han ingresado sus datos</u>"
+        } else if (params.datos == "0") {
+            params.label += " que <u>aún no han ingresado sus datos</u>"
+        }
+        if (params.busqueda) {
+            params.label += " y cuyo <u>nombre, apellido o cédula contenga <i>${params.busqueda}</i></u>"
+        }
+
+        def totalConv = Persona.findAllByConvocatoria(conv)
+        def totalDatos = totalConv.findAll { it.nombre && it.apellido }
+
+        params.totales = "En la convocatoria <i>${conv.descripcion}</i> se encontraron <b>${totalConv.size()}</b> inscritos, de los cuales <b>${totalDatos.size()}</b> ya han ingresado sus datos"
 
         [personaInstanceList: results, params: params]
     }

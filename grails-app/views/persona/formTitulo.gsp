@@ -35,7 +35,19 @@
             </div>
         </g:if>
 
+        <g:if test="${completo}">
+            <div class="span12">
+                <div class="alert alert-info" role="status">
+                    <a class="close" data-dismiss="alert" href="#">×</a>
+                    Usted ha terminado el proceso de inscripción. Puede ingresar a su registro para actualizar, revisar  y completar su información hasta el 9 de diciembre.
+                </div>
+            </div>
+        </g:if>
+
         <div class="span12 btn-group" role="navigation">
+            <g:link class="btn" action="datos">
+                <i class="icon-user"></i> Datos
+            </g:link>
             <a href="#" class="btn btn-success btn-save"><i class="icon-save"></i> Guardar</a>
         </div>
 
@@ -59,9 +71,19 @@
                     </div>
                 </div>
             </g:uploadForm>
+            <g:if test="${teleh.TituloPersona.findAllByPersona(personaInstance).size() > 0}">
+                <div class="noMargin well">
+                    <div class="tituloTree">
+                        Título actualmente cargado
+                    </div>
+
+                    <p>
+                        Cargue otro archivo para reemplazar este
+                    </p>
+                    <ttl:ver class="titulo" id="${personaInstance.id}"/>
+                </div>
+            </g:if>
         </div>
-
-
         <script type="text/javascript">
 
             function submitForm(btn) {

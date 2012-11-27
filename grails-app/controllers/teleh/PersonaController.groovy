@@ -1,7 +1,5 @@
 package teleh
 
-import org.springframework.dao.DataIntegrityViolationException
-
 class PersonaController extends teleh.seguridad.ShieldPostulante {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -37,17 +35,24 @@ class PersonaController extends teleh.seguridad.ShieldPostulante {
 
     def datos() {
         def user = Persona.get(session.usuario.id)
-        return [personaInstance: user]
+
+        def tieneTitulo = TituloPersona.findAllByPersona(user).size() > 0
+        def camposCompletos = true
+        if (!user.apellido || !user.nombre) {
+            camposCompletos = false
+        }
+
+        return [personaInstance: user, completo: tieneTitulo && camposCompletos]
     }
 
-    def comboCanton(){
+    def comboCanton() {
         def prov = Provincia.get(params.id)
-        [prov:prov]
+        [prov: prov]
     }
 
-    def comboParr(){
+    def comboParr() {
         def canton = Canton.get(params.id)
-        [canton:canton]
+        [canton: canton]
     }
 
 //    def form_ajax() {
@@ -251,13 +256,20 @@ class PersonaController extends teleh.seguridad.ShieldPostulante {
     } //save
 
     def formTitulo() {
-        def personaInstance = Persona.get(params.id)
-        return [personaInstance: personaInstance]
+        def personaInstance = Persona.get(session.usuario.id)
+
+        def tieneTitulo = TituloPersona.findAllByPersona(personaInstance).size() > 0
+        def camposCompletos = true
+        if (!personaInstance.apellido || !personaInstance.nombre) {
+            camposCompletos = false
+        }
+
+        return [personaInstance: personaInstance, completo: tieneTitulo && camposCompletos]
     }
 
     def uploadArchivo() {
         def archivo = request.getFile("tituloArchivo")
-        println "upload "+params
+        println "upload " + params
         // List of OK mime-types
         def okcontents = ['image/png', 'image/jpeg', 'image/gif', 'application/pdf']
         if (!okcontents.contains(archivo.getContentType())) {
@@ -270,7 +282,7 @@ class PersonaController extends teleh.seguridad.ShieldPostulante {
         if (size > 1024 * 500) {
             flash.clase = "alert-error"
             flash.message = "El archivo del titulo debe tener un tamaño máximo de 500Kb"
-            redirect(action: 'formTitulo',id: params.persona.id)
+            redirect(action: 'formTitulo', id: params.persona.id)
             return;
         }
 
@@ -285,7 +297,7 @@ class PersonaController extends teleh.seguridad.ShieldPostulante {
         } else {
             flash.clase = "alert-error"
             flash.message = "Error grave"
-            redirect(action: 'formTitulo',id: params.persona.id)
+            redirect(action: 'formTitulo', id: params.persona.id)
             return;
         }
         titulo.properties = params
@@ -309,7 +321,7 @@ class PersonaController extends teleh.seguridad.ShieldPostulante {
             str += "</ul>"
 
             flash.message = str
-            redirect(action: 'formTitulo',id: params.persona.id)
+            redirect(action: 'formTitulo', id: params.persona.id)
             return;
         }
     }
