@@ -1,5 +1,7 @@
 package teleh
 
+import org.springframework.dao.DataIntegrityViolationException
+
 class PersonaController extends teleh.seguridad.ShieldPostulante {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -43,6 +45,49 @@ class PersonaController extends teleh.seguridad.ShieldPostulante {
         }
 
         return [personaInstance: user, completo: tieneTitulo && camposCompletos]
+    }
+
+    def cursosPersona() {
+//        println ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+//        println params
+//        println ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+        def personaInstance = Persona.get(session.usuario.id)
+//        println personaInstance
+
+        if (params.add == "true") {
+//            println "ADD!!!"
+            if (params.fecha) {
+                params.fecha = new Date().parse("dd-MM-yyyy", params.fecha)
+            }
+            params.persona = personaInstance
+            def curso = new CursoPersona(params)
+            if (curso.save(flush: true)) {
+//                println "OK"
+            } else {
+                println "NO guardo el curso de la persona " + personaInstance.id
+                println curso.errors
+            }
+        }
+
+        def cursos = CursoPersona.findAllByPersona(personaInstance)
+//        println cursos
+        return [personaInstance: personaInstance, cursos: cursos]
+    }
+
+    def deleteCursoPersona() {
+        def curso = CursoPersona.get(params.id)
+        if (curso) {
+            try {
+                curso.delete(flush: true)
+                render "OK"
+            }
+            catch (DataIntegrityViolationException e) {
+                render "NO"
+                println e
+            }
+        } else {
+            render "NO"
+        }
     }
 
     def comboCanton() {

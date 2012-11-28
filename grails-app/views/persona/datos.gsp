@@ -17,6 +17,10 @@
         </title>
         <script src="${resource(dir: 'js/jquery/plugins/jquery-validation-1.9.0', file: 'jquery.validate.min.js')}"></script>
         <script src="${resource(dir: 'js/jquery/plugins/jquery-validation-1.9.0', file: 'messages_es.js')}"></script>
+
+        <script src="${resource(dir: 'js/jquery/plugins/box/js', file: 'jquery.luz.box.js')}"></script>
+        <link href="${resource(dir: 'js/jquery/plugins/box/css', file: 'jquery.luz.box.css')}" rel="stylesheet">
+
         <style type="text/css">
         p {
             border : none !important;
@@ -50,9 +54,10 @@
             <a href="#" class="btn btn-success btn-save"><i class="icon-save"></i> Guardar</a>
         </div>
 
-        <g:form class="form-horizontal" name="frmSave-Persona" action="savePersona" style="min-width: 1200px;">
-            <g:hiddenField name="id" value="${personaInstance?.id}"/>
-            <div id="list-grupo" class="span12" role="main" style="margin-top: 10px;margin-left: -10px">
+        <g:hiddenField name="id" value="${personaInstance?.id}"/>
+        <div id="list-grupo" class="span12" role="main" style="margin-top: 10px;margin-left: -10px">
+
+            <g:form class="form-horizontal" name="frmSave-Persona" action="savePersona" style="min-width: 1200px;">
                 <div class="area">
                     <p class="tituloTree tituloGrande">Datos generales del aspirante</p>
 
@@ -550,70 +555,49 @@
                     </div>
 
                 </div>
+            </g:form>
 
-                <div class="area">
-                    <p class="tituloTree tituloGrande">Cursos afines al desarrollo integral infantil</p>
+            <div class="area">
+                <p class="tituloTree tituloGrande">Cursos afines al desarrollo integral infantil</p>
 
+                <form id="frmCurso">
                     <table class="table table-bordered table-condensed">
                         <thead>
                             <tr>
-                                <th style="width: 100px">Fecha</th>
-                                <th style="width: 425px">Institución</th>
-                                <th style="width: 425px">Nombre del curso</th>
+                                <th>Fecha</th>
+                                <th>Institución</th>
+                                <th>Nombre del curso</th>
                                 <th>Horas</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <elm:datepicker name="fecha" class="input-small required"
+                                                    minDate="new Date(2009,0,1)" maxDate="new Date(${new Date().format('yyyy')}, ${new Date().format('MM').toInteger() - 1}, ${new Date().format('dd')})"/>
+                                </td>
+                                <td>
+                                    <g:textField name="institucion" maxlength="96" class="span5 required"/>
+                                </td>
+                                <td>
+                                    <g:textField name="nombre" maxlength="96" class="span6 required"/>
+                                </td>
+                                <td>
+                                    <g:field type="number" name="horas" class="input-mini digits required"/>
+                                </td>
+                                <td>
+                                    <a href="#" class="btn btn-success" id="btnAddCurso">
+                                        <i class="icon-plus"></i>
+                                    </a>
+                                </td>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <elm:datepicker name="fecha1" style="width: 100px" class=" " value="${personaInstance?.fecha1}"
-                                                    minDate="new Date(2009,0,1)" maxDate="new Date(${new Date().format('yyyy')}, ${new Date().format('MM').toInteger() - 1}, ${new Date().format('dd')})"/>
-                                </td>
-                                <td>
-                                    <g:textField name="institucion1" style="width: 425px" maxlength="96" class="" value="${personaInstance?.institucion1}"/>
-                                </td>
-                                <td>
-                                    <g:textField name="nombreCurso1" style="width: 425px" maxlength="96" class="" value="${personaInstance?.nombreCurso1}"/>
-                                </td>
-                                <td>
-                                    <g:field type="number" name="horas1" style="width: 70px" class=" " value="${fieldValue(bean: personaInstance, field: 'horas1')}"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <elm:datepicker name="fecha2" style="width: 100px" class=" " value="${personaInstance?.fecha2}"
-                                                    minDate="new Date(2009,0,1)" maxDate="new Date(${new Date().format('yyyy')}, ${new Date().format('MM').toInteger() - 1}, ${new Date().format('dd')})"/>
-                                </td>
-                                <td>
-                                    <g:textField name="institucion2" style="width: 425px" maxlength="96" class="" value="${personaInstance?.institucion2}"/>
-                                </td>
-                                <td>
-                                    <g:textField name="nombreCurso2" style="width: 425px" maxlength="96" class="" value="${personaInstance?.nombreCurso2}"/>
-                                </td>
-                                <td>
-                                    <g:field type="number" name="horas2" style="width: 70px" class=" " value="${fieldValue(bean: personaInstance, field: 'horas2')}"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <elm:datepicker name="fecha3" style="width: 100px" class=" " value="${personaInstance?.fecha3}"
-                                                    minDate="new Date(2009,0,1)" maxDate="new Date(${new Date().format('yyyy')}, ${new Date().format('MM').toInteger() - 1}, ${new Date().format('dd')})"/>
-                                </td>
-                                <td>
-                                    <g:textField name="institucion3" style="width: 425px" maxlength="96" class="" value="${personaInstance?.institucion3}"/>
-                                </td>
-                                <td>
-                                    <g:textField name="nombreCurso3" style="width: 425px" maxlength="96" class="" value="${personaInstance?.nombreCurso3}"/>
-                                </td>
-                                <td>
-                                    <g:field type="number" name="horas3" style="width: 70px" class=" " value="${fieldValue(bean: personaInstance, field: 'horas3')}"/>
-                                </td>
-                            </tr>
+                        <tbody id="tbCursos">
+
                         </tbody>
                     </table>
-                </div>
+                </form>
             </div>
-        </g:form>
+        </div>
 
         <div class="span12 btn-group" role="navigation" style="margin-bottom: 20px;">
             <a href="#" class="btn btn-success btn-save"><i class="icon-save"></i> Guardar</a>
@@ -627,7 +611,38 @@
                 }
                 $("#frmSave-Persona").submit();
             }
+
+            function loadCursos(add) {
+                var data = "";
+                if (add) {
+                    data = $("#frmCurso").serialize();
+                }
+                data += "&add=" + add;
+                $("#tbCursos").html(spinner);
+                $.ajax({
+                    type    : "POST",
+                    url     : "${createLink(action:'cursosPersona')}",
+                    data    : data,
+                    success : function (msg) {
+                        $("#tbCursos").html(msg);
+                    }
+                });
+            }
+
+            function cleanCurso() {
+                $("#frmCurso")[0].reset();
+            }
+
+            function scroll() {
+                var container = $('body'), scrollTo = $('#frmCurso');
+                var newPos = scrollTo.offset().top - container.offset().top + container.scrollTop() - 100;
+                container.scrollTop(newPos);
+            }
+
             $(function () {
+
+                loadCursos();
+
                 $("[rel=tooltip]").tooltip();
 
                 $("#frmSave-Persona").validate({
@@ -727,6 +742,25 @@
             //                                submitForm($(".btn-success"));
             //                            }
             //                        });
+
+            $("#frmCurso").validate({
+                errorPlacement : function (error, element) {
+                    element.parent().find(".help-block").html(error).show();
+                },
+                success        : function (label) {
+                    label.parent().hide();
+                }
+            });
+
+            $("#btnAddCurso").click(function () {
+                if ($("#frmCurso").valid()) {
+                    loadCursos(true);
+                    cleanCurso();
+                    scroll();
+                }
+                return false;
+            });
+
         </script>
 
     </body>

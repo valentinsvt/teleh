@@ -11,12 +11,14 @@ import jxl.write.*
 
 class ReportesController {
 
+    def dbConnectionService
+
     def index() { }
 
     def buscadorService
     def reporteBuscador = {
 
-        // println "reporte buscador params !! "+params
+        // //println "reporte buscador params !! "+params
         if (!session.dominio)
             response.sendError(403)
         else {
@@ -30,7 +32,7 @@ class ReportesController {
 
             def baos = new ByteArrayOutputStream()
             def name = "reporte_de_" + params.titulo.replaceAll(" ", "_") + "_" + new Date().format("ddMMyyyy_hhmm") + ".pdf";
-//            println "name "+name
+//            //println "name "+name
             Font catFont = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
             Font info = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL)
             Document document
@@ -133,8 +135,140 @@ class ReportesController {
         return ia
     }
 
-
     def listaPersonasPdf() {
+        if (!params.id) {
+            params.id = 1
+        }
+        if (!params.provincia || params.provincia == "") {
+            params.provincia = null
+        }
+        if (!params.estado || params.estado == "") {
+            params.estado = null
+        }
+        if (!params.sort) {
+            params.sort = "apellido"
+        }
+        if (!params.order) {
+            params.order = "asc"
+        }
+        if (!params.datos) {
+            params.datos = "-1"
+        }
+
+        def filtroProv = "", filtroEst = "", tipoJoin = "", filtroDatos = "", filtroBusqueda = "", sort = ""
+
+        switch (params.sort) {
+            case "provincia":
+                sort = "p.provnmbr"
+                break;
+            case "canton":
+                sort = "c.cantnmbr"
+                break;
+            case "titulo":
+                sort = "t.titldscr"
+                break;
+            case "cedula":
+                sort = "i.insccedu"
+                break;
+            case "apellido":
+                sort = "i.inscapel"
+                break;
+            case "sexo":
+                sort = "i.inscsexo"
+                break;
+            case "estado":
+                sort = "e.etdodscr"
+                break;
+        }
+
+        if (params.provincia) {
+            filtroProv = " and p.prov__id=" + params.provincia + "\n"
+        }
+        if (params.estado) {
+            filtroEst = " and e.etdo__id=" + params.estado + "\n"
+        }
+        if (params.datos == '-1') { //todos
+            tipoJoin = "left"
+        } else if (params.datos == '0') { //sin datos
+            tipoJoin = "left"
+            filtroDatos = " and i.inscapel is not null and i.inscnmbr is not null" + "\n"
+        } else if (params.datos == '1') { //con datos
+            tipoJoin = "inner"
+        }
+        if (params.busqueda) {
+            filtroBusqueda = " and (upper(i.inscapel) like '%upper(" + params.busqueda + ")%' or upper(i.inscnmbr) like '%upper(" + params.busqueda + ")%') or i.insccedu like '%" + params.busqueda + "%'" + "\n"
+        }
+
+        def baseSql = "select" + "\n"
+        baseSql += "        p.provnmbr                           prov," + "\n"
+        baseSql += "        c.cantnmbr                          cant," + "\n"
+        baseSql += "        t.titldscr                          titulo," + "\n"
+        baseSql += "        i.insccedu                          cedula," + "\n"
+        baseSql += "        concat(i.inscapel,\", \", i.inscnmbr)  nombres," + "\n"
+        baseSql += "        i.inscsexo                          genero," + "\n"
+        baseSql += "        e.etdodscr                          estado" + "\n"
+        baseSql += "  from insc i" + "\n"
+        baseSql += "          " + tipoJoin + " join prov p on i.prov__id=p.prov__id" + "\n"
+        baseSql += "          " + tipoJoin + " join cant c on i.cant__id=c.cant__id" + "\n"
+        baseSql += "          " + tipoJoin + " join titl t on i.titl__id=t.titl__id" + "\n"
+        baseSql += "          " + tipoJoin + " join etdo e on i.etdo__id=e.etdo__id" + "\n"
+        baseSql += "  where i.conv__id=" + params.id + "\n"
+        baseSql += filtroProv
+        baseSql += filtroEst
+        baseSql += filtroDatos
+        baseSql += filtroBusqueda
+        baseSql += " order by " + sort + " " + params.order
+
+//        //println baseSql
+
+        def cn = dbConnectionService.getConnection()
+
+        def rows = 0
+        def results = []
+
+        cn.eachRow(baseSql) { row ->
+//            //println row.titulo
+            def m = [:]
+            m.provincia = row.prov
+            m.canton = row.cant
+            m.titulo = row.titulo
+            m.cedula = row.cedula
+            m.nombres = row.nombres
+            m.genero = row.genero
+            m.estado = row.estado
+            results.add(m)
+            rows++
+        }
+
+        cn.close()
+
+        params.totalRows = rows
+
+//        params.label = "Se encontr" + (params.totalRows == 1 ? "ó" : "aron") + " <b>${params.totalRows}</b> inscrito" + (params.totalRows == 1 ? "" : "s") + " a la convocatoria ${conv.descripcion}"
+        params.label = "Inscritos a la convocatoria ${Convocatoria.get(params.id).descripcion}"
+        if (params.provincia) {
+            params.label += " en la provincia de ${Provincia.get(params.provincia).nombre}"
+        } else {
+            params.label += " en todas las provincias"
+        }
+        if (params.estado) {
+            params.label += " con estado ${Estado.get(params.estado).descripcion}"
+        } else {
+            params.label += " con cualquier estado"
+        }
+        if (params.datos == '1') {
+            params.label += " que ya han ingresado sus datos"
+        } else if (params.datos == "0") {
+            params.label += " que aún no han ingresado sus datos"
+        }
+        if (params.busqueda) {
+            params.label += " y cuyo nombre, apellido o cédula contenga ${params.busqueda}"
+        }
+
+        return [params: params, results: results]
+    }
+
+    def listaPersonasPdfObj() {
         if (!params.id) {
             params.id = 1
         }
@@ -164,7 +298,7 @@ class ReportesController {
             est = Estado.get(params.estado.toLong())
         }
 
-//        println params
+//        //println params
         def c = Persona.createCriteria()
         def results = c.list() {
             and {
@@ -219,7 +353,213 @@ class ReportesController {
         [personaInstanceList: results, params: params]
     }
 
+
     def listaPersonasXls() {
+        if (!params.id) {
+            params.id = 1
+        }
+        if (!params.provincia || params.provincia == "") {
+            params.provincia = null
+        }
+        if (!params.estado || params.estado == "") {
+            params.estado = null
+        }
+        if (!params.sort) {
+            params.sort = "apellido"
+        }
+        if (!params.order) {
+            params.order = "asc"
+        }
+        if (!params.datos) {
+            params.datos = "-1"
+        }
+
+        def datos = [
+                [etiqueta: "CONVOCATORIA", campo: "o.convdscr", alias: "conv", width: 25],
+                [etiqueta: "PROVINCIA", campo: "p.provnmbr", alias: "prov", width: 25],
+                [etiqueta: "CANTON", campo: "c.cantnmbr", alias: "cant", width: 25],
+                [etiqueta: "PARROQUIA", campo: "a.parrnmbr", alias: "parr", width: 25],
+                [etiqueta: "COMUNIDAD", campo: "i.insccmnd", alias: "comu", width: 25],
+                [etiqueta: "CEDULA", campo: "i.insccedu", alias: "cedula", width: 13],
+                [etiqueta: "APELLIDOS", campo: "i.inscapel", alias: "apellido", width: 25],
+                [etiqueta: "NOMBRES", campo: "i.inscnmbr", alias: "nombre", width: 25],
+                [etiqueta: "FECHA NACIMIENTO", campo: "DATE_FORMAT(i.inscfecn,'%d-%m-%Y')", alias: "fecnac", width: 25],
+                [etiqueta: "TITULO", campo: "t.titldscr", alias: "titulo", width: 25],
+                [etiqueta: "ESTADO", campo: "e.etdodscr", alias: "estado", width: 12],
+                [etiqueta: "GENERO", campo: "i.inscsexo", alias: "genero", width: 12],
+                [etiqueta: "EMAIL", campo: "i.inscmail", alias: "mail", width: 25],
+                [etiqueta: "ETNIA", campo: "i.inscetni", alias: "etnia", width: 13],
+                [etiqueta: "PROMOTOR CNH", campo: "i.inscpcnh", alias: "prom", width: 10],
+                [etiqueta: "HABLA L. NATIVA", campo: "i.insclenn", alias: 'lnat', width: 10],
+                [etiqueta: "CERTIFICADO L. NATIVA", campo: "i.insccern", alias: 'cnat', width: 10],
+                [etiqueta: "MAS DE 50% L. NATIVA", campo: "i.inscln50", alias: 'cinat', width: 10],
+                [etiqueta: "L. NATIVA", campo: "ti.tpiddscr", alias: "tipoid", width: 13],
+                [etiqueta: "HABLA L. EXTR.", campo: "i.insclene", alias: "lext", width: 10],
+                [etiqueta: "CERTIFICADO L. EXTR.", campo: "i.insccere", alias: "cext", width: 10],
+                [etiqueta: "MAS DE 50% L. EXTR.", campo: "i.inscle50", alias: "ciext", width: 10],
+                [etiqueta: "DIRECCION", campo: "i.inscdire", alias: "dire", width: 25],
+                [etiqueta: "TELEFONO FIJO", campo: "i.insctelf", alias: "tel", width: 13],
+                [etiqueta: "CELULAR", campo: "i.insctelc", alias: "celu", width: 13],
+                [etiqueta: "EXPERIENCIA A.", campo: "i.inscexan", alias: "exan", width: 10],
+                [etiqueta: "EXPERIENCIA M.", campo: "i.inscexms", alias: "exms", width: 10],
+                [etiqueta: "TRABAJO COM.", campo: "i.insccomu", alias: 'trcm', width: 10]
+        ]
+
+        def filtroProv = "", filtroEst = "", tipoJoin = "", filtroDatos = "", filtroBusqueda = "", sort = ""
+
+        switch (params.sort) {
+            case "provincia":
+                sort = "p.provnmbr"
+                break;
+            case "canton":
+                sort = "c.cantnmbr"
+                break;
+            case "titulo":
+                sort = "t.titldscr"
+                break;
+            case "cedula":
+                sort = "i.insccedu"
+                break;
+            case "apellido":
+                sort = "i.inscapel"
+                break;
+            case "sexo":
+                sort = "i.inscsexo"
+                break;
+            case "estado":
+                sort = "e.etdodscr"
+                break;
+        }
+
+        if (params.provincia) {
+            filtroProv = " and p.prov__id=" + params.provincia + "\n"
+        }
+        if (params.estado) {
+            filtroEst = " and e.etdo__id=" + params.estado + "\n"
+        }
+        if (params.datos == '-1') { //todos
+            tipoJoin = "left"
+        } else if (params.datos == '0') { //sin datos
+            tipoJoin = "left"
+            filtroDatos = " and i.inscapel is not null and i.inscnmbr is not null" + "\n"
+        } else if (params.datos == '1') { //con datos
+            tipoJoin = "inner"
+        }
+        if (params.busqueda) {
+            filtroBusqueda = " and (upper(i.inscapel) like '%upper(" + params.busqueda + ")%' or upper(i.inscnmbr) like '%upper(" + params.busqueda + ")%') or i.insccedu like '%" + params.busqueda + "%'" + "\n"
+        }
+
+        def baseSql = "select" + "\n"
+
+        datos.eachWithIndex { dt, i ->
+            baseSql += "      " + dt.campo + "    " + dt.alias
+            if (i < datos.size() - 1) {
+                baseSql += ","
+            }
+            baseSql += "\n"
+        }
+
+        baseSql += "  from insc i" + "\n"
+        baseSql += "          inner join conv o on i.conv__id=o.conv__id" + "\n"
+        baseSql += "          " + tipoJoin + " join prov p on i.prov__id=p.prov__id" + "\n"
+        baseSql += "          " + tipoJoin + " join cant c on i.cant__id=c.cant__id" + "\n"
+        baseSql += "          " + tipoJoin + " join parr a on i.parr__id=a.parr__id" + "\n"
+        baseSql += "          " + tipoJoin + " join titl t on i.titl__id=t.titl__id" + "\n"
+        baseSql += "          " + tipoJoin + " join etdo e on i.etdo__id=e.etdo__id" + "\n"
+        baseSql += "          left join tpid ti on i.tpididnt=ti.tpid__id" + "\n"
+        baseSql += "  where i.conv__id=" + params.id + "\n"
+        baseSql += filtroProv
+        baseSql += filtroEst
+        baseSql += filtroDatos
+        baseSql += filtroBusqueda
+        baseSql += " order by " + sort + " " + params.order
+
+        params.label = "Inscritos a la convocatoria ${Convocatoria.get(params.id).descripcion}"
+        if (params.provincia) {
+            params.label += " en la provincia de ${Provincia.get(params.provincia).nombre}"
+        } else {
+            params.label += " en todas las provincias"
+        }
+        if (params.estado) {
+            params.label += " con estado ${Estado.get(params.estado).descripcion}"
+        } else {
+            params.label += " con cualquier estado"
+        }
+        if (params.datos == '1') {
+            params.label += " que ya han ingresado sus datos"
+        } else if (params.datos == "0") {
+            params.label += " que aún no han ingresado sus datos"
+        }
+        if (params.busqueda) {
+            params.label += " y cuyo nombre, apellido o cédula contenga ${params.busqueda}"
+        }
+
+        WorkbookSettings workbookSettings = new WorkbookSettings()
+        workbookSettings.locale = Locale.default
+
+        def file = File.createTempFile(params.filename, '.xls')
+        file.deleteOnExit()
+        //println "paso"
+        WritableWorkbook workbook = Workbook.createWorkbook(file, workbookSettings)
+
+        WritableFont font = new WritableFont(WritableFont.ARIAL, 12)
+        WritableCellFormat formatXls = new WritableCellFormat(font)
+
+        WritableSheet sheet = workbook.createSheet('Reporte', 0)
+
+        WritableFont tituloFont = new WritableFont(WritableFont.TIMES, 14, WritableFont.BOLD, true);
+        WritableCellFormat tituloFormat = new WritableCellFormat(tituloFont);
+
+        WritableFont titulo2Font = new WritableFont(WritableFont.TIMES, 13, WritableFont.BOLD, true);
+        WritableCellFormat titulo2Format = new WritableCellFormat(titulo2Font);
+
+        WritableFont times11font = new WritableFont(WritableFont.TIMES, 12, WritableFont.BOLD, true);
+        WritableCellFormat times16format = new WritableCellFormat(times11font);
+
+        WritableFont times11font2 = new WritableFont(WritableFont.TIMES, 10, WritableFont.NO_BOLD, true);
+        WritableCellFormat times16format2 = new WritableCellFormat(times11font2);
+
+        // inicia textos y numeros para asocias a columnas
+        def label = new Label(0, 1, "Texto", times16format);
+        def nmro = new Number(12, 1, 9999);
+
+        label = new Label(0, 0, "Lista de personas", tituloFormat); sheet.addCell(label)
+        label = new Label(0, 1, params.label, titulo2Format); sheet.addCell(label)
+
+        def filaIni = 3
+        datos.eachWithIndex {l, columna ->
+            //headers
+            sheet.setColumnView(columna, l.width)
+            label = new Label(columna, filaIni, l.etiqueta, times16format); sheet.addCell(label)
+        }
+
+        //println baseSql
+
+        def cn = dbConnectionService.getConnection()
+        def fila = 0
+        cn.eachRow(baseSql) { row ->
+            datos.eachWithIndex { d, col ->
+                def val = row[d.alias]
+                if (!val) {
+                    val = ""
+                }
+                label = new Label(col, fila + filaIni + 1, val.toString(), times16format2); sheet.addCell(label)
+            }
+            fila++
+        }
+
+        cn.close()
+
+        workbook.write();
+        workbook.close();
+        def output = response.getOutputStream()
+        def header = "attachment; filename=" + params.filename;
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-Disposition", header);
+        output.write(file.getBytes());
+    }
+
+    def listaPersonasXlsObj() {
         if (!params.id) {
             params.id = 1
         }
@@ -249,7 +589,7 @@ class ReportesController {
             est = Estado.get(params.estado.toLong())
         }
 
-//        println params
+//        //println params
         def c = Persona.createCriteria()
         def results = c.list() {
             and {
@@ -306,7 +646,7 @@ class ReportesController {
 
         def file = File.createTempFile(params.filename, '.xls')
         file.deleteOnExit()
-        println "paso"
+        //println "paso"
         WritableWorkbook workbook = Workbook.createWorkbook(file, workbookSettings)
 
         WritableFont font = new WritableFont(WritableFont.ARIAL, 12)
@@ -381,7 +721,7 @@ class ReportesController {
 //
         results.eachWithIndex {r, fila ->
             datos.eachWithIndex {d, columna ->
-//                println "d: " + d
+//                //println "d: " + d
                 def val
                 if (d["accion"].size() > 0) {
                     val = bsc.operacion(propiedad: d["campo"], funcion: d["accion"], registro: r)
@@ -392,9 +732,9 @@ class ReportesController {
                     val = ""
                 }
                 label = new Label(columna, fila + filaIni + 1, val.toString(), times16format2); sheet.addCell(label)
-//                println "----------------------------"
+//                //println "----------------------------"
             }
-//            println "******************************************************************************************"
+//            //println "******************************************************************************************"
         }
 
 //        datos.eachWithIndex { h, i ->

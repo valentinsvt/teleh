@@ -94,28 +94,28 @@
                     </tr>
                 </thead>
                 <tbody class="paginate">
-                    <g:each in="${results}" status="i" var="row">
+                    <g:each in="${personaInstanceList}" status="i" var="personaInstance">
                         <tr class="${i % 2 == 0 ? 'even' : 'odd'}">
                             <td>
-                                ${row.provincia}
+                                ${fieldValue(bean: personaInstance, field: "provincia")}
                             </td>
                             <td>
-                                ${row.canton}
+                                ${fieldValue(bean: personaInstance, field: "canton")}
                             </td>
                             <td>
-                                ${row.titulo}
+                                ${personaInstance.titulo?.descripcion}
                             </td>
                             <td>
-                                ${row.cedula}
+                                ${personaInstance.cedula}
                             </td>
                             <td>
-                                ${row.nombres}
+                                ${personaInstance.apellido}, ${personaInstance.nombre}
                             </td>
                             <td>
-                                ${row.genero.capitalize()}
+                                ${personaInstance.sexo?.capitalize()}
                             </td>
                             <td>
-                                ${row.estado}
+                                ${personaInstance?.estado?.descripcion}
                             </td>
                         </tr>
                     </g:each>
