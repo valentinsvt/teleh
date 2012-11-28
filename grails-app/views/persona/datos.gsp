@@ -108,6 +108,8 @@
 
                                 <div class="controls">
                                     <g:textField name="cedula" maxlength="10" class=" required" value="${personaInstance?.cedula}" disabled="true"/>
+                                    <g:hiddenField name="cedula" value="${personaInstance?.cedula}"/>
+
                                     <span class="mandatory">*</span>
 
                                     <p class="help-block ui-helper-hidden"></p>

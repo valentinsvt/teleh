@@ -2,7 +2,83 @@ package teleh
 
 class PersonaAdmController extends teleh.seguridad.Shield {
 
+    def dbConnectionService
+
     def index() { }
+
+    def fixCursos() {
+        def sql = "select i.insc__id     id,\n" +
+                "        (select count(c.crso__id) from crso c where i.insc__id = c.insc__id) cant\n" +
+                "  from insc i\n" +
+                "  where inscfec1 is not null\n" +
+                "          or inscfec2 is not null\n" +
+                "          or inscfec3 is not null\n" +
+                "          or horas1 > 0\n" +
+                "          or horas2 > 0\n" +
+                "          or horas3 > 0\n" +
+                "          or inscins1 is not null\n" +
+                "          or inscins2 is not null\n" +
+                "          or inscins3 is not null\n" +
+                "          or insccur1 is not null\n" +
+                "          or insccur2 is not null\n" +
+                "          or insccur3 is not null\n" +
+                "  having (select count(c.crso__id) from crso c where i.insc__id = c.insc__id) = 0"
+        def res = []
+        def cn = dbConnectionService.getConnection()
+        cn.eachRow(sql) { row ->
+            def persona = Persona.get(row.id)
+
+            if (persona.fecha1 || persona.horas1 > 0 || persona.institucion1 || persona.nombreCurso1) {
+                println "CURSO 1: " + persona.fecha1 + "  " + persona.horas1 + "   " + persona.institucion1 + "   " + persona.nombreCurso1
+                def curso1 = new CursoPersona()
+                curso1.persona = persona
+                curso1.fecha = persona.fecha1
+                curso1.horas = persona.horas1
+                curso1.institucion = persona.institucion1
+                curso1.nombre = persona.nombreCurso1
+                if (curso1.save(flush: true)) {
+                    println "curso 1 saved ok"
+                } else {
+                    println "curso 1 not saved"
+                    println curso1.errors
+                }
+            }
+            if (persona.fecha2 || persona.horas2 > 0 || persona.institucion2 || persona.nombreCurso2) {
+                println "CURSO 2: " + persona.fecha2 + "  " + persona.horas2 + "   " + persona.institucion2 + "   " + persona.nombreCurso2
+                def curso2 = new CursoPersona()
+                curso2.persona = persona
+                curso2.fecha = persona.fecha2
+                curso2.horas = persona.horas2
+                curso2.institucion = persona.institucion2
+                curso2.nombre = persona.nombreCurso2
+                if (curso2.save(flush: true)) {
+                    println "curso 2 saved ok"
+                } else {
+                    println "curso 2 not saved"
+                    println curso2.errors
+                }
+            }
+            if (persona.fecha3 || persona.horas3 > 0 || persona.institucion3 || persona.nombreCurso3) {
+                println "CURSO 3: " + persona.fecha3 + "  " + persona.horas3 + "   " + persona.institucion3 + "   " + persona.nombreCurso3
+                def curso3 = new CursoPersona()
+                curso3.persona = persona
+                curso3.fecha = persona.fecha3
+                curso3.horas = persona.horas3
+                curso3.institucion = persona.institucion3
+                curso3.nombre = persona.nombreCurso3
+                if (curso3.save(flush: true)) {
+                    println "curso 3 saved ok"
+                } else {
+                    println "curso 3 not saved"
+                    println curso3.errors
+                }
+            }
+
+            res.add(persona)
+        }
+        cn.close()
+        return [res: res]
+    }
 
     def list() {
         if (!params.id) {

@@ -244,6 +244,7 @@ class PersonaController extends teleh.seguridad.ShieldPostulante {
 //    } //save
 
     def savePersona() {
+        println params
         if (params.fechaNacimiento) {
             params.fechaNacimiento = new Date().parse("dd-MM-yyyy", params.fechaNacimiento)
         }
@@ -272,6 +273,7 @@ class PersonaController extends teleh.seguridad.ShieldPostulante {
             personaInstance = new Persona(params)
         } //es create
         if (!personaInstance.save(flush: true)) {
+            println personaInstance.errors
             flash.clase = "alert-error"
             def str = "<h4>No se pudo guardar Persona " + (personaInstance.id ? personaInstance.id : "") + "</h4>"
 
@@ -290,13 +292,9 @@ class PersonaController extends teleh.seguridad.ShieldPostulante {
             return
         }
 
-        if (params.id) {
-            flash.clase = "alert-success"
-            flash.message = "Se ha guardado correctamente la Persona " + personaInstance.nombre + " " + personaInstance.apellido
-        } else {
-            flash.clase = "alert-success"
-            flash.message = "Se ha creado correctamente Persona " + personaInstance.id
-        }
+        flash.clase = "alert-success"
+        flash.message = "Sus datos se han guardado correctamente"
+
         redirect(action: 'formTitulo', id: personaInstance.id)
     } //save
 
@@ -327,7 +325,7 @@ class PersonaController extends teleh.seguridad.ShieldPostulante {
         if (size > 1024 * 500) {
             flash.clase = "alert-error"
             flash.message = "El archivo del titulo debe tener un tamaño máximo de 500Kb"
-            redirect(action: 'formTitulo', id: params.persona.id)
+            redirect(action: 'formTitulo')
             return;
         }
 
@@ -342,18 +340,18 @@ class PersonaController extends teleh.seguridad.ShieldPostulante {
         } else {
             flash.clase = "alert-error"
             flash.message = "Error grave"
-            redirect(action: 'formTitulo', id: params.persona.id)
+            redirect(action: 'formTitulo')
             return;
         }
         titulo.properties = params
         if (titulo.save(flush: true)) {
             flash.clase = "alert-success"
-            flash.message = "Se ha cargado correctamente el título de la Persona " + persona.nombre + " " + persona.apellido
-            redirect(action: 'datos')
+            flash.message = "Se ha cargado correctamente el título"
+            redirect(action: 'formTitulo')
             return;
         } else {
             flash.clase = "alert-error"
-            def str = "<h4>No se pudo guardar el título de la Persona " + persona.nombre + " " + persona.apellido + "</h4>"
+            def str = "<h4>No se pudo guardar el título"
 
             str += "<ul>"
             titulo.errors.allErrors.each { err ->
@@ -366,7 +364,7 @@ class PersonaController extends teleh.seguridad.ShieldPostulante {
             str += "</ul>"
 
             flash.message = str
-            redirect(action: 'formTitulo', id: params.persona.id)
+            redirect(action: 'formTitulo')
             return;
         }
     }
