@@ -259,6 +259,7 @@ class PersonaController extends teleh.seguridad.ShieldPostulante {
         }
         params.estado = Estado.findByCodigo("I")
         def personaInstance
+        /*
         if (params.id) {
             personaInstance = Persona.get(params.id)
             if (!personaInstance) {
@@ -267,11 +268,14 @@ class PersonaController extends teleh.seguridad.ShieldPostulante {
                 redirect(action: 'datos')
                 return
             }//no existe el objeto
-            personaInstance.properties = params
+//            personaInstance.properties = params
         }//es edit
         else {
-            personaInstance = new Persona(params)
+//            personaInstance = new Persona(params)
         } //es create
+        */
+        personaInstance = Persona.get(session.usuario.id)
+        personaInstance.properties = params
         if (!personaInstance.save(flush: true)) {
             println personaInstance.errors
             flash.clase = "alert-error"

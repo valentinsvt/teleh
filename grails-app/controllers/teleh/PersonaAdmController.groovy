@@ -298,4 +298,60 @@ class PersonaAdmController extends teleh.seguridad.Shield {
         out.close();
     }
 
+
+    def fix() {
+        //para probar:
+        /*
+        select group_concat(insc__id), insccedu, count(insccedu) from insc group by insccedu having count(insccedu) >1;
+
+        select insc__id, ttprtipo, count(insc__id) from ttpr group by insc__id order by 1;
+         */
+        def sql = "select insccedu, count(insccedu) from insc group by insccedu having count(insccedu) >1";
+        def cn = dbConnectionService.getConnection()
+        cn.eachRow(sql) {r ->
+
+            def prsn = Persona.findAllByCedula(r[0], [sort: "id"])
+            def noDelete
+            def titulo
+            def cursos
+            def ultimo = prsn.pop()
+            noDelete = prsn[0]
+            prsn.remove(0)
+            if (!noDelete.pin)
+                println 'wtf'
+            ultimo.properties.each {
+                if (!it.key.endsWith("Id") && it.key != "id") {
+                    if (it.value && noDelete.properties[it.key] != it.value) {
+//                        println "cambio " + it + "   de " + noDelete.properties[it.key] + "   a " + it.value
+                        noDelete.properties[it.key] = it.value
+                    }
+                } else {
+//                    println ">>" + it.key
+                }
+            }
+            titulo = TituloPersona.findByPersona(ultimo)
+//            print "borraciones  "
+            prsn.each {pr ->
+                if (!titulo)
+                    titulo = TituloPersona.findByPersona(pr)
+//                print " " + pr.id
+                pr.delete(flush: true)
+            }
+
+            if (titulo) {
+                titulo.persona = noDelete
+                titulo.save(flush: true)
+            }
+//            print " " + ultimo.id + "\n"
+            ultimo.delete(flush: true)
+//            println "save no delete " + noDelete.id
+//            println "------------------------------------------------------"
+            noDelete.save(flush: true)
+
+
+        }
+
+
+    }
+
 }

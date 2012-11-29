@@ -17,7 +17,7 @@ environments {
     development {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:mysql://10.0.0.1/teleh?useUnicode=true&characterEncoding=UTF-8"
+            url = "jdbc:mysql://10.0.0.1/cnh"
             //url = "jdbc:postgresql://10.0.0.3:5432/tages"
             username = "root"
             password = "root"
