@@ -33,27 +33,38 @@
 
             <div id="list-Persona" class="span12" role="main" style="margin-top: 10px;">
 
-                <div class="row">
-                    <div class="span12">
-                        Inscritos
-                        en la convocatoria <g:select class="input-medium" name="convocatoria" from="${teleh.Convocatoria.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion" value="${params.id}"/>
-                        en <g:select class="input-medium" name="provincia" from="${teleh.Provincia.list([sort: 'nombre'])}" optionKey="id" optionValue="nombre" value="${params.provincia}" noSelection="['': 'Todas las provincias']"/>
-                        con estado <g:select class="input-medium" name="estado" from="${teleh.Estado.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion" value="${params.estado}" noSelection="['': 'Cualquiera']"/>
-                        <g:select class="input-small" name="datos" from="${['-1': 'Todos', '0': 'Sin datos', '1': 'Con datos']}" optionKey="key" optionValue="value" value="${params.datos}"/>
+                <g:form class="well" name="frmSearch" params="${[max: params.max, sort: params.sort, order: params.order]}" action="list">
+                    <div class="row">
+                        <div class="span12">
+                            Inscritos en
+                            la convocatoria <g:select class="input-medium" name="convocatoria" from="${teleh.Convocatoria.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion" value="${params.id}"/>
+                            en <g:select class="input-medium" name="provincia" from="${teleh.Provincia.list([sort: 'nombre'])}" optionKey="id" optionValue="nombre" value="${params.provincia}" noSelection="['': 'Todas las provincias']"/>
+                            con estado <g:select class="input-medium" name="estado" from="${teleh.Estado.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion" value="${params.estado}" noSelection="['': 'Cualquiera']"/>
+                            <g:select class="input-small" name="datos" from="${['-1': 'Todos', '0': 'Sin datos', '1': 'Con datos']}" optionKey="key" optionValue="value" value="${params.datos}"/>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="row">
+                        <div class="span12">
+                            con nombre, apellido o cédula que contenga <input type='text' name="busqueda" class='span2 search-query' value="${params.busqueda}"/>
+                            <a href="#" id="btnFiltrar" class="btn btn-info" style="margin-bottom: 9px;">
+                                <i class=" icon-search"></i> Filtrar
+                            </a>
+                        </div>
+                    </div>
+                </g:form>
 
                 <div class="row">
                     <div class="span9">
                         ${params.label}
                     </div>
-                    <g:form class='span31 form-search' name="frmBuscar" action="list" params="${[provincia: params.provincia]}" id="${params.id}">
-                        <div class='input-append'>
-                            <input type='text' name="busqueda" class='span2 search-query' value="${params.busqueda}"/>
-                            %{--<a href='#' class='btn' id="btnBuscar"><i class='icon-zoom-in'></i> Buscar</a>--}%
-                            <g:submitButton name="Buscar" class='btn'/>
-                        </div>
-                    </g:form>
+                    %{--<g:form class='span31 form-search' name="frmBuscar" action="list" params="${[provincia: params.provincia]}" id="${params.id}">--}%
+                    %{--<div class='input-append'>--}%
+                    %{--<input type='text' name="busqueda" class='span2 search-query' value="${params.busqueda}"/>--}%
+                    %{--<a href='#' class='btn' id="btnBuscar"><i class='icon-zoom-in'></i> Buscar</a>--}%
+                    %{--<g:submitButton name="Buscar" class='btn'/>--}%
+                    %{--</div>--}%
+                    %{--</g:form>--}%
                 </div>
 
                 <div class="row">
@@ -65,11 +76,11 @@
                 <div class="row">
                     <div class="span12 btn-group">
                         <a href="#" class="btn btn-export" rel="tooltip" title="Exportar esta búsqueda a Excel" id="xls">
-                            <i class="icon-table"></i>
+                            <i class="icon-table"></i> Exportar a Excel
                         </a>
-                        <a href="#" class="btn btn-export" rel="tooltip" title="Exportar esta búsqueda a PDF" id="pdf">
-                            <i class="icon-file"></i>
-                        </a>
+                        %{--<a href="#" class="btn btn-export" rel="tooltip" title="Exportar esta búsqueda a PDF" id="pdf">--}%
+                        %{--<i class="icon-file"></i>--}%
+                        %{--</a>--}%
                     </div>
                 </div>
 
@@ -178,22 +189,28 @@
                         return false;
                     }); //click btn show
 
-                    $("#convocatoria").change(function () {
-                        var conv = $(this).val();
-                        location.href = "${createLink(action:'list')}/" + conv;
+                    $("#btnFiltrar").click(function () {
+                        $(this).replaceWith(spinner);
+//                        console.log($("#frmSearch").serialize());
+                        $("#frmSearch").submit();
                     });
-                    $("#provincia").change(function () {
-                        var prov = $(this).val();
-                        location.href = "${createLink(action:'list', id:params.id)}?provincia=" + prov;
-                    });
-                    $("#estado").change(function () {
-                        var est = $(this).val();
-                        location.href = "${createLink(action:'list', id:params.id)}?estado=" + est;
-                    });
-                    $("#datos").change(function () {
-                        var dat = $(this).val();
-                        location.href = "${createLink(action:'list', id:params.id)}?datos=" + dat;
-                    });
+
+                    %{--$("#convocatoria").change(function () {--}%
+                    %{--var conv = $(this).val();--}%
+                    %{--location.href = "${createLink(action:'list')}/" + conv;--}%
+                    %{--});--}%
+                    %{--$("#provincia").change(function () {--}%
+                    %{--var prov = $(this).val();--}%
+                    %{--location.href = "${createLink(action:'list', id:params.id)}?provincia=" + prov;--}%
+                    %{--});--}%
+                    %{--$("#estado").change(function () {--}%
+                    %{--var est = $(this).val();--}%
+                    %{--location.href = "${createLink(action:'list', id:params.id)}?estado=" + est;--}%
+                    %{--});--}%
+                    %{--$("#datos").change(function () {--}%
+                    %{--var dat = $(this).val();--}%
+                    %{--location.href = "${createLink(action:'list', id:params.id)}?datos=" + dat;--}%
+                    %{--});--}%
 
                     $(".show").click(function () {
                         var id = $(this).data("id");

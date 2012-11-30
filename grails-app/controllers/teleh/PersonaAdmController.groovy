@@ -110,6 +110,8 @@ class PersonaAdmController extends teleh.seguridad.Shield {
             params.datos = "-1"
         }
 
+        println params
+
         def conv, prov, est
 
         conv = Convocatoria.get(params.id.toLong())
@@ -119,7 +121,7 @@ class PersonaAdmController extends teleh.seguridad.Shield {
         if (params.estado) {
             est = Estado.get(params.estado.toLong())
         }
-
+//
 //        println params
         def c = Persona.createCriteria()
         def results = c.list(max: params.max, offset: params.offset) {
