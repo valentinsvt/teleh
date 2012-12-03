@@ -39,7 +39,6 @@ grails.resources.adhoc.patterns = ['/images/*', '/css/*', '/js/*', '/plugins/*']
 grails.views.default.codec = "none" // none, html, base64
 grails.views.gsp.encoding = "UTF-8"
 grails.converters.encoding = "UTF-8"
-
 // enable Sitemesh preprocessing of GSP pages
 grails.views.gsp.sitemesh.preprocess = true
 // scaffolding templates configuration
@@ -90,8 +89,38 @@ log4j = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
-
+/*
 grails {
+    mail {
+        host = "172.16.0.94"
+        port = 25
+        username = "info@infa.gob.ec"
+        password = "info"
+        props = ["mail.smtp.auth": "true",
+		"mail.debug": "true",
+                "mail.smtp.socketFactory.port": "25",
+                "mail.smtp.socketFactory.class": "javax.net.ssl.SSLSocketFactory",
+                "mail.smtp.socketFactory.fallback": "false"]
+
+    }
+}*/
+grails {
+    mail {
+        host = "172.16.0.94"
+        port = 25
+        username = "info@infa.gob.ec"
+        password = "info"
+        props = ["mail.debug": "true",
+                "mail.smtp.protocol": "smtps",
+                "mail.smtp.auth": "true",
+                "mail.smtp.starttls.enable": "true",
+                "mail.smtp.host": "172.16.0.94",
+                "mail.smtp.user": "info@infa.gob.ec",
+                "mail.smtp.password": "info"]
+    }
+
+}
+/*grails {
     mail {
         host = "smtp.gmail.com"
         port = 465
@@ -103,6 +132,6 @@ grails {
                 "mail.smtp.socketFactory.fallback": "false"]
 
     }
-}
+}*/
 
 grails.resources.debug = true

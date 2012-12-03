@@ -4,7 +4,6 @@ dataSource {
     //dialect = org.hibernate.dialect.PostgreSQLDialect
     driverClassName = "com.mysql.jdbc.Driver"
     dialect =  "org.hibernate.dialect.MySQL5InnoDBDialect"
-
 }
 hibernate {
     cache.use_second_level_cache=true
@@ -18,7 +17,7 @@ environments {
         dataSource {
             dbCreate = "update"
             url = "jdbc:mysql://10.0.0.1/cnh"
-            //url = "jdbc:postgresql://10.0.0.3:5432/tages"
+            //url = "jdbc:mysql://127.0.0.1/cnh"
             username = "root"
             password = "root"
         }
@@ -26,19 +25,16 @@ environments {
     test {
         dataSource {
             dbCreate = "update"
-            //url = "jdbc:postgresql://10.0.0.3:5432/mies"
-            url = "jdbc:postgresql://127.0.0.1:5432/v"
-            username = "postgres"
-            //password = "postgres"
-            password = "Sunday.server.2011"
+            url = "jdbc:mysql://10.0.0.3/teleh"
+            username = "root"
         }
     }
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:mysql://localhost/teleh"
+            url = "jdbc:mysql://127.0.0.1/cnh"
             username = "root"
-            password = "mies1809"
+            password = "cnhRoot"
         }
     }
 }
