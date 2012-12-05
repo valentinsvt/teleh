@@ -6,7 +6,7 @@ class Examen {
 
     String descripcion
     String proposito
-    int tipo=0
+    int tipo=0 //0->examen, 1->encuesta
 
     static mapping = {
         table 'exmn'

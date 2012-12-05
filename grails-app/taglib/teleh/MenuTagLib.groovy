@@ -33,7 +33,7 @@ class MenuTagLib {
         def items = [:]
 
 
-        switch(session.perfil) {
+        switch (session.perfil) {
             case "admin":
 //                items.administracion = [:]
 //                items.administracion.label = "Administración"
@@ -75,6 +75,11 @@ class MenuTagLib {
                 items.auxiliar.controller = "auxiliar"
                 items.auxiliar.action = "list"
                 items.auxiliar.label = "Usuarios"
+
+                items.examen = [:]
+                items.examen.label = "Exámenes"
+                items.examen.controller = "examen"
+                items.examen.action = "list"
                 break;
         }
 

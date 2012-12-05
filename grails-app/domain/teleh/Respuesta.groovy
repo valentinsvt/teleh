@@ -6,7 +6,7 @@ class Respuesta {
 
     Pregunta pregunta
     String respuesta
-    int correcta=0
+    int correcta=0 //0->incorrecta, 1-> correcta
 
     static mapping = {
         table 'resp'
