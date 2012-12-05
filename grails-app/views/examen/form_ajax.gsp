@@ -34,20 +34,20 @@
         </div>
     </div>
 
-    <div class="control-group">
-        <div>
-            <span class="control-label label label-inverse">
-                Tipo
-            </span>
-        </div>
+    %{--<div class="control-group">--}%
+        %{--<div>--}%
+            %{--<span class="control-label label label-inverse">--}%
+                %{--Tipo--}%
+            %{--</span>--}%
+        %{--</div>--}%
 
-        <div class="controls">
-            <g:select from="['0': 'Examen', '1': 'Encuesta']" name="tipo" class=" required" value="${fieldValue(bean: examenInstance, field: 'tipo')}" optionKey="key" optionValue="value"/>
-            <span class="mandatory">*</span>
+        %{--<div class="controls">--}%
+            %{--<g:select from="['0': 'Examen', '1': 'Encuesta']" name="tipo" class=" required" value="${fieldValue(bean: examenInstance, field: 'tipo')}" optionKey="key" optionValue="value"/>--}%
+            %{--<span class="mandatory">*</span>--}%
 
-            <p class="help-block ui-helper-hidden"></p>
-        </div>
-    </div>
+            %{--<p class="help-block ui-helper-hidden"></p>--}%
+        %{--</div>--}%
+    %{--</div>--}%
 
 </g:form>
 

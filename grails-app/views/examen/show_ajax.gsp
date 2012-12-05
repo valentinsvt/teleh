@@ -40,21 +40,21 @@
             </div>
         </g:if>
 
-        <div class="control-group">
-            <div>
-                <span id="tipo-label" class="control-label label label-inverse">
-                    Tipo
-                </span>
-            </div>
+        %{--<div class="control-group">--}%
+            %{--<div>--}%
+                %{--<span id="tipo-label" class="control-label label label-inverse">--}%
+                    %{--Tipo--}%
+                %{--</span>--}%
+            %{--</div>--}%
 
-            <div class="controls">
+            %{--<div class="controls">--}%
 
-                <span aria-labelledby="tipo-label">
-                    ${examenInstance.tipo == 0 ? 'Examen' : 'Encuesta'}
-                </span>
+                %{--<span aria-labelledby="tipo-label">--}%
+                    %{--${examenInstance.tipo == 0 ? 'Examen' : 'Encuesta'}--}%
+                %{--</span>--}%
 
-            </div>
-        </div>
+            %{--</div>--}%
+        %{--</div>--}%
 
     </form>
 </div>

@@ -58,7 +58,11 @@
 
             <ul class="one-to-many">
                 <g:each in="${preguntaInstance?.respuestas ?}" var="r">
-                    <li><g:link controller="respuesta" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></li>
+                    <li>
+                        %{--<g:link controller="respuesta" action="show" id="${r.id}">--}%
+                            ${r?.encodeAsHTML()}
+                        %{--</g:link>--}%
+                    </li>
                 </g:each>
                 %{--<li class="add">--}%
                     %{--<g:link controller="respuesta" action="create" params="['pregunta.id': preguntaInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'respuesta.label', default: 'Respuesta')])}</g:link>--}%

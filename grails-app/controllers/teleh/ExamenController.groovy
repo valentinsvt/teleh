@@ -29,6 +29,7 @@ class ExamenController extends teleh.seguridad.Shield {
     } //form_ajax
 
     def save() {
+        params.tipo = 0
         def examenInstance
         if (params.id) {
             examenInstance = Examen.get(params.id)

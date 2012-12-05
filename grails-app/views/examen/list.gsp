@@ -44,7 +44,7 @@
 
                         <g:sortableColumn property="proposito" title="Propósito"/>
 
-                        <g:sortableColumn property="tipo" title="Tipo"/>
+                        %{--<g:sortableColumn property="tipo" title="Tipo"/>--}%
                         <th style="width: 70px;">Preguntas</th>
 
                         <th width="150">Acciones</th>
@@ -58,9 +58,9 @@
 
                             <td>${fieldValue(bean: examenInstance, field: "proposito")}</td>
 
-                            <td>
-                                ${examenInstance.tipo == 0 ? 'Examen' : 'Encuesta'}
-                            </td>
+                            %{--<td>--}%
+                                %{--${examenInstance.tipo == 0 ? 'Examen' : 'Encuesta'}--}%
+                            %{--</td>--}%
 
                             <td>
                                 ${teleh.Pregunta.countByExamen(examenInstance)}
