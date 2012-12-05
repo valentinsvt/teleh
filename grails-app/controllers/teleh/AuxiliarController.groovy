@@ -29,6 +29,7 @@ class AuxiliarController extends teleh.seguridad.Shield {
     } //form_ajax
 
     def save() {
+        println params
         def auxiliarInstance
         if (params.id) {
             auxiliarInstance = Auxiliar.get(params.id)

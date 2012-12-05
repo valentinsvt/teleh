@@ -40,6 +40,7 @@
                     <tr>
                     
                         <g:sortableColumn property="usuario" title="Usuario" />
+                        <g:sortableColumn property="descripcion" title="Descripción" />
 
                         <th width="150">Acciones</th>
                     </tr>
@@ -49,7 +50,8 @@
                     <tr>
                     
                         <td>${fieldValue(bean: auxiliarInstance, field: "usuario")}</td>
-                    
+                        <td>${fieldValue(bean: auxiliarInstance, field: "descripcion")}</td>
+
                         <td>
                             <a class="btn btn-small btn-show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${auxiliarInstance.id}">
                                 <i class="icon-zoom-in icon-large"></i>

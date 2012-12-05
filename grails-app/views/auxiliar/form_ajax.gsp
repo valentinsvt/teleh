@@ -4,7 +4,7 @@
 <div id="create-Auxiliar" class="span" role="main">
     <g:form class="form-horizontal" name="frmSave-Auxiliar" action="save">
         <g:hiddenField name="id" value="${auxiliarInstance?.id}"/>
-                
+
         <div class="control-group">
             <div>
                 <span class="control-label label label-inverse">
@@ -13,12 +13,37 @@
             </div>
 
             <div class="controls">
-                <g:textField name="usuario" maxlength="20" class="" value="${auxiliarInstance?.usuario}"/>
-                
+                <g:textField name="usuario" maxlength="20" class="required" value="${auxiliarInstance?.usuario}"/>
+
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </div>
-                
+
+        <div class="control-group">
+            <div>
+                <span class="control-label label label-inverse">
+                    Descripción
+                </span>
+            </div>
+
+            <div class="controls">
+                <g:textField name="descripcion" maxlength="60" class="required" value="${auxiliarInstance?.descripcion}"/>
+                <p class="help-block ui-helper-hidden"></p>
+            </div>
+        </div>
+         <div class="control-group">
+            <div>
+                <span class="control-label label label-inverse">
+                    Tipo
+                </span>
+            </div>
+
+            <div class="controls">
+                <g:textField name="tipo" maxlength="1" class="" value="${auxiliarInstance?.tipo}"/>
+
+                <p class="help-block ui-helper-hidden"></p>
+            </div>
+        </div>
         <div class="control-group">
             <div>
                 <span class="control-label label label-inverse">
@@ -31,9 +56,9 @@
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </div>
-                
 
-                
+
+
     </g:form>
 
 <script type="text/javascript">
