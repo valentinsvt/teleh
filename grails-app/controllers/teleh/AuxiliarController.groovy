@@ -38,21 +38,19 @@ class AuxiliarController extends teleh.seguridad.Shield {
                 redirect(action: 'list')
                 return
             }//no existe el objeto
-            if(params.pass!="teleh")  {
+            if (params.pass != "teleh") {
                 def pass = params.password.encodeAsMD5()
                 params.remove("password")
-                auxiliarInstance.password=pass
+                auxiliarInstance.password = pass
             }
 
             auxiliarInstance.properties = params
 
         }//es edit
         else {
-            def pass = params.password.encodeAsMD5()
-            params.remove("password")
+            auxiliarInstance = new Auxiliar()
+            params.password = params.password.encodeAsMD5()
             auxiliarInstance.properties = params
-            auxiliarInstance = new Auxiliar(params)
-            auxiliarInstance.password=pass
         } //es create
         if (!auxiliarInstance.save(flush: true)) {
             flash.clase = "alert-error"
@@ -75,10 +73,10 @@ class AuxiliarController extends teleh.seguridad.Shield {
 
         if (params.id) {
             flash.clase = "alert-success"
-            flash.message = "Se ha actualizado correctamente Auxiliar " + auxiliarInstance.id
+            flash.message = "Se ha actualizado correctamente Auxiliar " + (auxiliarInstance.id ? auxiliarInstance.usuario : "")
         } else {
             flash.clase = "alert-success"
-            flash.message = "Se ha creado correctamente Auxiliar " + auxiliarInstance.id
+            flash.message = "Se ha creado correctamente Auxiliar " + (auxiliarInstance.id ? auxiliarInstance.usuario : "")
         }
         redirect(action: 'list')
     } //save
