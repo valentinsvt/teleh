@@ -224,7 +224,7 @@
                                         <g:set var="tipos" value="${['N', 'A']}"/>
                                     </g:else>
                                     <g:select id="titulo" name="titulo.id" from="${teleh.Titulo.findAllByTipoInList(tipos, [sort: 'descripcion'])}"
-                                              optionKey="id" optionValue="${{it.descripcion + ' (' + it.tipoTitulo.descripcion + ')'}}" class="many-to-one required"
+                                              optionKey="id" optionValue="${{ it.descripcion + ' (' + it.tipoTitulo.descripcion + ')' }}" class="many-to-one required"
                                               value="${personaInstance?.titulo?.id}" noSelection="['': '']"/>
                                     <span class="mandatory">*</span>
 
@@ -266,7 +266,7 @@
                                 <div class="controls">
                                     <g:select name="certificadoNativo" style="width: 70px" from="${personaInstance.constraints.certificadoNativo.inList}" class=" required nativa"
                                               rel="tooltip" title="Certificado por la Dirección Intercultural Bilingüe"
-                                              value="${personaInstance?.certificadoNativo}" valueMessagePrefix="persona.certificadoNativo" disabled="${personaInstance?.lenguaNativa == 'NO'}"/>
+                                              value="${personaInstance?.certificadoNativo ?: 'NO'}" valueMessagePrefix="persona.certificadoNativo" disabled="${personaInstance?.lenguaNativa == 'NO'}"/>
                                 </div>
                             </div>
                         </div>
@@ -302,7 +302,7 @@
                                 <div class="controls">
                                     <g:select name="habla50Nativa" style="width: 70px" from="${personaInstance.constraints.habla50Nativa.inList}" class=" required nativa"
                                               rel="tooltip" title="Habla más del 50% de la lengua nativa?"
-                                              value="${personaInstance?.habla50Nativa}" valueMessagePrefix="persona.habla50Nativa" disabled="${personaInstance?.lenguaNativa == 'NO'}"/>
+                                              value="${personaInstance?.habla50Nativa ?: 'NO'}" valueMessagePrefix="persona.habla50Nativa" disabled="${personaInstance?.lenguaNativa == 'NO'}"/>
                                 </div>
                             </div>
                         </div>
@@ -319,7 +319,7 @@
                                 <div class="controls">
                                     <g:select name="lenguaExtrangera" style="width: 70px" from="${personaInstance.constraints.lenguaExtrangera.inList}" class=" required lengua"
                                               rel="tooltip" title="Domina alguna lengua extranjera"
-                                              value="${personaInstance?.lenguaExtrangera}" valueMessagePrefix="persona.lenguaExtrangera" data-tipo="extrangera"/>
+                                              value="${personaInstance?.lenguaExtrangera ?: 'NO'}" valueMessagePrefix="persona.lenguaExtrangera" data-tipo="extrangera"/>
                                 </div>
                             </div>
                         </div>
@@ -335,7 +335,7 @@
                                 <div class="controls">
                                     <g:select name="certificadoExtrangero" style="width: 70px" from="${personaInstance.constraints.certificadoExtrangero.inList}" class=" required extrangera"
                                               rel="tooltip" title="Certificado por Institución reconocida"
-                                              value="${personaInstance?.certificadoExtrangero}" valueMessagePrefix="persona.certificadoExtrangero" disabled="${personaInstance?.lenguaExtrangera == 'NO'}"/>
+                                              value="${personaInstance?.certificadoExtrangero ?: 'NO'}" valueMessagePrefix="persona.certificadoExtrangero" disabled="${personaInstance?.lenguaExtrangera == 'NO'}"/>
                                 </div>
                             </div>
                         </div>
@@ -353,7 +353,7 @@
                                 <div class="controls">
                                     <g:select name="habla50Extrangera" style="width: 70px" from="${personaInstance.constraints.habla50Extrangera.inList}" class=" required extrangera"
                                               rel="tooltip" title="Habla más del 50% de la lengua extranjera?"
-                                              value="${personaInstance?.habla50Extrangera}" valueMessagePrefix="persona.habla50Extrangera" disabled="${personaInstance?.lenguaExtrangera == 'NO'}"/>
+                                              value="${personaInstance?.habla50Extrangera ?: 'NO'}" valueMessagePrefix="persona.habla50Extrangera" disabled="${personaInstance?.lenguaExtrangera == 'NO'}"/>
                                 </div>
                             </div>
                         </div>
