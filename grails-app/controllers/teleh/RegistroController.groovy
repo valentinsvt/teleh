@@ -7,7 +7,7 @@ class RegistroController {
     def index() {
         def fecha = new Date()
         session.convocatoria=null
-        def conv = Convocatoria.findByFechaInicioLessThanEqualsAndFechaFinGreaterThanEquals(fecha,fecha)
+        def conv = Convocatoria.findByFechaInicioLessThanEqualsAndFechaRegistroGreaterThanEquals(fecha,fecha)
         if (conv)
             session.convocatoria=conv
         def mensaje=params.msn

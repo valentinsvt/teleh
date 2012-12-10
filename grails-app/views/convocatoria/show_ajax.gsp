@@ -38,6 +38,23 @@
             </div>
         </div>
     </g:if>
+
+    <g:if test="${convocatoriaInstance?.fechaRegistro}">
+        <div class="control-group">
+            <div>
+                <span id="fechaRegistro-label" class="control-label label label-inverse">
+                    Fecha Máxima de registro
+                </span>
+            </div>
+            <div class="controls">
+
+                <span aria-labelledby="fechaInicio-label">
+                    <g:formatDate date="${convocatoriaInstance?.fechaRegistro}" />
+                </span>
+
+            </div>
+        </div>
+    </g:if>
     
     <g:if test="${convocatoriaInstance?.fechaFin}">
         <div class="control-group">

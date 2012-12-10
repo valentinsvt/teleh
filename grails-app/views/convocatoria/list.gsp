@@ -1,4 +1,3 @@
-
 <%@ page import="teleh.Convocatoria" %>
 <!doctype html>
 <html>
@@ -10,6 +9,7 @@
         <script src="${resource(dir: 'js/jquery/plugins/jquery-validation-1.9.0', file: 'jquery.validate.min.js')}"></script>
         <script src="${resource(dir: 'js/jquery/plugins/jquery-validation-1.9.0', file: 'messages_es.js')}"></script>
     </head>
+
     <body>
 
         <div class="span12">
@@ -27,6 +27,7 @@
                 Crear  Convocatoria
             </a>
         </div>
+
         <div id="search" class="pull-right"></div>
 
         <g:form action="delete" name="frmDelete-Convocatoria">
@@ -38,42 +39,35 @@
             <table class="table table-bordered table-striped table-condensed table-hover">
                 <thead>
                     <tr>
-                    
-                        <g:sortableColumn property="descripcion" title="Descripcion" />
-                    
-                        <g:sortableColumn property="fechaInicio" title="Fecha Inicio" />
-                    
-                        <g:sortableColumn property="fechaFin" title="Fecha Fin" />
-
-                    
+                        <g:sortableColumn property="descripcion" title="Descripcion"/>
+                        <g:sortableColumn property="fechaInicio" title="Fecha Inicio"/>
+                        <g:sortableColumn property="fechaRegistro" title="Fecha max. Registro"/>
+                        <g:sortableColumn property="fechaFin" title="Fecha Fin"/>
                         <th width="150">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="paginate">
-                <g:each in="${convocatoriaInstanceList}" status="i" var="convocatoriaInstance">
-                    <tr>
-                    
-                        <td>${fieldValue(bean: convocatoriaInstance, field: "descripcion")}</td>
-                    
-                        <td>${convocatoriaInstance.fechaInicio?.format('dd-MM-yyyy')} </td>
-                    
-                        <td>${convocatoriaInstance.fechaFin?.format('dd-MM-yyyy')}</td>
+                    <g:each in="${convocatoriaInstanceList}" status="i" var="convocatoriaInstance">
+                        <tr>
 
-                    
-                        <td>
-                            <a class="btn btn-small btn-show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${convocatoriaInstance.id}">
-                                <i class="icon-zoom-in icon-large"></i>
-                            </a>
-                            <a class="btn btn-small btn-edit btn-ajax" href="#" rel="tooltip" title="Editar" data-id="${convocatoriaInstance.id}">
-                                <i class="icon-pencil icon-large"></i>
-                            </a>
+                            <td>${fieldValue(bean: convocatoriaInstance, field: "descripcion")}</td>
+                            <td>${convocatoriaInstance.fechaInicio?.format('dd-MM-yyyy')}</td>
+                            <td>${convocatoriaInstance.fechaRegistro?.format('dd-MM-yyyy')}</td>
+                            <td>${convocatoriaInstance.fechaFin?.format('dd-MM-yyyy')}</td>
+                            <td>
+                                <a class="btn btn-small btn-show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${convocatoriaInstance.id}">
+                                    <i class="icon-zoom-in icon-large"></i>
+                                </a>
+                                <a class="btn btn-small btn-edit btn-ajax" href="#" rel="tooltip" title="Editar" data-id="${convocatoriaInstance.id}">
+                                    <i class="icon-pencil icon-large"></i>
+                                </a>
 
-                            <a class="btn btn-small btn-delete" href="#" rel="tooltip" title="Eliminar" data-id="${convocatoriaInstance.id}">
-                                <i class="icon-trash icon-large"></i>
-                            </a>
-                        </td>
-                    </tr>
-                </g:each>
+                                <a class="btn btn-small btn-delete" href="#" rel="tooltip" title="Eliminar" data-id="${convocatoriaInstance.id}">
+                                    <i class="icon-trash icon-large"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </g:each>
                 </tbody>
             </table>
 

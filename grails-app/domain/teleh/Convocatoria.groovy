@@ -6,6 +6,7 @@ class Convocatoria implements Serializable {
     String descripcion
     Date fechaInicio
     Date fechaFin
+    Date fechaRegistro
     String textoInicio
     String textoNota
     static mapping = {
@@ -19,6 +20,7 @@ class Convocatoria implements Serializable {
             descripcion column: 'convdscr'
             fechaInicio column: 'convfcin'
             fechaFin column: 'convfcfn'
+            fechaRegistro column:'convfcrg'
             textoInicio column: 'auxltxin'
             textoNota column: 'auxltxnt'
         }
@@ -27,6 +29,7 @@ class Convocatoria implements Serializable {
         descripcion(size: 1..63, blank: false, nullable: false, attributes: [title: 'descripcion'])
         fechaInicio(blank: false, nullable: false, attributes: [title: 'fecha inicio'])
         fechaFin(blank: false, nullable: false, attributes: [title: 'fecha fin'])
+        fechaRegistro(blank: true, nullable: true, attributes: [title: 'fecha registro'])
         textoInicio(size: 1..1024)
         textoNota(size: 1..1024)
     }

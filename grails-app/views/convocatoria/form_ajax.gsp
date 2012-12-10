@@ -33,6 +33,21 @@
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </div>
+
+        <div class="control-group">
+            <div>
+                <span class="control-label label label-inverse">
+                    Fecha Máxima de registro
+                </span>
+            </div>
+
+            <div class="controls">
+                <elm:datepicker name="fechaRegistro" class=" required" value="${convocatoriaInstance?.fechaRegistro}"/>
+
+                <span class="mandatory">*</span>
+                <p class="help-block ui-helper-hidden"></p>
+            </div>
+        </div>
                 
         <div class="control-group">
             <div>

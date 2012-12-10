@@ -86,8 +86,10 @@
 
 </g:if>
 <g:else>
-    <p class=" tituloGrande" style="float:left;font-family: 'Open Sans Condensed',serif;font-weight: bold;font-size: 25px;width: 95%">Sistema de evaluación</p>
+    %{--<p class=" tituloGrande" style="float:left;font-family: 'Open Sans Condensed',serif;font-weight: bold;font-size: 25px;width: 95%">Sistema de evaluación</p>--}%
+
     <div class="alert alert-info" role="status" style="margin-top: 50px;">
+        <h2>Sistema de evaluación</h2>
         No existe ninguna convocatoria vigente actualmente
     </div>
 </g:else>
