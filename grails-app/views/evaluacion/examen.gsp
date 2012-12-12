@@ -3,9 +3,9 @@
 <head>
     <script type="text/javascript" src="${resource(dir: 'js/jquery/js', file: 'jquery-1.8.0.min.js')}"></script>
     <script type="text/javascript"
-            src="${resource(dir: 'js/jquery/js', file: 'jquery-ui-1.9.1.custom.js')}"></script>
+            src="${resource(dir: 'js/jquery/js', file: 'jquery-ui-1.9.1.custom.min.js')}"></script>
 
-    <script type="text/javascript" src="${resource(dir: 'js/', file: 'funciones.js')}"></script>
+    <script type="text/javascript" src="${resource(dir: 'js/', file: 'functions.js')}"></script>
 
     <link rel="stylesheet"
           href="${resource(dir: 'js/jquery/css/twit', file: 'jquery-ui-1.8.23.custom.css')}"/>
@@ -21,7 +21,7 @@
                 <div style="font-size: 15px;margin-bottom: 20px;" id="pregunta">
                     ${pregunta.pregunta}
                 </div>
-                <g:each in="${tages.Respuesta.findAllByPregunta(pregunta,[sort:'id'])}" var="resp">
+                <g:each in="${respuestas}" var="resp">
                     <div style="width:90%;min-height: 25px;margin-bottom: 10px;line-height: 25px;margin-left: 20px;;border-bottom: 1px #2779AA dotted">
                         <input type="radio" name="resp" class="radios" style="margin-right: 5px;" value="${resp.id}">${resp.respuesta}
                     </div>

@@ -48,6 +48,20 @@
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </div>
+        <div class="control-group">
+            <div>
+                <span class="control-label label label-inverse">
+                    Fecha inicio de evaluaciones
+                </span>
+            </div>
+
+            <div class="controls">
+                <elm:datepicker name="fechaEvaluacion" class=" required" value="${convocatoriaInstance?.fechaEvaluacion}"/>
+
+                <span class="mandatory">*</span>
+                <p class="help-block ui-helper-hidden"></p>
+            </div>
+        </div>
                 
         <div class="control-group">
             <div>
@@ -88,6 +102,19 @@
             <div class="controls">
                 <g:textArea name="textoNota" cols="40" rows="5" maxlength="1024" class="" value="${convocatoriaInstance?.textoNota}"/>
                 
+                <p class="help-block ui-helper-hidden"></p>
+            </div>
+        </div>
+        <div class="control-group">
+            <div>
+                <span class="control-label label label-inverse">
+                    Texto Evaluación
+                </span>
+            </div>
+
+            <div class="controls">
+                <g:textArea name="textoEvaluacion" cols="40" rows="5" maxlength="1024" class="" value="${convocatoriaInstance?.textoEvaluacion}"/>
+
                 <p class="help-block ui-helper-hidden"></p>
             </div>
         </div>

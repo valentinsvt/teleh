@@ -7,8 +7,10 @@ class Convocatoria implements Serializable {
     Date fechaInicio
     Date fechaFin
     Date fechaRegistro
+    Date fechaEvaluacion
     String textoInicio
     String textoNota
+    String textoEvaluacion
     static mapping = {
         table 'conv'
         cache usage: 'read-write', include: 'non-lazy'
@@ -21,8 +23,10 @@ class Convocatoria implements Serializable {
             fechaInicio column: 'convfcin'
             fechaFin column: 'convfcfn'
             fechaRegistro column:'convfcrg'
+            fechaEvaluacion column: 'convfcev'
             textoInicio column: 'auxltxin'
             textoNota column: 'auxltxnt'
+            textoEvaluacion column: 'auxltxev'
         }
     }
     static constraints = {
@@ -30,7 +34,9 @@ class Convocatoria implements Serializable {
         fechaInicio(blank: false, nullable: false, attributes: [title: 'fecha inicio'])
         fechaFin(blank: false, nullable: false, attributes: [title: 'fecha fin'])
         fechaRegistro(blank: true, nullable: true, attributes: [title: 'fecha registro'])
+        fechaEvaluacion(blank:true,nullable: true)
         textoInicio(size: 1..1024)
         textoNota(size: 1..1024)
+        textoEvaluacion(size: 1..1024)
     }
 }

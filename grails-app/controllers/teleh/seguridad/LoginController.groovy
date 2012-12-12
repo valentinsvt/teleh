@@ -80,29 +80,39 @@ class LoginController {
     }
 
     def validar() {
-        def user = Persona.withCriteria {
-            eq("cedula", params.cedula)
-            eq("pin", params.pin.encodeAsMD5())
-            eq("activo", 1)
-        }
-
-        if (user.size() == 0) {
-            flash.message = "No se encuentra registrado en el sistema o su contraseña esta incorrecto"
-        } else if (user.size() > 1) {
-            flash.message = "Ha ocurrido un error grave"
-        } else {
-            user = user[0]
-            if (user.login==0){
-                user.login=1
-                user.save(flush: true)
+        if(!session.convocatoria)
+            redirect(action: "postulante")
+        else{
+            def user = Persona.withCriteria {
+                eq("cedula", params.cedula)
+                eq("pin", params.pin.encodeAsMD5())
+                eq("activo", 1)
             }
 
-            session.usuario = user
-            session.perfil="postulante"
-            redirect(action: "datos",controller: "persona")
-            return
+            if (user.size() == 0) {
+                flash.message = "No se encuentra registrado en el sistema o su contraseña esta incorrecta"
+            } else if (user.size() > 1) {
+                flash.message = "Ha ocurrido un error grave"
+            } else {
+                user = user[0]
+                if (user.login==0){
+                    user.login=1
+                    user.save(flush: true)
+                }
+
+                session.usuario = user
+                session.perfil="postulante"
+                def ahora = new Date()
+                if (session.convocatoria.fechaEvaluacion > ahora){
+                    redirect(action: "datos",controller: "persona")
+                }else{
+                    redirect(action: "inicio", controller: "evaluacion")
+                }
+                return
+            }
         }
-        redirect(controller: 'login', action: "postulante")
+
+
     }
 
 

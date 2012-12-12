@@ -29,7 +29,7 @@ class ConvocatoriaController extends teleh.seguridad.Shield {
     } //form_ajax
 
     def save() {
-
+        println "params "+params
         if (params.fechaInicio) {
             params.fechaInicio = new Date().parse("dd-MM-yyyy", params.fechaInicio)
         }
@@ -38,6 +38,10 @@ class ConvocatoriaController extends teleh.seguridad.Shield {
         }
         if (params.fechaRegistro) {
             params.fechaRegistro = new Date().parse("dd-MM-yyyy", params.fechaRegistro)
+        }
+        if (params.fechaEvaluacion) {
+            params.fechaEvaluacion = new Date().parse("dd-MM-yyyy", params.fechaEvaluacion)
+            println "fec ev "+params.fechaEvaluacion
         }
 
         def convocatoriaInstance
@@ -72,6 +76,7 @@ class ConvocatoriaController extends teleh.seguridad.Shield {
             redirect(action: 'list')
             return
         }
+        println "fecha con "+convocatoriaInstance.fechaEvaluacion
 
         if (params.id) {
             flash.clase = "alert-success"

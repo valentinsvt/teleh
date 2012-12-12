@@ -36,54 +36,61 @@
         ${session.convocatoria?.textoInicio}
     </div>
     <div class="" style="width: 98%;color: black;font-family: 'Open Sans Condensed',serif;font-size: 25px;float: left;height: 130px;margin-top: 10px;margin-left: 5px;text-align: justify">
-      <a href="${g.createLink(controller: 'registro')}" class="btn btn-primary" style="font-size: 20px">Registrarse</a>
+        <a href="${g.createLink(controller: 'registro')}" class="btn btn-primary" style="font-size: 20px">Registrarse</a>
     </div>
 
 
 </div>
 <div style="border: 1px solid #525E67;background: #E0E0E0;color: #939Aa2;width: 320px;position: relative;padding: 10px;height: 360px;margin: 0px;float: left" class="ui-corner-all">
+    <g:if test="${session.convocatoria}">
+        <g:form class="well form-horizontal" id="frmLogin" action="validar" name="frmLogin" style="background: none;border: 0px solid #E0E0E0 !important;padding: 0px;margin-left: 10px;box-shadow: none" >
 
-    <g:form class="well form-horizontal" id="frmLogin" action="validar" name="frmLogin" style="background: none;border: 0px solid #E0E0E0 !important;padding: 0px;margin-left: 10px;box-shadow: none" >
+            <fieldset style="background: none;margin: 0px;border: 0px solid #E0E0E0 !important;color: #333;margin-top: 0px">
 
-        <fieldset style="background: none;margin: 0px;border: 0px solid #E0E0E0 !important;color: #333;margin-top: 0px">
-
-            <div class="alert alert-info" role="status" style="float: left;height: 60px;">
-                <a class="close" data-dismiss="alert" href="#">×</a>
-                <g:if test="${flash.message}">
-                    ${flash.message}
-                </g:if>
-                <g:else>
-                    Para ingresar al sistema ingrese su número de cédula y la contraseña que fue enviada a su correo electrónico.
-                </g:else>
-            </div>
-
-            <div class="control-group" style="margin-top: 0">
-                <label class="control-label" for="login" style="width: 100%;text-align: left;font-size: 20px;font-family: 'Open Sans Condensed', serif;font-weight: bolder">Cédula:</label>
-
-                <div class="controls" style="width: 100%;margin-left: 5px">
-                    <g:textField name="cedula" class="span2 required" style="width: 90%"/>
-                    <p class="help-block ui-helper-hidden"></p>
+                <div class="alert alert-info" role="status" style="float: left;height: 60px;">
+                    <a class="close" data-dismiss="alert" href="#">×</a>
+                    <g:if test="${flash.message}">
+                        ${flash.message}
+                    </g:if>
+                    <g:else>
+                        Para ingresar al sistema ingrese su número de cédula y la contraseña que fue enviada a su correo electrónico.
+                    </g:else>
                 </div>
-            </div>
 
-            <div class="control-group">
-                <label class="control-label" for="login" style="width: 100%;text-align: left;font-size: 20px;font-family: 'Open Sans Condensed', serif;font-weight: bolder">Contraseña:</label>
+                <div class="control-group" style="margin-top: 0">
+                    <label class="control-label" for="login" style="width: 100%;text-align: left;font-size: 20px;font-family: 'Open Sans Condensed', serif;font-weight: bolder">Cédula:</label>
 
-                <div class="controls" style="width: 100%;margin-left: 5px">
-                    <g:passwordField name="pin" class="span2 required"  id="pass" style="width: 90%"/>
-                    <p class="help-block ui-helper-hidden"></p>
+                    <div class="controls" style="width: 100%;margin-left: 5px">
+                        <g:textField name="cedula" class="span2 required" style="width: 90%"/>
+                        <p class="help-block ui-helper-hidden"></p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="control-group">
+                <div class="control-group">
+                    <label class="control-label" for="login" style="width: 100%;text-align: left;font-size: 20px;font-family: 'Open Sans Condensed', serif;font-weight: bolder">Contraseña:</label>
 
-                <a href="#" class="btn btn-primary" id="btnLogin">Continuar</a>
-                <a href="#" id="btnOlvidoPass" style="color: #0088CC;margin-left: 70px;text-decoration: none;font-family: 'Open Sans Condensed', serif;font-weight: bold">
-                    Olvidó su contraseña?
-                </a>
-            </div>
-        </fieldset>
-    </g:form>
+                    <div class="controls" style="width: 100%;margin-left: 5px">
+                        <g:passwordField name="pin" class="span2 required"  id="pass" style="width: 90%"/>
+                        <p class="help-block ui-helper-hidden"></p>
+                    </div>
+                </div>
+
+                <div class="control-group">
+
+                    <a href="#" class="btn btn-primary" id="btnLogin">Continuar</a>
+                    <a href="#" id="btnOlvidoPass" style="color: #0088CC;margin-left: 70px;text-decoration: none;font-family: 'Open Sans Condensed', serif;font-weight: bold">
+                        Olvidó su contraseña?
+                    </a>
+                </div>
+            </fieldset>
+        </g:form>
+    </g:if>
+    <g:else>
+        <div class="alert alert-info" role="status" style="margin-top: 50px;">
+            <h2>Sistema de evaluación</h2>
+            No existe ninguna convocatoria vigente actualmente
+        </div>
+    </g:else>
 </div>
 
 

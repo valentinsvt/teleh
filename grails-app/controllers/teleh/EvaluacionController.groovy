@@ -3,22 +3,19 @@ package teleh
 class EvaluacionController  extends teleh.seguridad.ShieldPostulante {
 
     def inicio = {
-        if (session.persona) {
-            def aux = Auxiliar.list([sort: 'id']).pop()
-            def texto = ""
-            if (aux)
-                texto = aux.textoInicio
-            [persona: session.persona, texto: texto]
+        if (session.usuario) {
+            def conv = session.convocatoria
+            [persona: session.usuario, conv:conv]
         } else {
             redirect(action: "login", controller: "login")
         }
     }
 
     def index = {
-        println "persona " + session.persona
-        if (session.persona) {
-            println "si persona"
-            def encuesta = Encuesta.findByPersona(session.persona)
+//        println "persona " + session.usuario
+        if (session.usuario) {
+//            println "si persona"
+            def encuesta = Encuesta.findByPersona(session.usuario)
             def cal = Calendar.instance
             session.inicio = cal.time
             cal.add(Calendar.MINUTE, 30)
@@ -26,46 +23,58 @@ class EvaluacionController  extends teleh.seguridad.ShieldPostulante {
 //            println "cal inicio " + session.inicio
 //            println "cal fin " + session.fin
             if (!encuesta) {
-                println "no encuesta"
-                def examen = Examen.get(seleccionExamen())
-                encuesta = new Encuesta([examen: examen, persona: session.persona, inicio: session.inicio, fin: session.fin])
+//                println "no encuesta"
+                def examen = Examen.list()
+                if (examen.size()>0){
+                    examen=baraja(examen)
+                    examen=examen[seleccionExamen(examen.size())]
+                }else{
+                    redirect(action: "error")
+                }
+                encuesta = new Encuesta([examen: examen, persona: session.usuario, inicio: session.inicio, fin: session.fin])
                 if (encuesta.save(flush: true)) {
                     session.encuesta = encuesta
                     session.exa = examen
+                    println "examen "+examen
                     [exa: examen]
                 } else {
-                    println "no save " + encuesta.errors
+                    println "no save encuesta " + encuesta.errors
                 }
             } else {
-                println "si encuesta reconexiones: $encuesta.reconeccion encuesta: $encuesta"
+//                println "si encuesta reconexiones: $encuesta.reconeccion encuesta: $encuesta"
                 def ahora = new Date()
-                if (encuesta.reconeccion > 2){
+                def detalle = Detalle.findAllByEncuesta(encuesta,[sort: "id"])
+                if (encuesta.reconeccion > 20){
                     session.exa = encuesta.examen
-                    if(encuesta) session.encuesta=encuesta
+                    if(encuesta)
+                        session.encuesta=encuesta
+                    if (detalle.size()<Pregunta.findAllByExamen(encuesta.examen)?.size()){
+                        session.recon="Usted ha superado el número de reconexiones permitidas"
+                    }
                     redirect(action: "fin")
                 }else{
-                    def detalle = Detalle.findAllByEncuesta(encuesta,[sort: "id"])
-                    println "detalle "+detalle //0602896441
+
+//                    println "detalle "+detalle //0602896441
                     def fecha
                     if (detalle){
                         detalle = detalle.pop()
-                        println "detalle2 "+detalle
+//                        println "detalle2 "+detalle
                         fecha =new Date().parse("MM/dd/yyyy h:mm:ss a",detalle.fecha.format("MM/dd/yyyy h:mm:ss a"))
                         def inicio = new Date().parse("MM/dd/yyyy h:mm:ss a",encuesta.inicio.format("MM/dd/yyyy h:mm:ss a"))
-                        println "fecha "+fecha+" inicio "+inicio
+//                        println "fecha "+fecha+" inicio "+inicio
                         def dif =fecha.getTime()-inicio.getTime()
                         dif=(dif/1000)
-                        println "diferencia1!! "+dif
+//                        println "diferencia1!! "+dif
                         def sobrante = (encuesta.fin.getTime()-encuesta.inicio.getTime())/1000
-                        println " encu inicio "+encuesta.inicio+" fin "+encuesta.fin
-                        println "sobrante "+sobrante
+//                        println " encu inicio "+encuesta.inicio+" fin "+encuesta.fin
+//                        println "sobrante "+sobrante
                         dif=sobrante-dif
-                        println "diferencia2!! "+dif
+//                        println "diferencia2!! "+dif
                         encuesta.inicio = new Date()
                         def calen = new Date().toCalendar()
                         detalle.fecha=calen.time
                         calen.add(Calendar.SECOND, dif.toInteger())
-                        println "caln add "+calen.time
+//                        println "caln add "+calen.time
                         encuesta.fin = calen.time
 
                         detalle.save(flush: true)
@@ -77,7 +86,7 @@ class EvaluacionController  extends teleh.seguridad.ShieldPostulante {
                         encuesta.inicio = calen.time
                         calen.add(Calendar.MINUTE, 30)
                         encuesta.fin = calen.time
-                        println "inicio "+encuesta.inicio+" fin "+encuesta.fin
+//                        println "inicio "+encuesta.inicio+" fin "+encuesta.fin
                     }
                     encuesta.reconeccion++
                     if (encuesta.save(flush: true)){
@@ -108,7 +117,8 @@ class EvaluacionController  extends teleh.seguridad.ShieldPostulante {
     }
 
     def examen = {
-        if (session.persona) {
+//        println "examen "+session.exa
+        if (session.usuario) {
 
             if (session.exa && session.encuesta) {
 
@@ -126,7 +136,9 @@ class EvaluacionController  extends teleh.seguridad.ShieldPostulante {
                     redirect(action: "fin")
                 } else {
                     pregunta = preguntas.pop()
-                    [pregunta: pregunta, exa: session.exa]
+                    def respuestas = Respuesta.findAllByPregunta(pregunta)
+                    respuestas=baraja(respuestas)
+                    [pregunta: pregunta, exa: session.exa,respuestas:respuestas ]
                 }
             } else {
                 redirect(action: "fin")
@@ -139,18 +151,19 @@ class EvaluacionController  extends teleh.seguridad.ShieldPostulante {
     }
 
     def siguiente = {
-        if (session.persona) {
+        if (session.usuario) {
             if (session.exa && session.encuesta) {
                 def pregunta = Pregunta.get(params.preg)
                 def detalle = Detalle.findByEncuestaAndPregunta(session.encuesta, pregunta)
                 if (!detalle) {
                     def ahora = new Date()
                     if (ahora.before(session.encuesta.fin)) {
-                        println "si es antes"
+//                        println "si es antes"
                         detalle = new Detalle([encuesta: session.encuesta, pregunta: pregunta, respuesta: Respuesta.get(params.resp)])
                         detalle.save(flush: true)
 
                     } else {
+                        println "over time"
                         redirect(action: "fin")
                     }
 
@@ -165,7 +178,7 @@ class EvaluacionController  extends teleh.seguridad.ShieldPostulante {
     }
 
     def fin = {
-        println "session.encuesta $session"
+//        println "session.encuesta $session"
         if (session.encuesta) {
             def detalle = Detalle.findAllByEncuesta(session.encuesta)
             def nota = 0
@@ -176,37 +189,44 @@ class EvaluacionController  extends teleh.seguridad.ShieldPostulante {
             }
 
             //nota = "" + nota + "/" + preguntas
-            nota = "Ha contestado ${detalle.size()} preguntas de un total de 20"
-            session.persona = null
+            def txtNnota = "Ha contestado ${detalle.size()} preguntas de un total de ${preguntas}.</br> Su nota es: <b>${nota}/${preguntas}</b>"
+            session.usuario = null
             session.exa = null
             session.encuesta = null
-            def aux = Auxiliar.list([sort: 'id']).pop()
+            def msn = session.recon
+            session.recon=null
+
             def texto = ""
-            if (aux)
-                texto = aux.textoNota
-            [nota: nota, texto: texto]
+
+            texto = session.convocatoria.textoNota
+
+            [nota: txtNnota, texto: texto,msn:msn]
         } else {
-            session.persona = null
+            session.usuario = null
             redirect(controller: "login", action: "login")
         }
     }
 
-    def seleccionExamen() {
-        def num = Math.random()
-        if (num < 0.2) {
-            return 1
+    def baraja(org) {
+        def random = new Random()
+        def num
+        def res = []
+        org.size().times {
+            //println "arr original "+org
+            num = random.nextInt(org.size())
+            res.add(org[num])
+            org.remove(num)
+            //println "org  "+org
+            //println "final "+res
+            //println "-----------------------------"
         }
-        if (num < 0.4) {
-            return 2
-        }
-        if (num < 0.6) {
-            return 3
-        }
-        if (num < 0.8) {
-            return 4
-        }
-        if (num < 1) {
-            return 5
-        }
+        return res
+    }
+
+    def seleccionExamen(tam) {
+        def random = new Random()
+        def num = random.nextInt(tam)
+//        println "return "+num
+        return num
     }
 }

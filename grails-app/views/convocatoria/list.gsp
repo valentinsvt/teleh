@@ -42,6 +42,7 @@
                         <g:sortableColumn property="descripcion" title="Descripcion"/>
                         <g:sortableColumn property="fechaInicio" title="Fecha Inicio"/>
                         <g:sortableColumn property="fechaRegistro" title="Fecha max. Registro"/>
+                        <g:sortableColumn property="fechaRegistro" title="Fecha evaluación"/>
                         <g:sortableColumn property="fechaFin" title="Fecha Fin"/>
                         <th width="150">Acciones</th>
                     </tr>
@@ -53,6 +54,7 @@
                             <td>${fieldValue(bean: convocatoriaInstance, field: "descripcion")}</td>
                             <td>${convocatoriaInstance.fechaInicio?.format('dd-MM-yyyy')}</td>
                             <td>${convocatoriaInstance.fechaRegistro?.format('dd-MM-yyyy')}</td>
+                            <td>${convocatoriaInstance.fechaEvaluacion?.format('dd-MM-yyyy')}</td>
                             <td>${convocatoriaInstance.fechaFin?.format('dd-MM-yyyy')}</td>
                             <td>
                                 <a class="btn btn-small btn-show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${convocatoriaInstance.id}">

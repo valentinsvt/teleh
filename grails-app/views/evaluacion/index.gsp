@@ -1,14 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
-        <script type="text/javascript" src="${resource(dir: 'js/jquery/js', file: 'jquery-1.6.2.min.js')}"></script>
+        <script type="text/javascript" src="${resource(dir: 'js/jquery/js', file: 'jquery-1.8.0.min.js')}"></script>
         <script type="text/javascript"
-                src="${resource(dir: 'js/jquery/js', file: 'jquery-ui-1.8.16.custom.min.js')}"></script>
-        <script type="text/javascript" src="${resource(dir: 'js/', file: 'funciones.js')}"></script>
+                src="${resource(dir: 'js/jquery/js', file: 'jquery-ui-1.9.1.custom.min.js')}"></script>
+
+        <script type="text/javascript" src="${resource(dir: 'js/', file: 'functions.js')}"></script>
+
+        <link rel="stylesheet"
+              href="${resource(dir: 'js/jquery/css/twit', file: 'jquery-ui-1.8.23.custom.css')}"/>
         <script type="text/javascript"
-                src="${resource(dir: 'js/jquery/js/countdown', file: 'jquery.countdown.js')}"></script>
-        <link rel="stylesheet" href="${resource(dir: 'js/jquery/js/countdown', file: 'jquery.countdown.css')}"/>
-        <link rel="stylesheet" href="${resource(dir: 'js/jquery/css/cupertino', file: 'jquery-ui-1.8.16.custom.css')}"/>
+                src="${resource(dir: 'js/jquery/plugins/jquery.countdown', file: 'jquery.countdown.js')}"></script>
+        <link rel="stylesheet" href="${resource(dir: 'js/jquery/plugins/jquery.countdown', file: 'jquery.countdown.css')}"/>
+        %{--<link rel="stylesheet" href="${resource(dir: 'js/jquery/css/cupertino', file: 'jquery-ui-1.8.16.custom.css')}"/>--}%
         <title>MIES - Examen ${exa}</title>
 
     </head>

@@ -1,14 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
-        <script type="text/javascript" src="${resource(dir: 'js/jquery/js', file: 'jquery-1.6.2.min.js')}"></script>
+        <script type="text/javascript" src="${resource(dir: 'js/jquery/js', file: 'jquery-1.8.0.min.js')}"></script>
         <script type="text/javascript"
-                src="${resource(dir: 'js/jquery/js', file: 'jquery-ui-1.8.16.custom.min.js')}"></script>
+                src="${resource(dir: 'js/jquery/js', file: 'jquery-ui-1.9.1.custom.min.js')}"></script>
 
-        <script type="text/javascript" src="${resource(dir: 'js/', file: 'funciones.js')}"></script>
+        <script type="text/javascript" src="${resource(dir: 'js/', file: 'functions.js')}"></script>
 
         <link rel="stylesheet"
-              href="${resource(dir: 'js/jquery/css/cupertino', file: 'jquery-ui-1.8.16.custom.css')}"/>
+              href="${resource(dir: 'js/jquery/css/twit', file: 'jquery-ui-1.8.23.custom.css')}"/>
         <title>Gracias por su colaboración</title>
     </head>
 
@@ -16,19 +16,19 @@
 
     <div class="ui-widget-content ui-corner-all" style="width: 800px; height: 550px;">
 
-    <div style="position: absolute; left:10px; top:10px;">
-        <img style="position: absolute; left:10px; top:10px; width: 140px; height: 143px;" src="${resource(dir: 'images', file: 'logo_mies.jpg')}" alt="mies" width="100%" />
+    <div style="">
+        <img  src="${resource(dir: 'images', file: 'logo.jpg')}" alt="mies" width="100%" />
     </div>
 
         <div style="float: left;width: 750;">
-            <div id="dialogo" style=" font-size: 15px; width: 620px; height: 620px; padding-left: 170px; padding-top: 30px;">
-                <div id="mens">
-                    Bienvenido <b> ${persona}</b><br>
+            <div id="dialogo" style=" font-size: 15px; width: 620px; height: 620px; padding-left: 30px; padding-top: 30px;">
+                <div id="mens" style="">
+                   <p> Bienvenido <b> ${persona}</b></p>
                     %{--Dispone de 40 minutos para rendir su examen. .--}%
-                    ${texto} <br><br><br>
+                    <p>${conv.textoEvaluacion}</p></br>
                     Haga click <a href="#" id="emp">AQUI</a> para iniciar
                 </div>
-                <a href="${createLink(action: 'login', controller: 'login')}" style="display: none;margin-top: 10px"
+                <a href="${createLink(action: 'postulante', controller: 'login')}" style="display: none;margin-top: 10px"
                    id="salir">Salir</a>
             </div>
 

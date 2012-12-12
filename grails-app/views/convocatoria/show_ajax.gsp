@@ -55,6 +55,22 @@
             </div>
         </div>
     </g:if>
+        <g:if test="${convocatoriaInstance?.fechaEvaluacion}">
+            <div class="control-group">
+                <div>
+                    <span id="fechaEvaluacion-label" class="control-label label label-inverse">
+                        Fecha de incio de evaluaciones
+                    </span>
+                </div>
+                <div class="controls">
+
+                    <span aria-labelledby="fechaInicio-label">
+                        <g:formatDate date="${convocatoriaInstance?.fechaEvaluacion}" />
+                    </span>
+
+                </div>
+            </div>
+        </g:if>
     
     <g:if test="${convocatoriaInstance?.fechaFin}">
         <div class="control-group">
@@ -106,6 +122,22 @@
             </div>
         </div>
     </g:if>
+        <g:if test="${convocatoriaInstance?.textoEvaluacion}">
+            <div class="control-group">
+                <div>
+                    <span id="textoEvaluacion-label" class="control-label label label-inverse">
+                        Texto Evaluación
+                    </span>
+                </div>
+                <div class="controls">
+
+                    <span aria-labelledby="textoNota-label">
+                        <g:fieldValue bean="${convocatoriaInstance}" field="textoEvaluacion"/>
+                    </span>
+
+                </div>
+            </div>
+        </g:if>
     
     </form>
 </div>
