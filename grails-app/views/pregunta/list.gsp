@@ -181,17 +181,20 @@
                             success : function (msg) {
                                 var btnOk = $('<a href="#" class="btn btn-success"><i class="icon-save"></i> Guardar</a>');
                                 btnOk.click(function () {
-                                    var cant = $("#tbResp").children("tr").size();
-                                    btn.parents("td").siblings(".resps").text(cant);
-                                    $("#modal-Pregunta").modal("hide");
+                                    var ok = $(".correcta").size();
+                                    if (ok > 0) {
+                                        var cant = $("#tbResp").children("tr").size();
+                                        if (cant >= 3) {
+                                            btn.parents("td").siblings(".resps").text(cant);
+                                            $("#modal-Pregunta").modal("hide");
+                                        } else {
+                                            error("Debe haber al menos 3 respuestas por pregunta...");
+                                        }
+                                    } else {
+                                        error("Debe haber una respuesta correcta por pregunta...");
+                                    }
                                     return false;
                                 });
-//                                var btnSave = $('<a href="#"  class="btn btn-success"><i class="icon-save"></i> Guardar</a>');
-
-//                                btnSave.click(function () {
-//                                    submitForm(btnSave);
-//                                    return false;
-//                                });
 
                                 $("#modalHeader").removeClass("btn-edit btn-show btn-delete");
                                 $("#modalTitle").html("Respuestas");

@@ -25,7 +25,7 @@
         </div>
 
         <div class="controls">
-            <g:field type="number" name="orden" class="input-mini required" value="${fieldValue(bean: preguntaInstance, field: 'orden')}"/>
+            <g:field type="number" name="orden" class="input-mini required digits" value="${fieldValue(bean: preguntaInstance, field: 'orden')}"/>
             <span class="mandatory">*</span>
 
             <p class="help-block ui-helper-hidden"></p>
@@ -60,13 +60,13 @@
                 <g:each in="${preguntaInstance?.respuestas ?}" var="r">
                     <li>
                         %{--<g:link controller="respuesta" action="show" id="${r.id}">--}%
-                            ${r?.encodeAsHTML()}
+                        ${r?.encodeAsHTML()}
                         %{--</g:link>--}%
                     </li>
                 </g:each>
-                %{--<li class="add">--}%
-                    %{--<g:link controller="respuesta" action="create" params="['pregunta.id': preguntaInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'respuesta.label', default: 'Respuesta')])}</g:link>--}%
-                %{--</li>--}%
+            %{--<li class="add">--}%
+            %{--<g:link controller="respuesta" action="create" params="['pregunta.id': preguntaInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'respuesta.label', default: 'Respuesta')])}</g:link>--}%
+            %{--</li>--}%
             </ul>
 
 
@@ -77,6 +77,20 @@
 </g:form>
 
 <script type="text/javascript">
+
+    $(".digits").keydown(function (ev) {
+        /*
+         48-57      -> numeros
+         96-105     -> teclado numerico
+         190        -> . teclado
+         110        -> . teclado numerico
+         8          -> backspace
+         46         -> delete
+         9          -> tab
+         */
+//        console.log(ev.keyCode);
+        return ((ev.keyCode >= 48 && ev.keyCode <= 57) || (ev.keyCode >= 96 && ev.keyCode <= 105) || /*ev.keyCode == 190 || ev.keyCode == 110 ||*/ ev.keyCode == 8 || ev.keyCode == 46 || ev.keyCode == 9);
+    });
 
     $("#frmSave-Pregunta").validate({
         errorPlacement : function (error, element) {
