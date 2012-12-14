@@ -3,6 +3,7 @@ package teleh.seguridad
 import teleh.Auxiliar
 import teleh.Convocatoria
 import teleh.Persona
+import teleh.Estado
 
 class LoginController {
 
@@ -80,6 +81,7 @@ class LoginController {
     }
 
     def validar() {
+        def calif = Estado.get(2)
         if(!session.convocatoria)
             redirect(action: "postulante")
         else{
@@ -87,10 +89,12 @@ class LoginController {
                 eq("cedula", params.cedula)
                 eq("pin", params.pin.encodeAsMD5())
                 eq("activo", 1)
+                eq("estado", calif)
             }
 
             if (user.size() == 0) {
-                flash.message = "No se encuentra registrado en el sistema o su contraseña esta incorrecta"
+                flash.message = "No se encuentra registrado en el sistema, su contraseña está incorrecta o no ha sido calificado para rendir la prueba"
+                redirect(controller: 'login', action: "postulante")
             } else if (user.size() > 1) {
                 flash.message = "Ha ocurrido un error grave"
             } else {
