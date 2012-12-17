@@ -46,7 +46,7 @@ class LoginController {
                     to mail
                     from "info@infa.gob.ec"
                     subject "Recuperación de contraseña"
-                    body 'Hola ' + persona.login + ", tu nueva contraseña es: " + newPass + ""
+                    body "Su nueva contraseña es: " + newPass + ""
                 }
                 msg = "OK*Se ha enviado un email a la dirección " + mail + " con una nueva contraseña."
             } else {
