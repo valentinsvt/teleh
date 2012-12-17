@@ -74,6 +74,12 @@
                 </div>
 
                 <div class="row">
+                    <div class="span12" style="height: 30px; color: #1a2d57;">
+                        ${params.calificados}
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="span12 btn-group">
                         <a href="#" class="btn btn-export" rel="tooltip" title="Exportar esta búsqueda a Excel" id="xls">
                             <i class="icon-table"></i> Exportar a Excel

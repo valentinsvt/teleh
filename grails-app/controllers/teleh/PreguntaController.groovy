@@ -64,7 +64,7 @@ class PreguntaController extends teleh.seguridad.Shield {
     }
 
     def form_ajax() {
-        println params
+//        println params
         def examen = Examen.get(params.examen)
         def preguntaInstance = new Pregunta(params)
         if (params.id) {

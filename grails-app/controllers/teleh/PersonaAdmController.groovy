@@ -4,7 +4,7 @@ class PersonaAdmController extends teleh.seguridad.Shield {
 
     def dbConnectionService
 
-    def index() { }
+    def index() {}
 
     def fixCursos() {
         def sql = "select i.insc__id     id,\n" +
@@ -110,9 +110,9 @@ class PersonaAdmController extends teleh.seguridad.Shield {
             params.datos = "-1"
         }
 
-        println params
+//        println params
 
-        def conv, prov, est
+        def conv = null, prov = null, est = null
 
         conv = Convocatoria.get(params.id.toLong())
         if (params.provincia) {
@@ -175,8 +175,12 @@ class PersonaAdmController extends teleh.seguridad.Shield {
 
         def totalConv = Persona.findAllByConvocatoria(conv)
         def totalDatos = totalConv.findAll { it.nombre && it.apellido }
+        def totalCalificados = totalConv.findAll { it.estadoId == 2 }
 
         params.totales = "En la convocatoria <i>${conv.descripcion}</i> se encontraron <b>${totalConv.size()}</b> inscritos, de los cuales <b>${totalDatos.size()}</b> ya han ingresado sus datos"
+        def enc = Encuesta.count()
+        params.calificados = "Hay ${totalCalificados.size()} postulante${totalCalificados.size() == 1 ? '' : 's'} calificado${totalCalificados.size() == 1 ? '' : 's'}"
+        params.calificados += " y ${enc} ex${enc == 1 ? 'a' : 'á'}men${enc == 1 ? '' : 'es'} efectuado${enc == 1 ? '' : 's'}"
 
         [personaInstanceList: results, params: params]
     }
@@ -247,7 +251,7 @@ class PersonaAdmController extends teleh.seguridad.Shield {
             str += "<ul>"
             titulo.errors.allErrors.each { err ->
                 def msg = err.defaultMessage
-                err.arguments.eachWithIndex {  arg, i ->
+                err.arguments.eachWithIndex { arg, i ->
                     msg = msg.replaceAll("\\{" + i + "}", arg.toString())
                 }
                 str += "<li>" + msg + "</li>"
@@ -310,7 +314,7 @@ class PersonaAdmController extends teleh.seguridad.Shield {
          */
         def sql = "select insccedu, count(insccedu) from insc group by insccedu having count(insccedu) >1";
         def cn = dbConnectionService.getConnection()
-        cn.eachRow(sql) {r ->
+        cn.eachRow(sql) { r ->
 
             def prsn = Persona.findAllByCedula(r[0], [sort: "id"])
             def noDelete
@@ -333,7 +337,7 @@ class PersonaAdmController extends teleh.seguridad.Shield {
             }
             titulo = TituloPersona.findByPersona(ultimo)
 //            print "borraciones  "
-            prsn.each {pr ->
+            prsn.each { pr ->
                 if (!titulo)
                     titulo = TituloPersona.findByPersona(pr)
 //                print " " + pr.id
