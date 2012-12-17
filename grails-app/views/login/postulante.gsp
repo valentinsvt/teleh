@@ -53,7 +53,7 @@
                         ${flash.message}
                     </g:if>
                     <g:else>
-                        Para ingresar al sistema ingrese su número de cédula y la contraseña que fue enviada a su correo electrónico.
+                        Para rendir la <b>PRUEBA</b> ingrese su número de cédula y la contraseña que fue enviada a su correo electrónico.
                     </g:else>
                 </div>
 
