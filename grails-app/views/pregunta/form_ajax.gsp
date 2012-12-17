@@ -56,12 +56,12 @@
 
         <div class="controls">
 
-            <ul class="one-to-many">
+            <ul class="one-to-many icons">
                 <g:each in="${preguntaInstance?.respuestas ?}" var="r">
-                    <li>
+                    <li class="${r.correcta == 1 ? 'ok' : 'no'}">
                         %{--<g:link controller="respuesta" action="show" id="${r.id}">--}%
-                        ${r?.encodeAsHTML()}
-                        %{--</g:link>--}%
+                        <i class="${r.correcta == 1 ? 'icon-ok ok' : 'icon-remove no'}"></i> ${r?.encodeAsHTML()}
+                    %{--</g:link>--}%
                     </li>
                 </g:each>
             %{--<li class="add">--}%

@@ -1,3 +1,25 @@
+ul.icons {
+    list-style-type : none;
+    margin-left     : 2em;
+    text-indent     : -0.8em;
+}
+
+i.ok {
+    color : #198b23;
+}
+
+i.no {
+    color : #8b150a;
+}
+
+li.ok {
+    color : #198b23;
+}
+
+li.no {
+    color : #8b150a;
+}
+
 .error {
     border-color       : #b94a48 !important;
     border-width       : 2px;

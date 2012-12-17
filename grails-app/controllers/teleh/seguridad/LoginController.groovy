@@ -2,8 +2,8 @@ package teleh.seguridad
 
 import teleh.Auxiliar
 import teleh.Convocatoria
-import teleh.Persona
 import teleh.Estado
+import teleh.Persona
 
 class LoginController {
 
@@ -40,7 +40,7 @@ class LoginController {
             ['A'..'Z', 'a'..'z', '0'..'9', ('!@$%^&*' as String[]).toList()].each {chars += it}
             def newPass = (1..8).collect { chars[random.nextInt(chars.size())] }.join()
 
-            persona.password = newPass.encodeAsMD5()
+            persona.pin = newPass.encodeAsMD5()
             if (persona.save(flush: true)) {
                 sendMail {
                     to mail

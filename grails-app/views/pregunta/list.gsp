@@ -148,7 +148,8 @@
                             type    : "POST",
                             url     : "${createLink(action:'form_ajax')}",
                             data    : {
-                                id : id
+                                id     : id,
+                                examen : "${examen.id}"
                             },
                             success : function (msg) {
                                 var btnOk = $('<a href="#" data-dismiss="modal" class="btn">Cancelar</a>');

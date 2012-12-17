@@ -64,6 +64,7 @@ class PreguntaController extends teleh.seguridad.Shield {
     }
 
     def form_ajax() {
+        println params
         def examen = Examen.get(params.examen)
         def preguntaInstance = new Pregunta(params)
         if (params.id) {
@@ -75,14 +76,16 @@ class PreguntaController extends teleh.seguridad.Shield {
                 return
             } //no existe el objeto
         } //es edit
-        def orden = Pregunta.withCriteria {
-            eq("examen", examen)
-            projections {
-                max("orden")
+        if (!params.id) {
+            def orden = Pregunta.withCriteria {
+                eq("examen", examen)
+                projections {
+                    max("orden")
+                }
             }
+            preguntaInstance.orden = orden[0] ? orden[0] + 1 : 1
         }
         preguntaInstance.examen = examen
-        preguntaInstance.orden = orden[0] ? orden[0] + 1 : 1
 
         return [preguntaInstance: preguntaInstance]
     } //form_ajax
@@ -109,7 +112,7 @@ class PreguntaController extends teleh.seguridad.Shield {
             str += "<ul>"
             preguntaInstance.errors.allErrors.each { err ->
                 def msg = err.defaultMessage
-                err.arguments.eachWithIndex {  arg, i ->
+                err.arguments.eachWithIndex { arg, i ->
                     msg = msg.replaceAll("\\{" + i + "}", arg.toString())
                 }
                 str += "<li>" + msg + "</li>"
@@ -154,7 +157,7 @@ class PreguntaController extends teleh.seguridad.Shield {
             str += "<ul>"
             preguntaInstance.errors.allErrors.each { err ->
                 def msg = err.defaultMessage
-                err.arguments.eachWithIndex {  arg, i ->
+                err.arguments.eachWithIndex { arg, i ->
                     msg = msg.replaceAll("\\{" + i + "}", arg.toString())
                 }
                 str += "<li>" + msg + "</li>"
