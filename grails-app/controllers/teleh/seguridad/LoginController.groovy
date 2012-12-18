@@ -111,7 +111,7 @@ class LoginController {
                 if (session.convocatoria.fechaEvaluacion > ahora){
                     redirect(action: "datos",controller: "persona")
                 }else{
-                    if (user.estado.id.toInteger()==2){
+                    if (user.estado?.id?.toInteger()==2){
                         redirect(action: "inicio", controller: "evaluacion")
                     }else{
                         session.finalize()
