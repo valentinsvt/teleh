@@ -13,23 +13,26 @@ class LoginController {
         redirect(action: 'login')
     }
 
-    def postulante(){
+    def postulante() {
         def fecha = new Date()
-        session.convocatoria=null
-        def conv = Convocatoria.findByFechaInicioLessThanEqualsAndFechaFinGreaterThanEquals(fecha,fecha)
+        session.convocatoria = null
+        def conv = Convocatoria.findByFechaInicioLessThanEqualsAndFechaFinGreaterThanEquals(fecha, fecha)
         if (conv)
-            session.convocatoria=conv
-        def mensaje=params.msn
-        params.msn=null
+            session.convocatoria = conv
+        def mensaje = params.msn
+        params.msn = null
 
     }
 
     def olvidoPass() {
+        def ci = params.ci
         def mail = params.email
-        def personas = Persona.findAllByEmail(mail)
+        def personas = Persona.findAllByEmailAndCedula(mail, ci)
+        println params
+        println personas
         def msg
         if (personas.size() == 0) {
-            msg = "NO*No se encontró un usuario con ese email"
+            msg = "NO*No se encontró un usuario con ese email y cédula"
         } else if (personas.size() > 1) {
             msg = "NO*Ha ocurrido un error grave"
         } else {
@@ -37,7 +40,7 @@ class LoginController {
 
             def random = new Random()
             def chars = []
-            ['A'..'Z', 'a'..'z', '0'..'9', ('!@$%^&*' as String[]).toList()].each {chars += it}
+            ['A'..'Z', 'a'..'z', '0'..'9', ('!@$%^&*' as String[]).toList()].each { chars += it }
             def newPass = (1..8).collect { chars[random.nextInt(chars.size())] }.join()
 
             persona.pin = newPass.encodeAsMD5()
@@ -60,7 +63,7 @@ class LoginController {
 
     }
 
-    def validarAux(){
+    def validarAux() {
         def user = Auxiliar.withCriteria {
             eq("usuario", params.login)
             eq("password", params.pass.encodeAsMD5())
@@ -74,7 +77,7 @@ class LoginController {
             user = user[0]
             session.usuario = user
             session.perfil = "admin"
-            redirect(action: "list",controller: "personaAdm")
+            redirect(action: "list", controller: "personaAdm")
             return
         }
         redirect(controller: 'login', action: "login")
@@ -82,9 +85,9 @@ class LoginController {
 
     def validar() {
         def calif = Estado.get(2)
-        if(!session.convocatoria)
+        if (!session.convocatoria)
             redirect(action: "postulante")
-        else{
+        else {
             def user = Persona.withCriteria {
                 eq("cedula", params.cedula)
                 eq("pin", params.pin.encodeAsMD5())
@@ -99,17 +102,17 @@ class LoginController {
                 flash.message = "Ha ocurrido un error grave"
             } else {
                 user = user[0]
-                if (user.login==0){
-                    user.login=1
+                if (user.login == 0) {
+                    user.login = 1
                     user.save(flush: true)
                 }
 
                 session.usuario = user
-                session.perfil="postulante"
+                session.perfil = "postulante"
                 def ahora = new Date()
-                if (session.convocatoria.fechaEvaluacion > ahora){
-                    redirect(action: "datos",controller: "persona")
-                }else{
+                if (session.convocatoria.fechaEvaluacion > ahora) {
+                    redirect(action: "datos", controller: "persona")
+                } else {
                     redirect(action: "inicio", controller: "evaluacion")
                 }
                 return
@@ -118,9 +121,6 @@ class LoginController {
 
 
     }
-
-
-
 
 //    def savePer() {
 ////        println params
