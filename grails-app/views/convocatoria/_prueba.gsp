@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Registro</title>
+    <title>Evaluaciones</title>
     <style type="text/css">
     .control-group{
         clear: both;margin: 5px;height: 35px
@@ -39,17 +39,13 @@
     <p style="font-size: 16px;text-align: justify;margin-top: 20px;">Estimado/a Postulante:</p>
 
     <p style="font-size: 16px;text-align: justify;margin-top: 10px">
-
-        %{--Para continuar con el proceso por favor acceda nuevamente a la página web del Ministerio de Salud Pública www.msp.gob.ec en el espacio de: “Concursos Interno para Servidores con Contratos por 4 Años”. Presione “Ingresar al sistema”.--}%
-        Para continuar con el proceso por favor ingrese <a href="http://www.infa.gob.ec:7073/mies" target="_blank">AQUI</a> con la siguiente información.
         <br/>
+        Si usted ha sido calificada/o y aún no ha dado la prueba, le recordamos que ingrese  <a href="http://www.infa.gob.ec:7073/mies" target="_blank">AQUI</a>  , allí puede ingresar con su número cédula y contraseña (es la misma que se le dio al inicio para su registro) para realizar la prueba on-line. Recuerde que debe ingresar al sistema entre los días 14 al 21 de diciembre de 2012, hasta las 24h00.
         <br/>
-        <b>USUARIO:</b> ${prsn.cedula}<br/>
-
-        <b>CONTRASEÑA:</b> ${pin}<br/>
+        Felicitaciones y siga participando en el proceso.
 
         <br/>
-        Recuerde que su registro todavía está incompleto. Más información a <a href="mailto:info@infa.gob.ec">info@infa.gob.ec</a>
+        Más información a <a href="mailto:info@infa.gob.ec">info@infa.gob.ec</a>
 
 
     </p>

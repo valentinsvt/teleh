@@ -5,7 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException
 class ConvocatoriaController extends teleh.seguridad.Shield {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
-
+    def mailService
     def index() {
         redirect(action: "list", params: params)
     } //index
@@ -13,6 +13,37 @@ class ConvocatoriaController extends teleh.seguridad.Shield {
     def list() {
         [convocatoriaInstanceList: Convocatoria.list(params), params: params]
     } //list
+
+
+    def enviarMailPrueba(){
+        def calificados = Persona.findAllByEstado(Estado.get(2))
+        def cont = 0
+        def tot = 0
+        calificados.each {ca->
+            if (ca.mailPrueba!="E"){
+                def encu = Encuesta.findByPersona(ca)
+                if (encu){
+                    tot++
+                    println "enviar mail "+ca.email
+                    try {
+                        mailService.sendMail {
+                            to ca.email
+                            from "info@infa.gob.ec"
+                            subject "Momento de rendir su exámen"
+                            html g.render(template: "prueba", model: [prsn: ca])
+                        }
+                        ca.mailPrueba="E"
+                        ca.save()
+                        cont++
+                    } catch (e) {
+                        println "error al mandar mail: mail prueba "+ca.email+" e:"+e
+                    }
+                }
+            }
+
+        }
+        render "Se enviaron ${cont} mails de un total de ${tot}"
+    }
 
     def form_ajax() {
         def convocatoriaInstance = new Convocatoria(params)

@@ -56,6 +56,7 @@ class Persona {
     Integer puntajeEntrevista
     Integer login = 0
     int activo = 1
+    String mailPrueba /*enviado si o no*/
 
     static constraints = {
 
@@ -109,6 +110,7 @@ class Persona {
         puntajeBilingue(nullable: true, default: 0)
         puntajePrueba(nullable: true, default: 0)
         puntajeEntrevista(nullable: true, default: 0)
+        mailPrueba(nullable: true,blank: true)
 
     }
 
@@ -169,6 +171,7 @@ class Persona {
         puntajeEntrevista column: 'inscptet'
         login column: 'insclgin'
         activo column: 'inscactv'
+        mailPrueba column: 'inscmlpr'
     }
 
     String toString() {
