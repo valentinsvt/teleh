@@ -33,7 +33,7 @@
 <div class="container ui-corner-all" style="width: 600px;min-height: 600px;float: left;margin: 20px;border: 1px #aaa solid;padding: 10px;position: relative;" >
 
     <div class="page-header" style="">
-        <h3 style="font-size: 25px;margin-bottom: 5px;margin-left: 30px">Convocatoria: ${session.convocatoria.descripcion}</h3>
+        <h3 style="font-size: 25px;margin-bottom: 5px;margin-left: 30px">Convocatoria: ${conv}</h3>
     </div>
 
     <p style="font-size: 16px;text-align: justify;margin-top: 20px;">Estimado/a Postulante:</p>

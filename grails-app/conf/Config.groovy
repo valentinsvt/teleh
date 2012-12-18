@@ -110,7 +110,7 @@ grails {
         port = 25
         username = "info@infa.gob.ec"
         password = "info"
-        props = ["mail.debug": "true",
+        props = ["mail.debug": "false",
                 "mail.smtp.protocol": "smtps",
                 "mail.smtp.auth": "true",
                 "mail.smtp.starttls.enable": "true",

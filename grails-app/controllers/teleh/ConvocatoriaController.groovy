@@ -17,6 +17,7 @@ class ConvocatoriaController extends teleh.seguridad.Shield {
 
     def enviarMailPrueba(){
         def calificados = Persona.findAllByEstado(Estado.get(2))
+        def conv = Convocatoria.list().pop()
         def cont = 0
         def tot = 0
         calificados.each {ca->
@@ -30,13 +31,13 @@ class ConvocatoriaController extends teleh.seguridad.Shield {
                             to ca.email
                             from "info@infa.gob.ec"
                             subject "Momento de rendir su exámen"
-                            html g.render(template: "prueba", model: [prsn: ca])
+                            html g.render(template: "prueba", model: [prsn: ca,conv:conv])
                         }
                         ca.mailPrueba="E"
-                        ca.save()
+                        ca.save(flush: true)
                         cont++
                     } catch (e) {
-                        println "error al mandar mail: mail prueba "+ca.email+" e:"+e
+                        println "error al mandar mail: mail prueba "+ca.email+" id:"+ca.id+"  e:"+e
                     }
                 }
             }
