@@ -22,8 +22,11 @@ class ConvocatoriaController extends teleh.seguridad.Shield {
         def cont = 0
         def tot = 0
         calificados.each {ca->
+            println "actual -> "+ca+"  "+ca.id+" "+ca.mailPrueba
             if (ca.mailPrueba!="E"){
+                println "paso if E"
                 def encu = Encuesta.findByPersona(ca)
+                println "encuesta "+encu
                 if (encu){
                     tot++
                     println "enviar mail "+ca.email
