@@ -133,6 +133,9 @@ class EvaluacionController  extends teleh.seguridad.ShieldPostulante {
                 }
                 if (preguntas.size() == 0) {
                     pregunta = null
+                    def prsn = Persona.get(session.usuario.id)
+                    prsn.estado=Estado.get(3)
+                    prsn.save(flush: true)
                     redirect(action: "fin")
                 } else {
                     pregunta = preguntas.pop()
