@@ -32,6 +32,7 @@ class MenuTagLib {
 
         def items = [:]
 
+        def usu = Auxiliar.get(session.usuario.id)
 
         switch (session.perfil) {
             case "admin":
@@ -51,35 +52,48 @@ class MenuTagLib {
 //                items.administracion.items.reportes.controller = "reportes"
 //                items.administracion.items.reportes.action = "index"
 
-                items.convocatoria = [:]
-                items.convocatoria.controller = "convocatoria"
-                items.convocatoria.action = "list"
-                items.convocatoria.label = "Convocatoria"
+                if (usu.tipo.equalsIgnoreCase("a")) {
+                    items.convocatoria = [:]
+                    items.convocatoria.controller = "convocatoria"
+                    items.convocatoria.action = "list"
+                    items.convocatoria.label = "Convocatoria"
+                }
 
-                items.ordenDeTrabajo = [:]
-                items.ordenDeTrabajo.controller = "personaAdm"
-                items.ordenDeTrabajo.action = "list"
-                items.ordenDeTrabajo.label = "Postulantes"
+                if (usu.tipo.equalsIgnoreCase("a") || usu.tipo.equalsIgnoreCase("c")) {
+                    items.postulantes = [:]
+                    items.postulantes.controller = "personaAdm"
+                    items.postulantes.action = "list"
+                    items.postulantes.label = "Postulantes"
+                }
 
-                items.tipoTitulo = [:]
-                items.tipoTitulo.controller = "tipoTitulo"
-                items.tipoTitulo.action = "list"
-                items.tipoTitulo.label = "Tipo de título"
+                if (usu.tipo.equalsIgnoreCase("a") || usu.tipo.equalsIgnoreCase("c") || usu.tipo.equalsIgnoreCase("e")) {
+                    items.entrevista = [:]
+                    items.entrevista.controller = "entrevista"
+                    items.entrevista.action = "list"
+                    items.entrevista.label = "Entrevistas"
+                }
 
-                items.titulo = [:]
-                items.titulo.controller = "titulo"
-                items.titulo.action = "list"
-                items.titulo.label = "Títulos"
+                if (usu.tipo.equalsIgnoreCase("a")) {
+                    items.tipoTitulo = [:]
+                    items.tipoTitulo.controller = "tipoTitulo"
+                    items.tipoTitulo.action = "list"
+                    items.tipoTitulo.label = "Tipo de título"
 
-                items.auxiliar = [:]
-                items.auxiliar.controller = "auxiliar"
-                items.auxiliar.action = "list"
-                items.auxiliar.label = "Usuarios"
+                    items.titulo = [:]
+                    items.titulo.controller = "titulo"
+                    items.titulo.action = "list"
+                    items.titulo.label = "Títulos"
 
-                items.examen = [:]
-                items.examen.label = "Exámenes"
-                items.examen.controller = "examen"
-                items.examen.action = "list"
+                    items.auxiliar = [:]
+                    items.auxiliar.controller = "auxiliar"
+                    items.auxiliar.action = "list"
+                    items.auxiliar.label = "Usuarios"
+
+                    items.examen = [:]
+                    items.examen.label = "Exámenes"
+                    items.examen.controller = "examen"
+                    items.examen.action = "list"
+                }
                 break;
         }
 

@@ -1,4 +1,3 @@
-
 <%@ page import="teleh.Auxiliar" %>
 <!doctype html>
 <html>
@@ -10,6 +9,7 @@
         <script src="${resource(dir: 'js/jquery/plugins/jquery-validation-1.9.0', file: 'jquery.validate.min.js')}"></script>
         <script src="${resource(dir: 'js/jquery/plugins/jquery-validation-1.9.0', file: 'messages_es.js')}"></script>
     </head>
+
     <body>
 
         <div class="span12">
@@ -27,6 +27,7 @@
                 Crear  Auxiliar
             </a>
         </div>
+
         <div id="search" class="pull-right"></div>
 
         <g:form action="delete" name="frmDelete-Auxiliar">
@@ -38,34 +39,34 @@
             <table class="table table-bordered table-striped table-condensed table-hover">
                 <thead>
                     <tr>
-                    
-                        <g:sortableColumn property="usuario" title="Usuario" />
-                        <g:sortableColumn property="descripcion" title="Descripción" />
-
+                        <g:sortableColumn property="usuario" title="Usuario"/>
+                        <g:sortableColumn property="descripcion" title="Descripción"/>
+                        <g:sortableColumn property="tipo" title="Tipo"/>
                         <th width="150">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="paginate">
-                <g:each in="${auxiliarInstanceList}" status="i" var="auxiliarInstance">
-                    <tr>
-                    
-                        <td>${fieldValue(bean: auxiliarInstance, field: "usuario")}</td>
-                        <td>${fieldValue(bean: auxiliarInstance, field: "descripcion")}</td>
+                    <g:each in="${auxiliarInstanceList}" status="i" var="auxiliarInstance">
+                        <tr>
 
-                        <td>
-                            <a class="btn btn-small btn-show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${auxiliarInstance.id}">
-                                <i class="icon-zoom-in icon-large"></i>
-                            </a>
-                            <a class="btn btn-small btn-edit btn-ajax" href="#" rel="tooltip" title="Editar" data-id="${auxiliarInstance.id}">
-                                <i class="icon-pencil icon-large"></i>
-                            </a>
+                            <td>${fieldValue(bean: auxiliarInstance, field: "usuario")}</td>
+                            <td>${fieldValue(bean: auxiliarInstance, field: "descripcion")}</td>
+                            <td>${fieldValue(bean: auxiliarInstance, field: "tipo")}</td>
 
-                            <a class="btn btn-small btn-delete" href="#" rel="tooltip" title="Eliminar" data-id="${auxiliarInstance.id}">
-                                <i class="icon-trash icon-large"></i>
-                            </a>
-                        </td>
-                    </tr>
-                </g:each>
+                            <td>
+                                <a class="btn btn-small btn-show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${auxiliarInstance.id}">
+                                    <i class="icon-zoom-in icon-large"></i>
+                                </a>
+                                <a class="btn btn-small btn-edit btn-ajax" href="#" rel="tooltip" title="Editar" data-id="${auxiliarInstance.id}">
+                                    <i class="icon-pencil icon-large"></i>
+                                </a>
+
+                                <a class="btn btn-small btn-delete" href="#" rel="tooltip" title="Eliminar" data-id="${auxiliarInstance.id}">
+                                    <i class="icon-trash icon-large"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </g:each>
                 </tbody>
             </table>
 

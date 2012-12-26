@@ -1,5 +1,7 @@
 package teleh.seguridad
 
+import teleh.Auxiliar
+
 class Shield {
     def beforeInterceptor = [action: this.&auth, except: 'login']
     /**
@@ -22,13 +24,32 @@ class Shield {
             session.finalize()
             return false
         } else {
-            if(session.perfil=="admin") {
-//                println "2"
-                return true
-            }
-            else {
+            if (session.perfil == "admin") {
+                def usu = Auxiliar.get(session.usuario.id)
+
+                println usu.tipo + "   " + controllerName + "   " + actionName
+
+                def allowedControllers, allowedActions
+
+                if (usu.tipo.equalsIgnoreCase("a")) {
+                    return true
+                } else if (usu.tipo.equalsIgnoreCase("e")) {
+                    allowedControllers = ["entrevista"]
+                    allowedActions = ["list", "show_ajax", "entrevista"]
+                } else if (usu.tipo.equalsIgnoreCase("c")) {
+                    allowedControllers = ["personaAdm", "persona", "reportes", "pdf"]
+                    allowedActions = ["list", "verTitulo", "cambiarEstado", "show_ajax", "listaPersonasXls", 'pdfLink', 'listaPersonasPdf']
+                }
+
+                if (allowedControllers.contains(controllerName) && allowedActions.contains(actionName)) {
+                    return true
+                } else {
+                    return false
+                }
+
+            } else {
 //                println "3"
-                redirect(controller: 'login',action: 'login')
+                redirect(controller: 'login', action: 'login')
                 return false
             }
         }
