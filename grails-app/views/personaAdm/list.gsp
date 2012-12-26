@@ -39,7 +39,7 @@
                         Inscritos en
                         la convocatoria <g:select class="input-medium" name="convocatoria" from="${teleh.Convocatoria.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion" value="${params.id}"/>
                         en <g:select class="input-medium" name="provincia" from="${teleh.Provincia.list([sort: 'nombre'])}" optionKey="id" optionValue="nombre" value="${params.provincia}" noSelection="['': 'Todas las provincias']"/>
-                        con estado <g:select class="input-medium" name="estado" from="${teleh.Estado.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion" value="${params.estado}" noSelection="['': 'Cualquiera']"/>
+                        con estado <g:select class="input-medium" name="estado" from="${teleh.Estado.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion" value="${params.estado}" noSelection="['-1': 'Cualquiera']"/>
                         <g:select class="input-small" name="datos" from="${['-1': 'Todos', '0': 'Sin datos', '1': 'Con datos']}" optionKey="key" optionValue="value" value="${params.datos}"/>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" >
                 <div class="span12 btn-group">
                     <a href="#" class="btn btn-export" rel="tooltip" title="Exportar esta búsqueda a Excel" id="xls">
                         <i class="icon-table"></i> Exportar a Excel
@@ -90,52 +90,56 @@
                 </div>
             </div>
 
-            <table class="table table-bordered table-striped table-condensed table-hover" id="tbl">
+            <table class="table table-bordered table-striped table-condensed table-hover" id="tbl" style="margin-top: 15px;">
                 <thead>
                     <tr>
-                        <g:sortableColumn action="list" property="provincia" title="Vive en" params="${params}"/>
-                        <g:sortableColumn action="list" property="canton" title="Cantón" params="${params}"/>
-                        <g:sortableColumn action="list" property="titulo" title="Formación" params="${params}"/>
+                        <g:sortableColumn action="list" property="4" title="Vive en" params="${params}"/>
+                        <g:sortableColumn action="list" property="5" title="Cantón" params="${params}"/>
+                        <g:sortableColumn action="list" property="6" title="Formación" params="${params}"/>
                         <th>Cédula</th>
-                        <g:sortableColumn action="list" property="apellido" title="Nombres" params="${params}"/>
-                        <g:sortableColumn action="list" property="sexo" title="Género" params="${params}"/>
-                        <g:sortableColumn action="list" property="estado" title="Estado" params="${params}"/>
+                        <g:sortableColumn action="list" property="3" title="Nombres" params="${params}"/>
+                        <g:sortableColumn action="list" property="7" title="Género" params="${params}"/>
+                        <g:sortableColumn action="list" property="9" title="Estado" params="${params}"/>
+                        <g:sortableColumn action="list" property="10" title="Nota" params="${params}"/>
                         <th width="150">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="paginate">
-                    <g:each in="${personaInstanceList}" status="i" var="personaInstance">
+                    <g:each in="${res}" status="i" var="r">
                         <tr>
                             <td>
-                                ${fieldValue(bean: personaInstance, field: "provincia")}
+                                ${r[3]}
                             </td>
                             <td>
-                                ${fieldValue(bean: personaInstance, field: "canton")}
+                                ${r[4]}
                             </td>
                             <td>
-                                ${personaInstance.titulo?.descripcion}
+                                ${r[5]}
                             </td>
                             <td>
-                                <g:link action="verTitulo" rel="tooltip" title="Ver titulo" id="${personaInstance.id}">
-                                    ${personaInstance.cedula}
+                                <g:link action="verTitulo" rel="tooltip" title="Ver titulo" id="${r[0]}">
+                                    ${r[7]}
                                 </g:link>
                             </td>
                             <td>
-                                <a class="show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${personaInstance.id}">
-                                    ${personaInstance.apellido}, ${personaInstance.nombre}
+                                <a class="show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${r[0]}">
+                                    ${r[2]}, ${r[1]}
                                 </a>
                             </td>
                             <td>
-                                ${personaInstance.sexo?.capitalize()}
+                                ${r[6]}
                             </td>
                             <td>
-                                ${personaInstance?.estado?.descripcion}
+                                ${r[8]}
                             </td>
                             <td>
-                                <a class="btn btn-small btn-show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${personaInstance.id}">
+                                ${r[9]}
+                            </td>
+                            <td>
+                                <a class="btn btn-small btn-show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${r[0]}">
                                     <i class="icon-zoom-in icon-large"></i>
                                 </a>
-                                <g:link action="verTitulo" id="${personaInstance.id}" class="btn btn-small btn-titulo" rel="tooltip" title="Ver título" data-id="${personaInstance.id}">
+                                <g:link action="verTitulo" id="${r[0]}" class="btn btn-small btn-titulo" rel="tooltip" title="Ver título" data-id="${r[0]}">
                                     <i class=" icon-credit-card icon-large"></i>
                                 </g:link>
                             </td>

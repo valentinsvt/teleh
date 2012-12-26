@@ -66,6 +66,40 @@ class ConvocatoriaController extends teleh.seguridad.Shield {
         }
         render "Se enviaron ${cont} mails de un total de ${tot}"
     }
+    def enviarComunicado(){
+        def calificados = Persona.findAllByEstado(Estado.get(3))
+        println "calificados "+calificados.size()
+        def conv = Convocatoria.list().pop()
+        def cont = 0
+        def tot = 0
+        calificados.each {ca->
+//            println "actual -> "+ca+"  "+ca.id+" "+ca.mailPrueba
+            if (ca.mailPrueba!="C"){
+//                println "paso if E"
+                def encu = Encuesta.findByPersona(ca)
+//                println "encuesta "+encu
+                if (encu){
+                    tot++
+                    println "enviar mail "+ca.email
+                    try {
+                        mailService.sendMail {
+                            to ca.email
+                            from "info@infa.gob.ec"
+                            subject "Comunicado"
+                            html g.render(template: "comunicado", model: [prsn: ca,conv:conv])
+                        }
+                        ca.mailPrueba="C"
+                        ca.save(flush: true)
+                        cont++
+                    } catch (e) {
+                        println "error al mandar mail: mail prueba "+ca.email+" id:"+ca.id+"  e:"+e
+                    }
+                }
+            }
+
+        }
+        render "Se enviaron ${cont} mails de un total de ${tot}"
+    }
 
     def form_ajax() {
         def convocatoriaInstance = new Convocatoria(params)
