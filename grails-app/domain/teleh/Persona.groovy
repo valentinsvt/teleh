@@ -53,7 +53,7 @@ class Persona {
     Integer puntajeTrabajoComunitario
     Integer puntajeBilingue
     Integer puntajePrueba
-    Integer puntajeEntrevista
+    Double puntajeEntrevista
     Integer login = 0
     int activo = 1
     String mailPrueba /*enviado si o no*/
