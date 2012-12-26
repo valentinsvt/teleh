@@ -99,10 +99,10 @@ class EntrevistaController {
 
         cn.eachRow(sqlTotal.toString()) { r ->
             total = r[0]
-            println "r " + r
+//            println "r " + r
         }
 
-        println "sql size " + total
+//        println "sql size " + total
         def sql = "\n" +
                 "SELECT\n" +
                 "  i.insc__id,\n" +
@@ -127,7 +127,7 @@ class EntrevistaController {
                 "GROUP BY 1,2\n" +
                 "ORDER BY ${params.sort} ${params.order} limit ${params.max} offset ${params.offset};"
 
-println sql
+//println sql
 
         def res = []
 //        println "sql "+sql
