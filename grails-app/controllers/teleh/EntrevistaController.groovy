@@ -22,21 +22,50 @@ class EntrevistaController {
         return [persona: persona]
     }
 
+    def saveEntrevista() {
+        println params
+
+        def persona = Persona.get(params.id)
+
+        persona.puntajeEntrevista = params.total.toDouble()
+
+        if (persona.save(flush: true)) {
+            flash.clase = "alert-success"
+            flash.message = "Se ha completado correctamente la entrevista de " + persona.nombre + " " + persona.apellido
+        } else {
+            flash.clase = "alert-error"
+            def str = "<h4>No se pudo guardar la entrevista de " + (persona.nombre + " " + persona.apellido) + "</h4>"
+
+            str += "<ul>"
+            persona.errors.allErrors.each { err ->
+                def msg = err.defaultMessage
+                err.arguments.eachWithIndex { arg, i ->
+                    msg = msg.replaceAll("\\{" + i + "}", arg.toString())
+                }
+                str += "<li>" + msg + "</li>"
+            }
+            str += "</ul>"
+
+            flash.message = str
+        }
+        redirect(action: "list")
+    }
+
     def list() {
 //        println "params "+params
         def where = ""
         if (!params.id) {
             params.id = 1
         }
-        where+=" and i.conv__id = ${params.id}"
+        where += " and i.conv__id = ${params.id}"
         if (params.provincia && params.provincia != "") {
-            where+=" and i.prov__id = ${params.provincia}"
+            where += " and i.prov__id = ${params.provincia}"
         }
         if (!params.estado || params.estado == "") {
             params.estado = null
         }
         if (!params.max || params.max == 0) {
-            params.max = 1
+            params.max = 100
         } else {
             params.max = params.max.toInteger()
         }
@@ -51,7 +80,7 @@ class EntrevistaController {
         if (!params.order) {
             params.order = "asc"
         }
-        if (params.busqueda && params.busqueda!="") {
+        if (params.busqueda && params.busqueda != "") {
             where += " and (upper(i.inscnmbr) like '%${params.busqueda.toUpperCase()}%' or upper(i.inscapel) like '%${params.busqueda.toUpperCase()}%' or i.insccedu like '%${params.busqueda}%') "
         }
 //        println "where "+where
@@ -60,20 +89,20 @@ class EntrevistaController {
 
         def conv = Convocatoria.get(params.id.toLong())
         def cn = dbConnectionService.getConnection()
-        def total =0
-        def sqlTotal =  "\n" +
+        def total = 0
+        def sqlTotal = "\n" +
                 "SELECT\n" +
                 "  count(*)\n" +
                 "FROM insc i\n" +
                 "  INNER JOIN encu e ON i.insc__id = e.prsp__id\n" +
                 "  WHERE i.etdo__id = 3  ${where}"
 
-        cn.eachRow(sqlTotal.toString()){r->
-            total=r[0]
-            println "r "+r
+        cn.eachRow(sqlTotal.toString()) { r ->
+            total = r[0]
+            println "r " + r
         }
 
-        println "sql size "+total
+        println "sql size " + total
         def sql = "\n" +
                 "SELECT\n" +
                 "  i.insc__id,\n" +
@@ -83,9 +112,10 @@ class EntrevistaController {
                 "  p.provnmbr,\n" +
                 "  c.cantnmbr,\n" +
                 "  t.titldscr,\n" +
-                "  i.inscsexo,\n"+
-                "  i.insccedu, \n"+
-                "  count(d.dtle__id)\n" +
+                "  i.inscsexo,\n" +
+                "  i.insccedu, \n" +
+                "  count(d.dtle__id),\n" +
+                "  i.inscptet \n" +
                 "FROM insc i\n" +
                 "  INNER JOIN encu e ON i.insc__id = e.prsp__id\n" +
                 "  INNER JOIN dtle d ON e.encu__id = d.encu__id\n" +
@@ -97,11 +127,11 @@ class EntrevistaController {
                 "GROUP BY 1,2\n" +
                 "ORDER BY ${params.sort} ${params.order} limit ${params.max} offset ${params.offset};"
 
-
+println sql
 
         def res = []
 //        println "sql "+sql
-        cn.eachRow(sql.toString()){r->
+        cn.eachRow(sql.toString()) { r ->
             res.add(r.toRowResult())
 //            println "r "+r
         }
@@ -109,7 +139,7 @@ class EntrevistaController {
 
 //        println "res "+res+" "
 
-        [res:res,total:total]
+        [res: res, total: total]
     }
 
     def list_() {

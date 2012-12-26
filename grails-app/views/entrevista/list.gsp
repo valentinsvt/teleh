@@ -16,6 +16,14 @@
     </head>
 
     <body>
+        <g:if test="${flash.message}">
+            <div class="span12">
+                <div class="alert ${flash.clase ?: 'alert-info'}" role="status">
+                    <a class="close" data-dismiss="alert" href="#">×</a>
+                    ${flash.message}
+                </div>
+            </div>
+        </g:if>
 
         <div id="list-Persona" class="span12" role="main" style="margin-top: 10px;">
 
@@ -34,24 +42,6 @@
                 </div>
             </g:form>
 
-            <div class="row">
-                <div class="span9">
-                    ${params.label}
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="span12" style="height: 30px;">
-                    ${params.totales}
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="span12" style="height: 30px; color: #1a2d57;">
-                    ${params.calificados}
-                </div>
-            </div>
-
             <table class="table table-bordered table-striped table-condensed table-hover" id="tbl">
                 <thead>
                     <tr>
@@ -61,7 +51,8 @@
                         <th>Cédula</th>
                         <g:sortableColumn action="list" property="4" title="Nombres" params="${params}"/>
                         <g:sortableColumn action="list" property="8" title="Género" params="${params}"/>
-                        <th>Nota</th>
+                        <th>Nota Prueba</th>
+                        <th>Nota Entrevista</th>
                         <th width="150">Acciones</th>
                     </tr>
                 </thead>
@@ -90,6 +81,9 @@
                             </td>
                             <td>
                                 ${r[9]}
+                            </td>
+                            <td>
+                                ${r[10]}
                             </td>
                             <td>
                                 <a class="btn btn-small btn-show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${r[0]}">
@@ -148,7 +142,7 @@
                     return false;
                 }); //click btn show
 
-                $("#btnFiltrar").click(function(){
+                $("#btnFiltrar").click(function () {
                     $(".well").submit()
                 });
             });
