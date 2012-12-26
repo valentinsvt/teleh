@@ -5,6 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException
 class ConvocatoriaController extends teleh.seguridad.Shield {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    def dbConnectionService
     def mailService
     def index() {
         redirect(action: "list", params: params)
@@ -14,6 +15,22 @@ class ConvocatoriaController extends teleh.seguridad.Shield {
         [convocatoriaInstanceList: Convocatoria.list(params), params: params]
     } //list
 
+       //                        select i.insc__id,e.encu__id,i.inscnmbr,i.inscapel,p.provnmbr,c.cantnmbr,t.titldscr,count(d.dtle__id) from insc i,encu e,dtle d ,resp r,prov p ,cant c,titl t where i.insc__id=e.prsp__id and e.encu__id=d.encu__id and i.etdo__id!=3 and r.resp__id=d.resp__id and r.correcta=1 and i.prov__id=p.prov__id and i.cant__id=c.cant__id and i.titl__id=t.titl__id   group by 1,2   order by 1;
+    def actualizaEstado(){
+        def cn = dbConnectionService.getConnection()
+        def sql = "select i.insc__id,e.encu__id,count(d.dtle__id) from insc i,encu e,dtle d where i.insc__id=e.prsp__id and e.encu__id=d.encu__id and i.etdo__id!=3 group by 1,2  having count(d.dtle__id)=20 order by 1"
+        def updates = ""
+        cn.eachRow(sql.toString()){r->
+            if (updates.size()!=0)
+                updates+=","
+            if(r[2]==20)
+                updates+=r[0]
+        }
+        println "updates !"+updates
+        sql = "update insc set etdo__id=3 where insc__id in (${updates})"
+        cn.execute(sql.toString())
+        cn.close()
+    }
 
     def enviarMailPrueba(){
         def calificados = Persona.findAllByEstado(Estado.get(2))

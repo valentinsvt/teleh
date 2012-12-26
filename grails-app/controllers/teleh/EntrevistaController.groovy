@@ -2,6 +2,8 @@ package teleh
 
 class EntrevistaController {
 
+    def dbConnectionService
+
 
     def show_ajax() {
         def personaInstance = Persona.get(params.id)
@@ -21,17 +23,20 @@ class EntrevistaController {
     }
 
     def list() {
+//        println "params "+params
+        def where = ""
         if (!params.id) {
             params.id = 1
         }
-        if (!params.provincia || params.provincia == "") {
-            params.provincia = null
+        where+=" and i.conv__id = ${params.id}"
+        if (params.provincia && params.provincia != "") {
+            where+=" and i.prov__id = ${params.provincia}"
         }
         if (!params.estado || params.estado == "") {
             params.estado = null
         }
         if (!params.max || params.max == 0) {
-            params.max = 100
+            params.max = 1
         } else {
             params.max = params.max.toInteger()
         }
@@ -41,26 +46,34 @@ class EntrevistaController {
             params.offset = params.offset.toInteger()
         }
         if (!params.sort) {
-            params.sort = "apellido"
+            params.sort = "4"
         }
         if (!params.order) {
             params.order = "asc"
         }
-        if (!params.datos) {
-            params.datos = "-1"
+        if (params.busqueda && params.busqueda!="") {
+            where += " and (upper(i.inscnmbr) like '%${params.busqueda.toUpperCase()}%' or upper(i.inscapel) like '%${params.busqueda.toUpperCase()}%' or i.insccedu like '%${params.busqueda}%') "
         }
-
-//        println params
+//        println "where "+where
 
         def prov = null
 
         def conv = Convocatoria.get(params.id.toLong())
-        if (params.provincia) {
-            prov = Provincia.get(params.provincia.toLong())
+        def cn = dbConnectionService.getConnection()
+        def total =0
+        def sqlTotal =  "\n" +
+                "SELECT\n" +
+                "  count(*)\n" +
+                "FROM insc i\n" +
+                "  INNER JOIN encu e ON i.insc__id = e.prsp__id\n" +
+                "  WHERE i.etdo__id = 3  ${where}"
+
+        cn.eachRow(sqlTotal.toString()){r->
+            total=r[0]
+            println "r "+r
         }
-        def est = Estado.get(3)
 
-
+        println "sql size "+total
         def sql = "\n" +
                 "SELECT\n" +
                 "  i.insc__id,\n" +
@@ -70,6 +83,8 @@ class EntrevistaController {
                 "  p.provnmbr,\n" +
                 "  c.cantnmbr,\n" +
                 "  t.titldscr,\n" +
+                "  i.inscsexo,\n"+
+                "  i.insccedu, \n"+
                 "  count(d.dtle__id)\n" +
                 "FROM insc i\n" +
                 "  INNER JOIN encu e ON i.insc__id = e.prsp__id\n" +
@@ -78,12 +93,23 @@ class EntrevistaController {
                 "  LEFT JOIN prov p ON i.prov__id = p.prov__id\n" +
                 "  LEFT JOIN cant c ON i.cant__id = c.cant__id\n" +
                 "  LEFT JOIN titl t ON i.titl__id = t.titl__id\n" +
-                "WHERE i.etdo__id = 3\n" +
+                "WHERE i.etdo__id = 3  ${where} \n" +
                 "GROUP BY 1,2\n" +
-                "ORDER BY 1;"
+                "ORDER BY ${params.sort} ${params.order} limit ${params.max} offset ${params.offset};"
 
 
 
+        def res = []
+//        println "sql "+sql
+        cn.eachRow(sql.toString()){r->
+            res.add(r.toRowResult())
+//            println "r "+r
+        }
+        cn.close()
+
+//        println "res "+res+" "
+
+        [res:res,total:total]
     }
 
     def list_() {

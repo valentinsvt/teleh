@@ -19,7 +19,7 @@
 
         <div id="list-Persona" class="span12" role="main" style="margin-top: 10px;">
 
-            <g:form class="well" name="frmSearch" params="${[max: params.max, sort: params.sort, order: params.order]}" action="list">
+            <g:form class="well" name="frmSearch" params="${[max: 100, sort: params.sort, order: params.order]}" action="list">
                 <div class="row">
                     <div class="span12">
                         Inscritos en
@@ -55,47 +55,47 @@
             <table class="table table-bordered table-striped table-condensed table-hover" id="tbl">
                 <thead>
                     <tr>
-                        <g:sortableColumn action="list" property="provincia" title="Provincia" params="${params}"/>
-                        <g:sortableColumn action="list" property="canton" title="Cantón" params="${params}"/>
-                        <g:sortableColumn action="list" property="titulo" title="Formación" params="${params}"/>
+                        <g:sortableColumn action="list" property="5" title="Provincia" params="${params}"/>
+                        <g:sortableColumn action="list" property="6" title="Cantón" params="${params}"/>
+                        <g:sortableColumn action="list" property="7" title="Formación" params="${params}"/>
                         <th>Cédula</th>
-                        <g:sortableColumn action="list" property="apellido" title="Nombres" params="${params}"/>
-                        <g:sortableColumn action="list" property="sexo" title="Género" params="${params}"/>
+                        <g:sortableColumn action="list" property="4" title="Nombres" params="${params}"/>
+                        <g:sortableColumn action="list" property="8" title="Género" params="${params}"/>
                         <th>Nota</th>
                         <th width="150">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="paginate">
-                    <g:each in="${personaInstanceList}" status="i" var="personaInstance">
+                    <g:each in="${res}" status="i" var="r">
                         <tr>
                             <td>
-                                ${fieldValue(bean: personaInstance, field: "provincia")}
+                                ${r[4]}
                             </td>
                             <td>
-                                ${fieldValue(bean: personaInstance, field: "canton")}
+                                ${r[5]}
                             </td>
                             <td>
-                                ${personaInstance.titulo?.descripcion}
+                                ${r[6]}
                             </td>
                             <td>
-                                ${personaInstance.cedula}
+                                ${r[8]}
                             </td>
                             <td>
-                                <a class="show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${personaInstance.id}">
-                                    ${personaInstance.apellido}, ${personaInstance.nombre}
+                                <a class="show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${r[0]}">
+                                    ${r[3]}, ${r[2]}
                                 </a>
                             </td>
                             <td>
-                                ${personaInstance.sexo?.capitalize()}
+                                ${r[6]}
                             </td>
                             <td>
-                                ${teleh.Encuesta.findByPersona(personaInstance)}
+                                ${r[9]}
                             </td>
                             <td>
-                                <a class="btn btn-small btn-show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${personaInstance.id}">
+                                <a class="btn btn-small btn-show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${r[0]}">
                                     <i class="icon-zoom-in icon-large"></i>
                                 </a>
-                                <g:link action="entrevista" id="${personaInstance.id}" class="btn btn-small btn-titulo" rel="tooltip" title="Entrevista" data-id="${personaInstance.id}">
+                                <g:link action="entrevista" id="${r[0]}" class="btn btn-small btn-titulo" rel="tooltip" title="Entrevista" data-id="${r[0]}">
                                     <i class=" icon-comments icon-large"></i>
                                 </g:link>
                             </td>
@@ -104,7 +104,7 @@
                 </tbody>
             </table>
 
-            <elm:paginate total="${params.totalRows}" action="list" id="${params.id}" params="${params}" maxsteps="9"/>
+            <elm:paginate total="${total}" action="list" id="${params.id}" params="${params}" maxsteps="9"/>
 
         </div>
 
@@ -147,6 +147,10 @@
                     });
                     return false;
                 }); //click btn show
+
+                $("#btnFiltrar").click(function(){
+                    $(".well").submit()
+                });
             });
         </script>
 
