@@ -27,7 +27,7 @@ class Shield {
             if (session.perfil == "admin") {
                 def usu = Auxiliar.get(session.usuario.id)
 
-                println usu.tipo + "   " + controllerName + "   " + actionName
+//                println usu.tipo + "   " + controllerName + "   " + actionName
 
                 def allowedControllers, allowedActions
 

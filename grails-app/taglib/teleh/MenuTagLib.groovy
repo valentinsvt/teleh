@@ -5,6 +5,8 @@ class MenuTagLib {
 
 
     def renderItem(item, tipo) {
+        println session.cn + "\t" + item.controller
+        println session.an + "\t" + item.action
         def str = "", clase = ""
         if (session.cn == item.controller && session.an == item.action) {
             clase = "active"

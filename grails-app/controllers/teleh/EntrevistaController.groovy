@@ -1,6 +1,6 @@
 package teleh
 
-class EntrevistaController {
+class EntrevistaController extends teleh.seguridad.Shield {
 
     def dbConnectionService
 
@@ -18,34 +18,66 @@ class EntrevistaController {
 
     def entrevista() {
         def persona = Persona.get(params.id)
+        def preguntas = PreguntaEntrevista.findAllByConvocatoria(persona.convocatoria, [sort: 'orden'])
 
-        return [persona: persona]
+        preguntas.each { preg ->
+            def respuestaPersona = RespuestaEntrevista.findAllByPersonaAndPreguntaEntrevista(persona, preg)
+            if (respuestaPersona.size() == 0) {
+                respuestaPersona = new RespuestaEntrevista()
+                respuestaPersona.persona = persona
+                respuestaPersona.preguntaEntrevista = preg
+                respuestaPersona.valor = 0
+                if (!respuestaPersona.save(flush: true)) {
+                    println "ERROR: " + respuestaPersona.errors
+                }
+            }
+        }
+
+        def respuestasPersona = RespuestaEntrevista.withCriteria {
+            eq("persona", persona)
+            preguntaEntrevista {
+                eq("convocatoria", persona.convocatoria)
+            }
+        }
+
+        def readOnly = persona.puntajeEntrevista > 0
+
+        return [persona: persona, respuestasPersona: respuestasPersona, readOnly: readOnly]
     }
 
     def saveEntrevista() {
-        println params
+//        println params
 
         def persona = Persona.get(params.id)
+        def total = 0
+        def str = ""
 
-        persona.puntajeEntrevista = params.total.toDouble()
+        params.each { k, v ->
+            if (k.contains("preg")) {
+                def parts = k.split("_")
+                println k + "         " + parts[1] + ": " + v
+                def resp = RespuestaEntrevista.get(parts[1])
+                resp.valor = v.toDouble()
+                if (!resp.save(flush: true)) {
+                    println "ERROR 1: " + resp.errors
+                    str += "<li>Error al guardar respuesta " + parts[1] + ": " + resp.errors + "</li>"
+                } else {
+                    total += resp.valor
+                }
+            }
+        }
+        persona.puntajeEntrevista = total;
+        if (!persona.save(flush: true)) {
+            println "ERROR 2: " + persona.errors
+            str += "<li>Error al guardar persona " + persona.id + ": " + persona.errors + "</li>"
+        }
 
-        if (persona.save(flush: true)) {
+        if (str == "") {
             flash.clase = "alert-success"
             flash.message = "Se ha completado correctamente la entrevista de " + persona.nombre + " " + persona.apellido
         } else {
+            str = "<h4>No se pudo guardar la entrevista de " + (persona.nombre + " " + persona.apellido) + "</h4><ul>" + str + "</ul>"
             flash.clase = "alert-error"
-            def str = "<h4>No se pudo guardar la entrevista de " + (persona.nombre + " " + persona.apellido) + "</h4>"
-
-            str += "<ul>"
-            persona.errors.allErrors.each { err ->
-                def msg = err.defaultMessage
-                err.arguments.eachWithIndex { arg, i ->
-                    msg = msg.replaceAll("\\{" + i + "}", arg.toString())
-                }
-                str += "<li>" + msg + "</li>"
-            }
-            str += "</ul>"
-
             flash.message = str
         }
         redirect(action: "list")

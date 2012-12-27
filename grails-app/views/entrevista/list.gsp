@@ -11,7 +11,7 @@
     <head>
         <meta name="layout" content="main">
         <title>
-            Lista de Personas
+            Lista de Personas para entrevistas
         </title>
     </head>
 
@@ -22,6 +22,15 @@
                     <a class="close" data-dismiss="alert" href="#">×</a>
                     ${flash.message}
                 </div>
+            </div>
+        </g:if>
+
+        <g:if test="${session.usuario.tipo == 'a'}">
+            <div class="span8 btn-group" role="navigation">
+                <g:link class="btn" controller="preguntaEntrevista" action="list">
+                    <i class="icon-pencil"></i>
+                    Editar Entrevistas
+                </g:link>
             </div>
         </g:if>
 

@@ -11,7 +11,7 @@
     <head>
         <meta name="layout" content="main">
         <title>
-            Lista de Personas
+            Lista de Personas para entrevista
         </title>
     </head>
 
