@@ -80,7 +80,7 @@ class ConvocatoriaController extends teleh.seguridad.Shield {
 //                println "encuesta "+encu
                 if (encu){
                     tot++
-                    println "enviar mail "+ca.email
+                    println "enviar mail entrevista "+ca.email
                     try {
                         mailService.sendMail {
                             to ca.email
@@ -92,9 +92,73 @@ class ConvocatoriaController extends teleh.seguridad.Shield {
                         ca.save(flush: true)
                         cont++
                     } catch (e) {
-                        println "error al mandar mail: mail prueba "+ca.email+" id:"+ca.id+"  e:"+e
+                        println "error al mandar mail: mail comunicado entrevista "+ca.email+" id:"+ca.id+"  e:"+e
                     }
                 }
+            }
+
+        }
+        render "Se enviaron ${cont} mails de un total de ${tot}"
+    }
+
+    def enviarComunicadoNoAceptados(){
+        def calificados = Persona.findAllByEstado(Estado.get(5))
+        println "calificados "+calificados.size()
+        def conv = Convocatoria.list().pop()
+        def cont = 0
+        def tot = 0
+        calificados.each {ca->
+//            println "actual -> "+ca+"  "+ca.id+" "+ca.mailPrueba
+            if (ca.mailPrueba!="C"){
+
+                    tot++
+                    println "enviar mail no aceptados "+ca.email
+                    try {
+                        mailService.sendMail {
+                            to ca.email
+                            from "info@infa.gob.ec"
+                            subject "Comunicado"
+                            html g.render(template: "noAceptados", model: [prsn: ca,conv:conv])
+                        }
+                        ca.mailPrueba="C"
+                        ca.save(flush: true)
+                        cont++
+                    } catch (e) {
+                        println "error al mandar mail: mail comunicado no aceptado "+ca.email+" id:"+ca.id+"  e:"+e
+                    }
+
+            }
+
+        }
+        render "Se enviaron ${cont} mails de un total de ${tot}"
+    }
+    def enviarComunicadoPendientes(){
+        /*TODO importante!! ver que estado va aqui o como sacar los pendientes*/
+        def calificados = Persona.findAllByEstado(Estado.get(2))
+        println "calificados "+calificados.size()
+        def conv = Convocatoria.list().pop()
+        def cont = 0
+        def tot = 0
+        calificados.each {ca->
+//            println "actual -> "+ca+"  "+ca.id+" "+ca.mailPrueba
+            if (ca.mailPrueba!="C"){
+//
+                    tot++
+                    println "enviar mail pendientes "+ca.email
+                    try {
+                        mailService.sendMail {
+                            to ca.email
+                            from "info@infa.gob.ec"
+                            subject "Comunicado"
+                            html g.render(template: "pendientes", model: [prsn: ca,conv:conv])
+                        }
+                        ca.mailPrueba="C"
+                        ca.save(flush: true)
+                        cont++
+                    } catch (e) {
+                        println "error al mandar mail: mail comunicado pedientes "+ca.email+" id:"+ca.id+"  e:"+e
+                    }
+
             }
 
         }
