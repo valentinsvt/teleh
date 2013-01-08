@@ -15,12 +15,23 @@ class LoginController {
     def postulante() {
         def fecha = new Date()
         session.convocatoria = null
-        def conv = Convocatoria.findByFechaInicioLessThanEqualsAndFechaFinGreaterThanEquals(fecha, fecha)
+/*        def conv = Convocatoria.findByFechaInicioLessThanEqualsAndFechaFinGreaterThanEquals(fecha, fecha)
         if (conv)
             session.convocatoria = conv
         def mensaje = params.msn
         params.msn = null
-
+*/
+        def conv = Convocatoria.findByFechaInicioLessThanEqualsAndFechaFinGreaterThanEquals(fecha,fecha)
+        if (conv) { /*** Se trata de manejar el mensaje de inscripciones, pruebas o entrevistas **/
+            /* No hace falta fecha de inicio de entrevistas porque postulante no necesita ingresar solo el usuario tipo e
+             * hace la entrevista y la registra */
+            params.esInsc = (conv.fechaEvaluacion > fecha)
+            params.esPrba = (conv.fechaEvaluacion <= fecha)
+            session.convocatoria = conv
+            params.convocatoria = true
+        }
+        def mensaje = params.msn
+        params.msn = null
     }
 
     def olvidoPass() {

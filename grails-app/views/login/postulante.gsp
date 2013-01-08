@@ -36,8 +36,16 @@
                 ${session.convocatoria?.textoInicio}
             </div>
 
-            <div class="" style="width: 98%;color: black;font-family: 'Open Sans Condensed',serif;font-size: 25px;float: left;height: 130px;margin-top: 10px;margin-left: 5px;text-align: justify">
+            <div class="" style="width: 40%;color: black;font-family: 'Open Sans Condensed',serif;font-size: 25px;float: left;height: 130px;margin-top: 10px;margin-left: 5px;text-align: justify">
                 <a href="${g.createLink(controller: 'registro')}" class="btn btn-primary" style="font-size: 20px">Registrarse</a>
+            </div>
+            <div class="" style="width: 50%;color: black;font-family: 'Open Sans Condensed',serif;font-size: 25px;float: left;height: 130px;margin-top: 10px;margin-left: 5px;text-align: justify">
+                <g:if test="${params.esInsc}">
+                    <span class="tituloTree"> PERIODO DE INSCRIPCIONES</span>
+                </g:if>
+                <g:if test="${params.esPrba}">
+                    <span class="tituloTree"> PERIODO DE PRUEBAS</span>
+                </g:if>
             </div>
 
         </div>
@@ -54,8 +62,12 @@
                                 ${flash.message}
                             </g:if>
                             <g:else>
-                                Para rendir la <b>PRUEBA</b>, ingrese su número de cédula y la contraseña que fue enviada a su correo electrónico cuando se
-                                <b>Registró</b> y si ha recibido el correo de que ha sido calificad@.
+                                <g:if test="${params.esInsc}">
+                                    Para <b>INSCRIBIRSE</b> ingrese su número de cédula y la contraseña que fue enviada a su correo electrónico.
+                                </g:if>
+                                <g:else>
+                                    Para rendir la <b>PRUEBA</b> ingrese su número de cédula y la contraseña que fue enviada a su correo electrónico.
+                                </g:else>
                             </g:else>
                         </div>
 
