@@ -116,7 +116,7 @@
                             });
 
                             $("#modalHeader").removeClass("btn-edit btn-show btn-delete");
-                            $("#modalTitle").html("Crear Tipo Titulo");
+                            $("#modalTitle").html("Crear Tipo de Título");
                             $("#modalBody").html(msg);
                             $("#modalFooter").html("").append(btnOk).append(btnSave);
                             $("#modal-TipoTitulo").modal("show");
@@ -143,7 +143,7 @@
                             });
 
                             $("#modalHeader").removeClass("btn-edit btn-show btn-delete").addClass("btn-edit");
-                            $("#modalTitle").html("Editar Tipo Titulo");
+                            $("#modalTitle").html("Editar Tipo de Título");
                             $("#modalBody").html(msg);
                             $("#modalFooter").html("").append(btnOk).append(btnSave);
                             $("#modal-TipoTitulo").modal("show");
@@ -163,7 +163,7 @@
                         success : function (msg) {
                             var btnOk = $('<a href="#" data-dismiss="modal" class="btn btn-primary">Aceptar</a>');
                             $("#modalHeader").removeClass("btn-edit btn-show btn-delete").addClass("btn-show");
-                            $("#modalTitle").html("Ver Tipo Titulo");
+                            $("#modalTitle").html("Ver Tipo de Título");
                             $("#modalBody").html(msg);
                             $("#modalFooter").html("").append(btnOk);
                             $("#modal-TipoTitulo").modal("show");
@@ -185,7 +185,7 @@
                     });
 
                     $("#modalHeader").removeClass("btn-edit btn-show btn-delete").addClass("btn-delete");
-                    $("#modalTitle").html("Eliminar Tipo Titulo");
+                    $("#modalTitle").html("Eliminar el Tipo de Título");
                     $("#modalBody").html("<p>¿Está seguro de querer eliminar este Tipo Titulo?</p>");
                     $("#modalFooter").html("").append(btnOk).append(btnDelete);
                     $("#modal-TipoTitulo").modal("show");

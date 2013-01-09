@@ -54,7 +54,7 @@
             <div class="tituloTree">Acciones de verificación durante la entrevista - Actitud de quienes desarrollan la entrevista</div>
             <table class="table table-condensed table-bordered table-striped table-hover">
                 <g:set var="alfabeto" value="ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
-                <g:each in="${respuestasPersona.findAll { it.preguntaEntrevista.tipo == 'Valoracion' }}" var="pregunta">
+                <g:each in="${respuestasPersona.findAll { it.preguntaEntrevista.tipo == 'Verificacion' }}" var="pregunta">
                     <tr>
                         <td>
                             ${alfabeto[pregunta.preguntaEntrevista.numero - 1]}

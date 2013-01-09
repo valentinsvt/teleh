@@ -16,4 +16,8 @@ class TipoTitulo implements Serializable {
     static constraints = {
         descripcion(size: 1..31, blank: false, nullable: false, attributes: [title: 'descripcion'])
     }
+
+    String toString() {
+        descripcion
+    }
 }

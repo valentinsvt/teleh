@@ -23,7 +23,7 @@ class Titulo implements Serializable {
         }
     }
     static constraints = {
-        tipoTitulo(blank: false, nullable: false, attributes: [title: 'tipo de titulo'])
+        tipoTitulo(blank: false, nullable: false, attributes: [title: 'tipo de título'])
         tipo(size: 1..1, blank: false, nullable: false, inList: ['S', 'N', 'A'], attributes: [title: 'tipo'])
         descripcion(size: 1..127, blank: false, nullable: false, attributes: [title: 'descripcion'])
         puntaje(blank: false, nullable: false, attributes: [title: 'puntaje'])

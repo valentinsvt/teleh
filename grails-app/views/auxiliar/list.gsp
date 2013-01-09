@@ -24,7 +24,7 @@
         <div class="span8 btn-group" role="navigation">
             <a href="#" class="btn btn-ajax btn-new">
                 <i class="icon-file"></i>
-                Crear  Auxiliar
+                Crear  Usuario
             </a>
         </div>
 
@@ -119,7 +119,7 @@
                             });
 
                             $("#modalHeader").removeClass("btn-edit btn-show btn-delete");
-                            $("#modalTitle").html("Crear Auxiliar");
+                            $("#modalTitle").html("Crear Usuario");
                             $("#modalBody").html(msg);
                             $("#modalFooter").html("").append(btnOk).append(btnSave);
                             $("#modal-Auxiliar").modal("show");
@@ -146,7 +146,7 @@
                             });
 
                             $("#modalHeader").removeClass("btn-edit btn-show btn-delete").addClass("btn-edit");
-                            $("#modalTitle").html("Editar Auxiliar");
+                            $("#modalTitle").html("Editar Usuario");
                             $("#modalBody").html(msg);
                             $("#modalFooter").html("").append(btnOk).append(btnSave);
                             $("#modal-Auxiliar").modal("show");
@@ -166,7 +166,7 @@
                         success : function (msg) {
                             var btnOk = $('<a href="#" data-dismiss="modal" class="btn btn-primary">Aceptar</a>');
                             $("#modalHeader").removeClass("btn-edit btn-show btn-delete").addClass("btn-show");
-                            $("#modalTitle").html("Ver Auxiliar");
+                            $("#modalTitle").html("Ver Usuario");
                             $("#modalBody").html(msg);
                             $("#modalFooter").html("").append(btnOk);
                             $("#modal-Auxiliar").modal("show");
@@ -188,8 +188,8 @@
                     });
 
                     $("#modalHeader").removeClass("btn-edit btn-show btn-delete").addClass("btn-delete");
-                    $("#modalTitle").html("Eliminar Auxiliar");
-                    $("#modalBody").html("<p>¿Está seguro de querer eliminar este Auxiliar?</p>");
+                    $("#modalTitle").html("Eliminar Usuario");
+                    $("#modalBody").html("<p>¿Está seguro de querer eliminar este Usuario?</p>");
                     $("#modalFooter").html("").append(btnOk).append(btnDelete);
                     $("#modal-Auxiliar").modal("show");
                     return false;
