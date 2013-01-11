@@ -29,7 +29,7 @@ class PersonaAdmController extends teleh.seguridad.Shield {
             def persona = Persona.get(row.id)
 
             if (persona.fecha1 || persona.horas1 > 0 || persona.institucion1 || persona.nombreCurso1) {
-                println "CURSO 1: " + persona.fecha1 + "  " + persona.horas1 + "   " + persona.institucion1 + "   " + persona.nombreCurso1
+                //println "CURSO 1: " + persona.fecha1 + "  " + persona.horas1 + "   " + persona.institucion1 + "   " + persona.nombreCurso1
                 def curso1 = new CursoPersona()
                 curso1.persona = persona
                 curso1.fecha = persona.fecha1
@@ -59,7 +59,7 @@ class PersonaAdmController extends teleh.seguridad.Shield {
                 }
             }
             if (persona.fecha3 || persona.horas3 > 0 || persona.institucion3 || persona.nombreCurso3) {
-                println "CURSO 3: " + persona.fecha3 + "  " + persona.horas3 + "   " + persona.institucion3 + "   " + persona.nombreCurso3
+                //println "CURSO 3: " + persona.fecha3 + "  " + persona.horas3 + "   " + persona.institucion3 + "   " + persona.nombreCurso3
                 def curso3 = new CursoPersona()
                 curso3.persona = persona
                 curso3.fecha = persona.fecha3
@@ -84,6 +84,8 @@ class PersonaAdmController extends teleh.seguridad.Shield {
 //        println "params "+params
         def where = ""
         def est = null
+
+        def strEstado = params.estado
         if (!params.id) {
             params.id = 1
         }
@@ -94,8 +96,9 @@ class PersonaAdmController extends teleh.seguridad.Shield {
         if (!params.estado || params.estado == "-1") {
             params.estado = "is not null"
         }else{
-            params.estado = " = "+params.estado
-            est = Estado.get(params.estado)
+            params.estado = params.estado
+            est = Estado.get(params.estado.toLong())
+            strEstado = "="+ params.estado
         }
         if (!params.max || params.max == 0) {
             params.max = 100
@@ -133,11 +136,11 @@ class PersonaAdmController extends teleh.seguridad.Shield {
                 "SELECT\n" +
                 "  count(*)\n" +
                 "FROM insc i\n" +
-                "  WHERE i.etdo__id ${params.estado}  ${where}"
-
+                "  WHERE i.etdo__id ${strEstado}  ${where}"
+        //println sqlTotal
         cn.eachRow(sqlTotal.toString()){r->
             total=r[0]
-            println "r "+r
+            //println "r "+r
         }
         def subQuery ="(select count(r.resp__id) from encu e,dtle d,resp r where e.prsp__id= i.insc__id and e.encu__id=d.encu__id and d.resp__id = r.resp__id and r.correcta = 1)"
         def sql = "\n" +
@@ -149,18 +152,19 @@ class PersonaAdmController extends teleh.seguridad.Shield {
                 "  c.cantnmbr,\n" +
                 "  t.titldscr,\n" +
                 "  i.inscsexo,\n"+
-                "  i.insccedu, \n"+
-                "  e.etdodscr, \n"+
+                "  i.insccedu,\n"+
+                "  e.etdodscr,\n"+
+                "  i.inscpcnh,\n" +
                 "  ${subQuery}\n" +
                 "FROM insc i\n" +
                 "  LEFT JOIN prov p ON i.prov__id = p.prov__id\n" +
                 "  LEFT JOIN cant c ON i.cant__id = c.cant__id\n" +
                 "  LEFT JOIN titl t ON i.titl__id = t.titl__id\n" +
                 "  LEFT JOIN etdo e ON i.etdo__id = e.etdo__id\n" +
-                "WHERE i.etdo__id  ${params.estado}  ${where} \n" +
+                "WHERE i.etdo__id  ${strEstado}  ${where} \n" +
                 "ORDER BY ${params.sort} ${params.order} limit ${params.max} offset ${params.offset};"
 
-//        println "sql "+sql
+       // println "sql "+sql
 //
         def res = []
 //        println "sql "+sql

@@ -429,6 +429,8 @@ class ReportesController {
             case "estado":
                 sort = "e.etdodscr"
                 break;
+            default:
+                sort = "i.inscapel"
         }
 
         if (params.provincia) {
@@ -473,6 +475,8 @@ class ReportesController {
         baseSql += filtroDatos
         baseSql += filtroBusqueda
         baseSql += " order by " + sort + " " + params.order
+
+        println baseSql
 
         params.label = "Inscritos a la convocatoria ${Convocatoria.get(params.id).descripcion}"
         if (params.provincia) {

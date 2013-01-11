@@ -101,6 +101,7 @@
                         <g:sortableColumn action="list" property="7" title="Género" params="${params}"/>
                         <g:sortableColumn action="list" property="9" title="Estado" params="${params}"/>
                         <g:sortableColumn action="list" property="10" title="Nota" params="${params}"/>
+                        <g:sortableColumn action="list" property="11" title="CNH" params="${params}"/>
                         <th width="150">Acciones</th>
                     </tr>
                 </thead>
@@ -131,6 +132,9 @@
                             </td>
                             <td>
                                 ${r[8]}
+                            </td>
+                            <td>
+                                ${r[10]}
                             </td>
                             <td>
                                 ${r[9]}
