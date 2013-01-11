@@ -6,6 +6,7 @@
     .control-group{
         clear: both;margin: 5px;height: 35px
     }
+
     .control-label{
         width: 150px;float: left;height: 30px;line-height: 30px;text-align: right;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;font-size: 13px;font-weight: bold
     }
