@@ -94,7 +94,7 @@ class PersonaAdmController extends teleh.seguridad.Shield {
             where+=" and i.prov__id = ${params.provincia}"
         }
         if (!params.estado || params.estado == "-1") {
-            params.estado = "is not null"
+            strEstado = "is not null"
         }else{
             params.estado = params.estado
             est = Estado.get(params.estado.toLong())
@@ -137,7 +137,7 @@ class PersonaAdmController extends teleh.seguridad.Shield {
                 "  count(*)\n" +
                 "FROM insc i\n" +
                 "  WHERE i.etdo__id ${strEstado}  ${where}"
-        //println sqlTotal
+        println "sqlTotal: " + sqlTotal
         cn.eachRow(sqlTotal.toString()){r->
             total=r[0]
             //println "r "+r
@@ -164,7 +164,7 @@ class PersonaAdmController extends teleh.seguridad.Shield {
                 "WHERE i.etdo__id  ${strEstado}  ${where} \n" +
                 "ORDER BY ${params.sort} ${params.order} limit ${params.max} offset ${params.offset};"
 
-       // println "sql "+sql
+        println "sql "+sql
 //
         def res = []
 //        println "sql "+sql
