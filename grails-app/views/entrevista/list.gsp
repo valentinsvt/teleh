@@ -25,7 +25,7 @@
             </div>
         </g:if>
 
-        <g:if test="${session.usuario.tipo == 'a'}">
+        <g:if test="${session.usuario.tipo.toString().equalsIgnoreCase('a')}">
             <div class="span8 btn-group" role="navigation">
                 <g:link class="btn" controller="preguntaEntrevista" action="list">
                     <i class="icon-pencil"></i>
