@@ -68,7 +68,7 @@ class ConvocatoriaController extends teleh.seguridad.Shield {
     }
 
     def enviarMailPrueba2(){
-        def calificados = Persona.findAllByEstado(Estado.get(2),[max:2])
+        def calificados = Persona.findAllByEstado(Estado.get(2))
         println "calificados "+calificados.size()
         def conv = Convocatoria.list().pop()
         def cont = 0
