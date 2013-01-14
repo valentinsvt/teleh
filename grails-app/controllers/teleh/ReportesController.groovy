@@ -1,19 +1,19 @@
 package teleh
 
 import com.itextpdf.text.BadElementException
+import com.lowagie.text.*
 import com.lowagie.text.pdf.PdfPCell
 import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter
 import jxl.Workbook
 import jxl.WorkbookSettings
-import com.lowagie.text.*
 import jxl.write.*
 
 class ReportesController {
 
     def dbConnectionService
 
-    def index() { }
+    def index() {}
 
     def buscadorService
     def reporteBuscador = {
@@ -89,15 +89,15 @@ class ReportesController {
         table.setWidthPercentage(100);
         table.setWidths(arregloEnteros(anchos))
         Font small = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL);
-        headers.eachWithIndex {h, i ->
+        headers.eachWithIndex { h, i ->
             PdfPCell c1 = new PdfPCell(new Phrase(h, small));
             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(c1);
         }
         table.setHeaderRows(1);
         def tagLib = new BuscadorTagLib()
-        datos.each {d ->
-            campos.eachWithIndex {c, j ->
+        datos.each { d ->
+            campos.eachWithIndex { c, j ->
                 def campo
                 if (funciones) {
                     if (funciones[j])
@@ -128,7 +128,7 @@ class ReportesController {
 
     static arregloEnteros(array) {
         int[] ia = new int[array.size()]
-        array.eachWithIndex {it, i ->
+        array.eachWithIndex { it, i ->
             ia[i] = it.toInteger()
         }
 
@@ -384,25 +384,37 @@ class ReportesController {
                 [etiqueta: "APELLIDOS", campo: "i.inscapel", alias: "apellido", width: 25],
                 [etiqueta: "NOMBRES", campo: "i.inscnmbr", alias: "nombre", width: 25],
                 [etiqueta: "FECHA NACIMIENTO", campo: "DATE_FORMAT(i.inscfecn,'%d-%m-%Y')", alias: "fecnac", width: 25],
-                [etiqueta: "TITULO", campo: "t.titldscr", alias: "titulo", width: 25],
-                [etiqueta: "ESTADO", campo: "e.etdodscr", alias: "estado", width: 12],
+                [etiqueta: "ESTADO", campo: "et.etdodscr", alias: "estado", width: 12],
                 [etiqueta: "GENERO", campo: "i.inscsexo", alias: "genero", width: 12],
                 [etiqueta: "EMAIL", campo: "i.inscmail", alias: "mail", width: 25],
                 [etiqueta: "ETNIA", campo: "i.inscetni", alias: "etnia", width: 13],
                 [etiqueta: "PROMOTOR CNH", campo: "i.inscpcnh", alias: "prom", width: 10],
                 [etiqueta: "HABLA L. NATIVA", campo: "i.insclenn", alias: 'lnat', width: 10],
                 [etiqueta: "CERTIFICADO L. NATIVA", campo: "i.insccern", alias: 'cnat', width: 10],
-                [etiqueta: "MAS DE 50% L. NATIVA", campo: "i.inscln50", alias: 'cinat', width: 10],
                 [etiqueta: "L. NATIVA", campo: "ti.tpiddscr", alias: "tipoid", width: 13],
                 [etiqueta: "HABLA L. EXTR.", campo: "i.insclene", alias: "lext", width: 10],
                 [etiqueta: "CERTIFICADO L. EXTR.", campo: "i.insccere", alias: "cext", width: 10],
-                [etiqueta: "MAS DE 50% L. EXTR.", campo: "i.inscle50", alias: "ciext", width: 10],
                 [etiqueta: "DIRECCION", campo: "i.inscdire", alias: "dire", width: 25],
                 [etiqueta: "TELEFONO FIJO", campo: "i.insctelf", alias: "tel", width: 13],
                 [etiqueta: "CELULAR", campo: "i.insctelc", alias: "celu", width: 13],
+
+
+                [etiqueta: "TITULO", campo: "t.titldscr", alias: "titulo", width: 25],
+                [etiqueta: "TIPO TITULO", campo: "tp.tpttdscr", alias: 'tptt', width: 12],
+                [etiqueta: "P. TITULO", campo: "t.titlptje", alias: 'ttpn', width: 12],
+
+                [etiqueta: "HORAS C.", campo: "(select sum(u.crsohras) from crso u where u.insc__id=i.insc__id and u.crsofcha > '2009-01-01')", alias: 'cursos', width: 10],
+
                 [etiqueta: "EXPERIENCIA A.", campo: "i.inscexan", alias: "exan", width: 10],
                 [etiqueta: "EXPERIENCIA M.", campo: "i.inscexms", alias: "exms", width: 10],
-                [etiqueta: "TRABAJO COM.", campo: "i.insccomu", alias: 'trcm', width: 10]
+
+                [etiqueta: "TRABAJO COM.", campo: "i.insccomu", alias: 'trcm', width: 10],
+
+                [etiqueta: "MAS DE 50% L. NATIVA", campo: "i.inscln50", alias: 'cinat', width: 10],
+                [etiqueta: "MAS DE 50% L. EXTR.", campo: "i.inscle50", alias: "ciext", width: 10],
+
+                [etiqueta: "EVALUACION", campo: "count(d.dtle__id)", alias: 'prueba', width: 10],
+                [etiqueta: "ENTREVISTA", campo: "i.inscptet", alias: 'entrevista', width: 10]
         ]
 
         def filtroProv = "", filtroEst = "", tipoJoin = "", filtroDatos = "", filtroBusqueda = "", sort = ""
@@ -467,16 +479,23 @@ class ReportesController {
         baseSql += "          " + tipoJoin + " join cant c on i.cant__id=c.cant__id" + "\n"
         baseSql += "          " + tipoJoin + " join parr a on i.parr__id=a.parr__id" + "\n"
         baseSql += "          " + tipoJoin + " join titl t on i.titl__id=t.titl__id" + "\n"
-        baseSql += "          " + tipoJoin + " join etdo e on i.etdo__id=e.etdo__id" + "\n"
+        baseSql += "          " + tipoJoin + " join etdo et on i.etdo__id=et.etdo__id" + "\n"
         baseSql += "          left join tpid ti on i.tpididnt=ti.tpid__id" + "\n"
+
+        baseSql += "          left join tptt tp on t.tptt__id = tp.tptt__id" + "\n"
+        baseSql += "          left join encu e on i.insc__id = e.prsp__id" + "\n"
+        baseSql += "          left join dtle d on e.encu__id = d.encu__id" + "\n"
+        baseSql += "          left join resp r on d.resp__id = r.resp__id and r.correcta = 1" + "\n"
+
         baseSql += "  where i.conv__id=" + params.id + "\n"
         baseSql += filtroProv
         baseSql += filtroEst
         baseSql += filtroDatos
         baseSql += filtroBusqueda
+        baseSql += "group by i.insc__id"
         baseSql += " order by " + sort + " " + params.order
 
-        println baseSql
+//        println baseSql
 
         params.label = "Inscritos a la convocatoria ${Convocatoria.get(params.id).descripcion}"
         if (params.provincia) {
@@ -531,10 +550,36 @@ class ReportesController {
         label = new Label(0, 1, params.label, titulo2Format); sheet.addCell(label)
 
         def filaIni = 3
-        datos.eachWithIndex {l, columna ->
+        def columnaOk = 0
+        datos.eachWithIndex { l, columna ->
             //headers
             sheet.setColumnView(columna, l.width)
-            label = new Label(columna, filaIni, l.etiqueta, times16format); sheet.addCell(label)
+            label = new Label(columnaOk, filaIni, l.etiqueta, times16format); sheet.addCell(label)
+            if (l.alias == "cursos") {
+                columnaOk += 1
+                sheet.setColumnView(columnaOk, l.width)
+                label = new Label(columnaOk, filaIni, "P. CURSOS", times16format); sheet.addCell(label)
+            } else if (l.alias == "exms") {
+                columnaOk += 1
+                sheet.setColumnView(columnaOk, l.width)
+                label = new Label(columnaOk, filaIni, "P. EXPERIENCIA", times16format); sheet.addCell(label)
+            } else if (l.alias == "trcm") {
+                columnaOk += 1
+                sheet.setColumnView(columnaOk, l.width)
+                label = new Label(columnaOk, filaIni, "P. TR. COM.", times16format); sheet.addCell(label)
+            } else if (l.alias == "ciext") {
+                columnaOk += 1
+                sheet.setColumnView(columnaOk, l.width)
+                label = new Label(columnaOk, filaIni, "P. BILINGUISMO", times16format); sheet.addCell(label)
+                columnaOk += 1
+                sheet.setColumnView(columnaOk, l.width)
+                label = new Label(columnaOk, filaIni, "MÉRITOS", times16format); sheet.addCell(label)
+            } else if (l.alias == "entrevista") {
+                columnaOk += 1
+                sheet.setColumnView(columnaOk, l.width)
+                label = new Label(columnaOk, filaIni, "TOTAL", times16format); sheet.addCell(label)
+            }
+            columnaOk++
         }
 
         //println baseSql
@@ -542,12 +587,71 @@ class ReportesController {
         def cn = dbConnectionService.getConnection()
         def fila = 0
         cn.eachRow(baseSql) { row ->
+//            println fila
+            columnaOk = 0
+            def exp = 0
+            def blg = 0
+            def mer = 0
             datos.eachWithIndex { d, col ->
                 def val = row[d.alias]
                 if (!val) {
                     val = ""
                 }
-                label = new Label(col, fila + filaIni + 1, val.toString(), times16format2); sheet.addCell(label)
+                label = new Label(columnaOk, fila + filaIni + 1, val.toString(), times16format2); sheet.addCell(label)
+                if (d.alias == "cursos") {
+                    def pt = 0
+                    if (val != "") {
+                        if (val.toDouble() > 120) {
+                            pt = 6
+                        } else {
+                            pt = (6 * val) / 120
+                        }
+                    }
+                    columnaOk += 1
+                    mer += pt
+                    label = new Label(columnaOk, fila + filaIni + 1, formatNumber(number: pt, maxFractionDigits: 2, minFractionDigits: 2), times16format2); sheet.addCell(label)
+                } else if (d.alias == "exan") {
+                    if (val != "") {
+                        if (val.toDouble() >= 1) {
+                            exp = 10
+                        }
+                    }
+                } else if (d.alias == "exms") {
+                    if (val != "") {
+                        if (val.toDouble() >= 12) {
+                            exp = 10
+                        }
+                    }
+                    columnaOk += 1
+                    mer += exp
+                    label = new Label(columnaOk, fila + filaIni + 1, formatNumber(number: exp, maxFractionDigits: 2, minFractionDigits: 2), times16format2); sheet.addCell(label)
+                } else if (d.alias == "trcm") {
+                    def pt = 0
+                    if (val == "SI") {
+                        pt = 3
+                    }
+                    columnaOk += 1
+                    mer += pt
+                    label = new Label(columnaOk, fila + filaIni + 1, formatNumber(number: pt, maxFractionDigits: 2, minFractionDigits: 2), times16format2); sheet.addCell(label)
+                } else if (d.alias == "cinat") {
+                    if (val == "SI") {
+                        blg += 4
+                    }
+                } else if (d.alias == "ciext") {
+                    if (val == "SI") {
+                        blg += 2
+                    }
+                    columnaOk += 1
+                    mer += blg
+                    label = new Label(columnaOk, fila + filaIni + 1, formatNumber(number: blg, maxFractionDigits: 2, minFractionDigits: 2), times16format2); sheet.addCell(label)
+                    columnaOk += 1
+                    label = new Label(columnaOk, fila + filaIni + 1, formatNumber(number: mer, maxFractionDigits: 2, minFractionDigits: 2), times16format2); sheet.addCell(label)
+                } else if (d.alias == "entrevista") {
+                    columnaOk += 1
+                    def total = (row.prueba ?: 0) + (row.entrevista ?: 0) + mer
+                    label = new Label(columnaOk, fila + filaIni + 1, formatNumber(number: total, maxFractionDigits: 2, minFractionDigits: 2), times16format2); sheet.addCell(label)
+                }
+                columnaOk++
             }
             fila++
         }
@@ -716,15 +820,15 @@ class ReportesController {
         label = new Label(0, 1, params.label, titulo2Format); sheet.addCell(label)
 
         def filaIni = 3
-        datos.etiqueta.eachWithIndex {l, columna ->
+        datos.etiqueta.eachWithIndex { l, columna ->
             //headers
             sheet.setColumnView(columna, 25)
             label = new Label(columna, filaIni, l, times16format); sheet.addCell(label)
         }
 //
 //
-        results.eachWithIndex {r, fila ->
-            datos.eachWithIndex {d, columna ->
+        results.eachWithIndex { r, fila ->
+            datos.eachWithIndex { d, columna ->
 //                //println "d: " + d
                 def val
                 if (d["accion"].size() > 0) {

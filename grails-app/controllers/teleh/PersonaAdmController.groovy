@@ -89,16 +89,16 @@ class PersonaAdmController extends teleh.seguridad.Shield {
         if (!params.id) {
             params.id = 1
         }
-        where+=" and i.conv__id = ${params.id}"
+        where += " and i.conv__id = ${params.id}"
         if (params.provincia && params.provincia != "") {
-            where+=" and i.prov__id = ${params.provincia}"
+            where += " and i.prov__id = ${params.provincia}"
         }
         if (!params.estado || params.estado == "-1") {
             strEstado = "is not null"
-        }else{
+        } else {
             params.estado = params.estado
             est = Estado.get(params.estado.toLong())
-            strEstado = "="+ params.estado
+            strEstado = "=" + params.estado
         }
         if (!params.max || params.max == 0) {
             params.max = 100
@@ -116,14 +116,14 @@ class PersonaAdmController extends teleh.seguridad.Shield {
         if (!params.order) {
             params.order = "asc"
         }
-        if (params.busqueda && params.busqueda!="") {
+        if (params.busqueda && params.busqueda != "") {
             where += " and (upper(i.inscnmbr) like '%${params.busqueda.toUpperCase()}%' or upper(i.inscapel) like '%${params.busqueda.toUpperCase()}%' or i.insccedu like '%${params.busqueda}%') "
         }
 
         if (params.datos == '1') {
-            where+=" and inscnmbr IS NOT NULL and inscapel IS NOT NULL"
+            where += " and inscnmbr IS NOT NULL and inscapel IS NOT NULL"
         } else if (params.datos == "0") {
-            where+=" and inscnmbr IS NULL and inscapel IS NULL"
+            where += " and inscnmbr IS NULL and inscapel IS NULL"
         }
 //        println "where "+where
 
@@ -131,18 +131,18 @@ class PersonaAdmController extends teleh.seguridad.Shield {
 
         def conv = Convocatoria.get(params.id.toLong())
         def cn = dbConnectionService.getConnection()
-        def total =0
-        def sqlTotal =  "\n" +
+        def total = 0
+        def sqlTotal = "\n" +
                 "SELECT\n" +
                 "  count(*)\n" +
                 "FROM insc i\n" +
                 "  WHERE i.etdo__id ${strEstado}  ${where}"
         println "sqlTotal: " + sqlTotal
-        cn.eachRow(sqlTotal.toString()){r->
-            total=r[0]
+        cn.eachRow(sqlTotal.toString()) { r ->
+            total = r[0]
             //println "r "+r
         }
-        def subQuery ="(select count(r.resp__id) from encu e,dtle d,resp r where e.prsp__id= i.insc__id and e.encu__id=d.encu__id and d.resp__id = r.resp__id and r.correcta = 1)"
+        def subQuery = "(select count(r.resp__id) from encu e,dtle d,resp r where e.prsp__id= i.insc__id and e.encu__id=d.encu__id and d.resp__id = r.resp__id and r.correcta = 1)"
         def sql = "\n" +
                 "SELECT\n" +
                 "  i.insc__id,\n" +
@@ -151,9 +151,9 @@ class PersonaAdmController extends teleh.seguridad.Shield {
                 "  p.provnmbr,\n" +
                 "  c.cantnmbr,\n" +
                 "  t.titldscr,\n" +
-                "  i.inscsexo,\n"+
-                "  i.insccedu,\n"+
-                "  e.etdodscr,\n"+
+                "  i.inscsexo,\n" +
+                "  i.insccedu,\n" +
+                "  e.etdodscr,\n" +
                 "  i.inscpcnh,\n" +
                 "  ${subQuery}\n" +
                 "FROM insc i\n" +
@@ -164,11 +164,11 @@ class PersonaAdmController extends teleh.seguridad.Shield {
                 "WHERE i.etdo__id  ${strEstado}  ${where} \n" +
                 "ORDER BY ${params.sort} ${params.order} limit ${params.max} offset ${params.offset};"
 
-        println "sql "+sql
+        println "sql " + sql
 //
         def res = []
 //        println "sql "+sql
-        cn.eachRow(sql.toString()){r->
+        cn.eachRow(sql.toString()) { r ->
             res.add(r.toRowResult())
 //            println "r "+r
         }
@@ -203,14 +203,14 @@ class PersonaAdmController extends teleh.seguridad.Shield {
         def enc = null
         def sqlTotales = "select etdo__id,count(*),(select count(*) from insc where conv__id = ${params.id} and inscnmbr IS NOT NULL and inscapel IS NOT NULL),(select count(*) from encu)   from insc where conv__id = ${params.id} group by 1"
 //        println "sql tot "+sqlTotales
-        cn.eachRow(sqlTotales.toString()){r->
+        cn.eachRow(sqlTotales.toString()) { r ->
             if (!totalDatos)
-                totalDatos=r[2]
+                totalDatos = r[2]
             if (!enc)
                 enc = r[3]
-            if(r[0]==2)
-                totalCalificados=r[1]
-            totalConv+=r[1]
+            if (r[0] == 2)
+                totalCalificados = r[1]
+            totalConv += r[1]
 
         }
 

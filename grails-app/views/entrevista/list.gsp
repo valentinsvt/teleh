@@ -62,6 +62,7 @@
                         <g:sortableColumn action="list" property="8" title="Género" params="${params}"/>
                         <th>Nota Prueba</th>
                         <th>Nota Entrevista</th>
+                        %{--<th>Mérito</th>--}%
                         <th width="150">Acciones</th>
                     </tr>
                 </thead>
@@ -94,6 +95,9 @@
                             <td>
                                 ${r[10]}
                             </td>
+                            %{--<td>--}%
+
+                            %{--</td>--}%
                             <td>
                                 <a class="btn btn-small btn-show btn-ajax" href="#" rel="tooltip" title="Ver" data-id="${r[0]}">
                                     <i class="icon-zoom-in icon-large"></i>
