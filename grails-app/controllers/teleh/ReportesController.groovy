@@ -413,7 +413,7 @@ class ReportesController {
                 [etiqueta: "MAS DE 50% L. NATIVA", campo: "i.inscln50", alias: 'cinat', width: 10],
                 [etiqueta: "MAS DE 50% L. EXTR.", campo: "i.inscle50", alias: "ciext", width: 10],
 
-                [etiqueta: "EVALUACION", campo: "count(d.dtle__id)", alias: 'prueba', width: 10],
+                [etiqueta: "EVALUACION", campo: "(SELECT count(res.resp__id) FROM encu enc, dtle dtl, resp res, insc ins WHERE enc.prsp__id = ins.insc__id AND ins.insc__id = i.insc__id AND enc.encu__id = dtl.encu__id AND dtl.resp__id = res.resp__id AND res.correcta = 1 GROUP BY insc__id)", alias: 'prueba', width: 10],
                 [etiqueta: "ENTREVISTA", campo: "i.inscptet", alias: 'entrevista', width: 10]
         ]
 

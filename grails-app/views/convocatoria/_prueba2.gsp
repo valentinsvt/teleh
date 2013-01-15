@@ -41,7 +41,7 @@
     <p style="font-size: 16px;text-align: justify;margin-top: 10px">
         Estimados y estimadas hemos revisado su participación en el proceso de selección de profesionales para la modalidad CNH,
         por tanto le solicitamos que rinda la  evaluación en línea en la pagina: <a href="http://www.infa.gob.ec:7073/mies" target="_blank">www.infa.gob.ec:7073/mies</a> ; deberá ingresar con
-        la  misma contraseña de su inscripción desde el sábado 12 al 15 de enero de 2013 hasta las 24h00. Posteriormente se
+        la  misma contraseña de su inscripción. Posteriormente se
         enviará a sus correos si ha sido favorecido para continuar en el proceso.
 
         <br/>
