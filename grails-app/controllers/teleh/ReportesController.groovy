@@ -219,7 +219,7 @@ class ReportesController {
         baseSql += filtroBusqueda
         baseSql += " order by " + sort + " " + params.order
 
-//        //println baseSql
+        println baseSql
 
         def cn = dbConnectionService.getConnection()
 
@@ -449,7 +449,7 @@ class ReportesController {
             filtroProv = " and p.prov__id=" + params.provincia + "\n"
         }
         if (params.estado) {
-            filtroEst = " and e.etdo__id=" + params.estado + "\n"
+            filtroEst = " and et.etdo__id=" + params.estado + "\n"
         }
         if (params.datos == '-1') { //todos
             tipoJoin = "left"
