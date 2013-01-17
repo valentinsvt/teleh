@@ -217,7 +217,7 @@ class PersonaAdmController extends teleh.seguridad.Shield {
         params.totales = "En la convocatoria <i>${conv.descripcion}</i> se encontraron <b>${totalConv}</b> inscritos, de los cuales <b>${totalDatos}</b> ya han ingresado sus datos"
 
         params.calificados = "Hay ${totalCalificados + enc} postulante${totalCalificados + enc == 1 ? '' : 's'} calificado${totalCalificados + enc == 1 ? '' : 's'}"
-        params.calificados += " y ${enc} ex${enc == 1 ? 'a' : 'á'}men${enc == 1 ? '' : 'es'} efectuado${enc == 1 ? '' : 's'}"
+        params.calificados += " y ${enc} ex${enc == 1 ? 'a' : 'á'}men${enc == 1 ? '' : 'es'} iniciado${enc == 1 ? '' : 's'}"
         cn.close()
         [res: res, params: params]
     }
