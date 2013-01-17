@@ -92,7 +92,7 @@
         
                 <span aria-labelledby="titulo-label">
         %{--<g:link controller="titulo" action="show" id="${personaInstance?.titulo?.id}">--}%
-                    ${personaInstance?.titulo?.encodeAsHTML()}
+                    ${personaInstance?.titulo?.descripcion} ${personaInstance?.titulo?.tipoTitulo?.descripcion}
         %{--</g:link>--}%
                 </span>
         

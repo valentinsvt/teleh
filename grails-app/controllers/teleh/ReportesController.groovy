@@ -598,7 +598,12 @@ class ReportesController {
                     val = ""
                 }
                 label = new Label(columnaOk, fila + filaIni + 1, val.toString(), times16format2); sheet.addCell(label)
-                if (d.alias == "cursos") {
+                if (d.alias == "ttpn") {
+//                    println "titulo " + val + "   " + mer
+                    if (val && val != "") {
+                        mer += val
+                    }
+                } else if (d.alias == "cursos") {
                     def pt = 0
                     if (val != "") {
                         if (val.toDouble() > 120) {
