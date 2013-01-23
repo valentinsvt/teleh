@@ -15,7 +15,7 @@ class ConvocatoriaController extends teleh.seguridad.Shield {
         [convocatoriaInstanceList: Convocatoria.list(params), params: params]
     } //list
 
-       //                        select i.insc__id,e.encu__id,i.inscnmbr,i.inscapel,p.provnmbr,c.cantnmbr,t.titldscr,count(d.dtle__id) from insc i,encu e,dtle d ,resp r,prov p ,cant c,titl t where i.insc__id=e.prsp__id and e.encu__id=d.encu__id and i.etdo__id!=3 and r.resp__id=d.resp__id and r.correcta=1 and i.prov__id=p.prov__id and i.cant__id=c.cant__id and i.titl__id=t.titl__id   group by 1,2   order by 1;
+    //                        select i.insc__id,e.encu__id,i.inscnmbr,i.inscapel,p.provnmbr,c.cantnmbr,t.titldscr,count(d.dtle__id) from insc i,encu e,dtle d ,resp r,prov p ,cant c,titl t where i.insc__id=e.prsp__id and e.encu__id=d.encu__id and i.etdo__id!=3 and r.resp__id=d.resp__id and r.correcta=1 and i.prov__id=p.prov__id and i.cant__id=c.cant__id and i.titl__id=t.titl__id   group by 1,2   order by 1;
     def actualizaEstado(){
         def cn = dbConnectionService.getConnection()
         def sql = "select i.insc__id,e.encu__id,count(d.dtle__id) from insc i,encu e,dtle d where i.insc__id=e.prsp__id and e.encu__id=d.encu__id and i.etdo__id!=3 group by 1,2  having count(d.dtle__id)=20 order by 1"
@@ -137,6 +137,52 @@ class ConvocatoriaController extends teleh.seguridad.Shield {
         render "Se enviaron ${cont} mails de un total de ${tot}"
     }
 
+
+    def pantallaComunicado(){
+
+    }
+
+    def enviarComunicadoGanadores(){
+//        println "envar ganadores "+params
+        def archivo = request.getFile("tituloArchivo")
+        def conv = Convocatoria.list().pop()
+        archivo.transferTo(new File("/tmp", "cedulas.csv"))
+        def csv = new File("/tmp/cedulas.csv")
+        def tot = 0
+        def cont = 0
+
+        csv.eachLine{
+            tot++
+
+            if (it.trim()!=""){
+//                    println it
+                def prsn = Persona.findByCedula(it.trim())
+                if (prsn){
+                    if (prsn.mailPrueba!="G"){
+
+                        println "enviar mail ganadores "+prsn.email+" cedula "+prsn.cedula
+                        try {
+                            mailService.sendMail {
+                                to prsn.email
+                                from "info@infa.gob.ec"
+                                subject "Felicitaciones"
+                                html g.render(template: "ganadores", model: [prsn: prsn,conv:conv])
+                            }
+                            prsn.mailPrueba="G"
+                            prsn.save(flush: true)
+                            cont++
+                        } catch (e) {
+                            println "error al mandar mail: mail comunicado entrevista "+prsn.email+" id:"+prsn.id+"  e:"+e
+                        }
+
+                    }
+                }
+            }
+
+        }
+        render "Se enviaron ${cont} mails de un total de ${tot}"
+    }
+
     def enviarComunicadoNoAceptados(){
         def calificados = Persona.findAllByEstado(Estado.get(5))
         println "calificados "+calificados.size()
@@ -147,21 +193,21 @@ class ConvocatoriaController extends teleh.seguridad.Shield {
 //            println "actual -> "+ca+"  "+ca.id+" "+ca.mailPrueba
             if (ca.mailPrueba!="C"){
 
-                    tot++
-                    println "enviar mail no aceptados "+ca.email
-                    try {
-                        mailService.sendMail {
-                            to ca.email
-                            from "info@infa.gob.ec"
-                            subject "Comunicado"
-                            html g.render(template: "noAceptados", model: [prsn: ca,conv:conv])
-                        }
-                        ca.mailPrueba="C"
-                        ca.save(flush: true)
-                        cont++
-                    } catch (e) {
-                        println "error al mandar mail: mail comunicado no aceptado "+ca.email+" id:"+ca.id+"  e:"+e
+                tot++
+                println "enviar mail no aceptados "+ca.email
+                try {
+                    mailService.sendMail {
+                        to ca.email
+                        from "info@infa.gob.ec"
+                        subject "Comunicado"
+                        html g.render(template: "noAceptados", model: [prsn: ca,conv:conv])
                     }
+                    ca.mailPrueba="C"
+                    ca.save(flush: true)
+                    cont++
+                } catch (e) {
+                    println "error al mandar mail: mail comunicado no aceptado "+ca.email+" id:"+ca.id+"  e:"+e
+                }
 
             }
 
@@ -179,21 +225,21 @@ class ConvocatoriaController extends teleh.seguridad.Shield {
 //            println "actual -> "+ca+"  "+ca.id+" "+ca.mailPrueba
             if (ca.mailPrueba!="C"){
 //
-                    tot++
-                    println "enviar mail pendientes "+ca.email
-                    try {
-                        mailService.sendMail {
-                            to ca.email
-                            from "info@infa.gob.ec"
-                            subject "Comunicado"
-                            html g.render(template: "pendientes", model: [prsn: ca,conv:conv])
-                        }
-                        ca.mailPrueba="C"
-                        ca.save(flush: true)
-                        cont++
-                    } catch (e) {
-                        println "error al mandar mail: mail comunicado pedientes "+ca.email+" id:"+ca.id+"  e:"+e
+                tot++
+                println "enviar mail pendientes "+ca.email
+                try {
+                    mailService.sendMail {
+                        to ca.email
+                        from "info@infa.gob.ec"
+                        subject "Comunicado"
+                        html g.render(template: "pendientes", model: [prsn: ca,conv:conv])
                     }
+                    ca.mailPrueba="C"
+                    ca.save(flush: true)
+                    cont++
+                } catch (e) {
+                    println "error al mandar mail: mail comunicado pedientes "+ca.email+" id:"+ca.id+"  e:"+e
+                }
 
             }
 

@@ -29,6 +29,7 @@ class Shield {
 
 //                println usu.tipo + "   " + controllerName + "   " + actionName
 
+
                 def allowedControllers, allowedActions
 
                 if (usu.tipo.equalsIgnoreCase("a")) {
