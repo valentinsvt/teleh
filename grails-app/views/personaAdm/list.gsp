@@ -37,7 +37,7 @@
                 <div class="row">
                     <div class="span12">
                         Inscritos en
-                        la convocatoria <g:select class="input-medium" name="convocatoria" from="${teleh.Convocatoria.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion" value="${params.id}"/>
+                        la convocatoria <g:select class="input-medium" name="convocatoria" from="${teleh.Convocatoria.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion" value="${params.convocatoria}"/>
                         en <g:select class="input-medium" name="provincia" from="${teleh.Provincia.list([sort: 'nombre'])}" optionKey="id" optionValue="nombre" value="${params.provincia}" noSelection="['': 'Todas las provincias']"/>
                         con estado <g:select class="input-medium" name="estado" from="${teleh.Estado.list([sort: 'descripcion'])}" optionKey="id" optionValue="descripcion" value="${params.estado}" noSelection="['-1': 'Cualquiera']"/>
                         <g:select class="input-small" name="datos" from="${['-1': 'Todos', '0': 'Sin datos', '1': 'Con datos']}" optionKey="key" optionValue="value" value="${params.datos}"/>

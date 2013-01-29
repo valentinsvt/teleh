@@ -81,15 +81,15 @@ class PersonaAdmController extends teleh.seguridad.Shield {
     }
 
     def list() {
-//        println "params "+params
+//        println "params " + params
         def where = ""
         def est = null
 
         def strEstado = params.estado
-        if (!params.id) {
-            params.id = 1
+        if (!params.convocatoria) {
+            params.convocatoria = 1
         }
-        where += " and i.conv__id = ${params.id}"
+        where += " and i.conv__id = ${params.convocatoria}"
         if (params.provincia && params.provincia != "") {
             where += " and i.prov__id = ${params.provincia}"
         }
@@ -129,7 +129,7 @@ class PersonaAdmController extends teleh.seguridad.Shield {
 
         def prov = null
 
-        def conv = Convocatoria.get(params.id.toLong())
+        def conv = Convocatoria.get(params.convocatoria.toLong())
         def cn = dbConnectionService.getConnection()
         def total = 0
         def sqlTotal = "\n" +
@@ -164,7 +164,7 @@ class PersonaAdmController extends teleh.seguridad.Shield {
                 "WHERE i.etdo__id  ${strEstado}  ${where} \n" +
                 "ORDER BY ${params.sort} ${params.order} limit ${params.max} offset ${params.offset};"
 
-        println "sql " + sql
+//        println "sql " + sql
 //
         def res = []
 //        println "sql "+sql
@@ -201,7 +201,7 @@ class PersonaAdmController extends teleh.seguridad.Shield {
         def totalDatos = null
         def totalCalificados = 0
         def enc = null
-        def sqlTotales = "select etdo__id,count(*),(select count(*) from insc where conv__id = ${params.id} and inscnmbr IS NOT NULL and inscapel IS NOT NULL),(select count(*) from encu)   from insc where conv__id = ${params.id} group by 1"
+        def sqlTotales = "select etdo__id,count(*),(select count(*) from insc where conv__id = ${params.convocatoria} and inscnmbr IS NOT NULL and inscapel IS NOT NULL),(select count(*) from encu)   from insc where conv__id = ${params.convocatoria} group by 1"
 //        println "sql tot "+sqlTotales
         cn.eachRow(sqlTotales.toString()) { r ->
             if (!totalDatos)
@@ -213,6 +213,17 @@ class PersonaAdmController extends teleh.seguridad.Shield {
             totalConv += r[1]
 
         }
+
+//        println ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+//        println conv.descripcion
+//        println totalConv
+//        println totalDatos
+//        println totalCalificados
+//        println enc
+//        println ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+
+        totalDatos = totalDatos ?: 0
+        enc = enc ?: 0
 
         params.totales = "En la convocatoria <i>${conv.descripcion}</i> se encontraron <b>${totalConv}</b> inscritos, de los cuales <b>${totalDatos}</b> ya han ingresado sus datos"
 
