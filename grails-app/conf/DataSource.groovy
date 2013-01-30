@@ -17,7 +17,7 @@ environments {
         dataSource {
             dbCreate = "update"
             url = "jdbc:mysql://10.0.0.1/cnh"
-            //url = "jdbc:mysql://127.0.0.1/cnh"
+            //url = "jdbc:mysql://10.0.0.1/infa"
             username = "root"
             password = "root"
         }
