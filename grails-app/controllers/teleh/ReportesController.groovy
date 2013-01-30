@@ -361,7 +361,7 @@ class ReportesController {
         if (!params.provincia || params.provincia == "") {
             params.provincia = null
         }
-        if (!params.estado || params.estado == "") {
+        if (!params.estado || params.estado == "" || params.estado == "-1" || params.estado == -1) {
             params.estado = null
         }
         if (!params.sort) {
