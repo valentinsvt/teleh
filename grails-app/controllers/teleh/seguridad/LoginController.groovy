@@ -105,7 +105,7 @@ class LoginController {
                 eq("cedula", params.cedula)
                 eq("pin", params.pin.encodeAsMD5())
                 eq("activo", 1)
-                eq("convocatoria", session.convocatoria) //solo esta convocatoria
+                //eq("convocatoria", session.convocatoria) //solo esta convocatoria
             }
 
             if (user.size() == 0) {
