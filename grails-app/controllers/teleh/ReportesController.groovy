@@ -495,7 +495,7 @@ class ReportesController {
         baseSql += "group by i.insc__id"
         baseSql += " order by " + sort + " " + params.order
 
-//        println baseSql
+        println baseSql
 
         params.label = "Inscritos a la convocatoria ${Convocatoria.get(params.id).descripcion}"
         if (params.provincia) {

@@ -164,7 +164,7 @@ class PersonaAdmController extends teleh.seguridad.Shield {
                 "WHERE i.etdo__id  ${strEstado}  ${where} \n" +
                 "ORDER BY ${params.sort} ${params.order} limit ${params.max} offset ${params.offset};"
 
-//        println "sql " + sql
+        println "sql " + sql
 //
         def res = []
 //        println "sql "+sql

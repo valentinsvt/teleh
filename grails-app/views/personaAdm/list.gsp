@@ -79,7 +79,7 @@
                 </div>
             </div>
 
-            <div class="row" >
+            <div class="row">
                 <div class="span12 btn-group">
                     <a href="#" class="btn btn-export" rel="tooltip" title="Exportar esta búsqueda a Excel" id="xls">
                         <i class="icon-table"></i> Exportar a Excel
@@ -264,7 +264,7 @@
                             break;
                     }
 
-                    data += "id=${params.id}" + sep;
+                    data += "id=${params.convocatoria}" + sep;
                     data += "provincia=${params.provincia}" + sep;
                     data += "estado=${params.estado}" + sep;
                     data += "sort=${params.sort}" + sep;
@@ -272,7 +272,7 @@
                     data += "datos=${params.datos}" + sep;
                     data += "busqueda=${params.busqueda}" + sep;
 
-                    //                        console.log(actionUrl + url + "?" + data)
+//                    console.log(actionUrl + url + "?" + data)
 
                     location.href = actionUrl + url + "?" + data;
 
