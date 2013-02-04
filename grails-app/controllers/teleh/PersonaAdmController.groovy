@@ -94,7 +94,8 @@ class PersonaAdmController extends teleh.seguridad.Shield {
             where += " and i.prov__id = ${params.provincia}"
         }
         if (!params.estado || params.estado == "-1") {
-            strEstado = "is not null"
+            //strEstado = "is not null"
+            strEstado = "is null or i.etdo__id is not null"
         } else {
             params.estado = params.estado
             est = Estado.get(params.estado.toLong())
@@ -161,7 +162,7 @@ class PersonaAdmController extends teleh.seguridad.Shield {
                 "  LEFT JOIN cant c ON i.cant__id = c.cant__id\n" +
                 "  LEFT JOIN titl t ON i.titl__id = t.titl__id\n" +
                 "  LEFT JOIN etdo e ON i.etdo__id = e.etdo__id\n" +
-                "WHERE i.etdo__id  ${strEstado}  ${where} \n" +
+                "WHERE (i.etdo__id  ${strEstado})  ${where} \n" +
                 "ORDER BY ${params.sort} ${params.order} limit ${params.max} offset ${params.offset};"
 
         println "sql " + sql

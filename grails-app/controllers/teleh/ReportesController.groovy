@@ -460,7 +460,7 @@ class ReportesController {
             tipoJoin = "inner"
         }
         if (params.busqueda) {
-            filtroBusqueda = " and (upper(i.inscapel) like '%upper(" + params.busqueda + ")%' or upper(i.inscnmbr) like '%upper(" + params.busqueda + ")%') or i.insccedu like '%" + params.busqueda + "%'" + "\n"
+            filtroBusqueda = " and (upper(i.inscapel) like '%upper(" + params.busqueda + ")%' or upper(i.inscnmbr) like '%upper(" + params.busqueda + ")%' or i.insccedu like '%" + params.busqueda + "%')" + "\n"
         }
 
         def baseSql = "select" + "\n"
@@ -495,7 +495,7 @@ class ReportesController {
         baseSql += "group by i.insc__id"
         baseSql += " order by " + sort + " " + params.order
 
-        println baseSql
+        println "sql para exportar a excel:" + baseSql
 
         params.label = "Inscritos a la convocatoria ${Convocatoria.get(params.id).descripcion}"
         if (params.provincia) {
